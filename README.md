@@ -1,2 +1,2 @@
 # PhilosophyV
-A RISC-V Processor implemented in verilog 
+A RISC-V Processor implemented in Verilog 
