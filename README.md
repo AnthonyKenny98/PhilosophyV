@@ -1,6 +1,7 @@
 # PhilosophyV :book:
-A RISC-V Processor implemented in Verilog 
+>A RISC-V Processor implemented in Verilog 
 
+*Philosophy IV*, written in 1903 by [Mr. Owen Wister of the Class of 1882](https://en.wikipedia.org/wiki/Owen_Wister), recounts the antics of two Harvard students and their last minute attempts to study (or avoid studying) for an exam they are hopelessly unprepared for. Similarly, this repository holds my last minute attempt to build a RISCV processor, as part of my Senior Thesis.
 
 ## Table of Contents
 + [Branches](#branches)
