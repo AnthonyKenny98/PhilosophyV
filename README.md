@@ -27,7 +27,7 @@ As such, I name my processor Philosphy V; both in reference to the RISC-V ISA fo
   ```
   
 ## <a name=#testing></a>Testing Methodology
-Tests are run on a module by module basis under the [simulation function](https://www.xilinx.com/products/design-tools/vivado/simulator.html) in Vivado. Test benches (```module_tb.v```) that test a certain module as a Unit Under Test (UUT) import test stimulus and expected results from a test vector file (```module.tv```). A python script for creating large test vectors has also been provided. See below for a step by step example of testing an 8 bit adder.
+Tests are run on a module by module basis under the [simulation function](https://www.xilinx.com/products/design-tools/vivado/simulator.html) in Vivado. Test benches (```module_tb.v```) that test a certain module as a Unit Under Test (UUT) import test stimulus and expected results from a test vector file (```module.tv```). A python script for creating large test vectors has also been provided. See [TestingMethodology.md](doc/TestingMethodology.md) for a step by step example of testing an 8 bit adder.
 
 
 ## <a name=#builtwith></a>Built With
