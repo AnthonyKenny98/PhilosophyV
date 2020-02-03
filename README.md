@@ -16,7 +16,7 @@ As such, I name my processor Philosphy V; both in reference to the RISC-V ISA fo
       |
       |_isa/                    // Contains documentation regarding the RISCV ISA
       |
-      |_philosophyv_001/        // The Vivado project directory. The project references
+      |_philosophy_v_001/        // The Vivado project directory. The project references
       |                         //    the external module files in src/
       |
       |_scripts/                // Contains scripts for creating certain files
