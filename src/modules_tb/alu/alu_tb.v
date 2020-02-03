@@ -32,7 +32,7 @@ module alu_test;
     // reg equal_x, zero_x, overflow_x;
     
     // Test Vectors
-    reg [(3*N+`ALU_FUNCT_WIDTH-1): 0] test_vectors [9:0];
+    reg [(3*N+`ALU_FUNCT_WIDTH-1): 0] test_vectors [1000:0];
     integer vectornum, errors;
     
     // Error Tracking - Array for each FUNCT

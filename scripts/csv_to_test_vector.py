@@ -54,8 +54,7 @@ def main():
             # Write decimal values to bit width binary values
             for i in range(len(row)):
                 placeholder = '{:0' + bit_widths[i] + 'b}'
-                out.write(str((placeholder.format(int(row[i])))))
-                out.write('_')
+                out.write(str((placeholder.format(int(row[i]) & 0xffffffff))))
             out.write('\n')
 
     out.close()
