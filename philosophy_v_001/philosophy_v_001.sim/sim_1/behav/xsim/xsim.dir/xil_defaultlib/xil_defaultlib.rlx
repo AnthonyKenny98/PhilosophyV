@@ -5,4 +5,4 @@ Nov  6 2019
 /home/anthony/Documents/PhilosophyV/philosophy_v_001/philosophy_v_001.sim/sim_1/behav/xsim/glbl.v,1573089660,verilog,,,,glbl,,,,,,,,
 /home/anthony/Documents/PhilosophyV/src/modules/alu/alu.v,1580520811,verilog,,/home/anthony/Documents/PhilosophyV/src/modules_tb/alu/alu_tb.v,/home/anthony/Documents/PhilosophyV/src/modules/alu/alu_defines.h,alu,,,../../../../../src/modules/alu,,,,,
 /home/anthony/Documents/PhilosophyV/src/modules/alu/alu_defines.h,1580520815,verilog,,,,,,,,,,,,
-/home/anthony/Documents/PhilosophyV/src/modules_tb/alu/alu_tb.v,1580519864,verilog,,,/home/anthony/Documents/PhilosophyV/src/modules/alu/alu_defines.h,alu_test,,,../../../../../src/modules/alu,,,,,
+/home/anthony/Documents/PhilosophyV/src/modules_tb/alu/alu_tb.v,1580747382,verilog,,,/home/anthony/Documents/PhilosophyV/src/modules/alu/alu_defines.h,alu_test,,,../../../../../src/modules/alu,,,,,

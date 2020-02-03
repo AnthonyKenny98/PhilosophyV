@@ -24,68 +24,51 @@ module alu_test;
         .overflow(overflow)
     );
     
+    // Clk for testing
+    reg clk;
+    
+    // Expected Outputs for testing
+    reg [(N-1):0] c_x;
+    // reg equal_x, zero_x, overflow_x;
+    
+    // Test Vectors
+    reg [(3*N+`ALU_FUNCT_WIDTH-1): 0] test_vectors [9:0];
+    integer vectornum, errors;
+    
     // Error Tracking - Array for each FUNCT
-    `define NUM_ERROR_COUNTERS 10
-    integer errors [(`NUM_ERROR_COUNTERS - 1):0];
-    integer i;
+    // `define NUM_ERROR_COUNTERS 10
+    // integer errors [(`NUM_ERROR_COUNTERS - 1):0];
+
     
-    initial begin
-    
-        // Set Up Error Tracking
-        for (i=0; i<`NUM_ERROR_COUNTERS; i=i+1) begin
-            errors[i] = 0;
-        end
-        
-        // Init Inputs
-        a = 1791;
-        b = 1324;
-        
-        // And
-        funct = `ALU_FUNCT_AND;
-        #10;
-        if (c != 1068) begin
-            errors[`ALU_FUNCT_AND] = errors[`ALU_FUNCT_AND] + 1;
-        end
-        
-        // Or
-        funct = `ALU_FUNCT_OR;
-        #10;
-        if (c != 2047) begin
-            errors[`ALU_FUNCT_OR] = errors[`ALU_FUNCT_OR] + 1;
-        end
-        
-        // Xor
-        funct = `ALU_FUNCT_XOR;
-        #10;
-        if (c != 979) begin
-            errors[`ALU_FUNCT_XOR] = errors[`ALU_FUNCT_XOR] + 1;
-        end
-        
-        // Nor
-        funct = `ALU_FUNCT_NOR;
-        #10;
-        if (c != 0) begin
-            errors[`ALU_FUNCT_NOR] = errors[`ALU_FUNCT_NOR] + 1;
-        end
-        
-        // Add
-        funct = `ALU_FUNCT_ADD;
-        #10;
-        if (c != 3115) begin
-            errors[`ALU_FUNCT_ADD] = errors[`ALU_FUNCT_ADD] + 1;
-        end
-        
-        // Sub
-        funct = `ALU_FUNCT_SUB;
-        #10;
-        if (c != 467) begin
-            errors[`ALU_FUNCT_SUB] = errors[`ALU_FUNCT_SUB] + 1;
-        end
-        
-        
-        // Display Errors
-        for (i=0; i<`NUM_ERROR_COUNTERS; i=i+1) begin
-            $display("Errors for FUNCT %d = %d\n", i, errors[i]);
-        end
+    // Generate clk
+    always begin    // No sensitivity list, so it always cycles
+        clk = 1; #10; clk = 0; #10;
     end
+        
+    // Load test vectors at start of test.
+    initial begin    // Will execute at beginning once
+        $readmemb("alu.tv", test_vectors);
+        vectornum = 0; errors = 0;
+    end
+        
+    // Apply test vectors on rising edge of clk
+    always @(posedge clk) begin
+        #2; {a, b, funct, c_x} = test_vectors[vectornum];
+    end
+    
+    // Check results on falling edge of clk
+    always @(negedge clk) begin
+        // Check for error in test vector
+        if (c !== c_x) begin
+            $display("ERROR: x = %d, y = %d, FUNCT = %b", a, b, funct);
+            $display(" z = %d (%d expected)", c, c_x);
+            errors = errors + 1;
+        end
+        vectornum = vectornum + 1;
+        if (test_vectors[vectornum] === 100'bx) begin
+            $display("%d tests finished with %d errors.", vectornum, errors);
+            $finish;
+        end  
+    end
+
 endmodule
