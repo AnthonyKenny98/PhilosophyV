@@ -1,0 +1,4 @@
+Vivado Simulator 2019.2
+Time resolution is 1 ps
+        499 tests finished with           0 errors.
+$finish called at time : 9970 ns : File "/home/anthony/Documents/PhilosophyV/src/modules_tb/alu/alu_tb.v" Line 70
