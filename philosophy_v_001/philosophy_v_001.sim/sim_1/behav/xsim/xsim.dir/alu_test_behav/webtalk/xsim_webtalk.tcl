@@ -1,6 +1,6 @@
 webtalk_init -webtalk_dir /home/anthony/Documents/PhilosophyV/philosophy_v_001/philosophy_v_001.sim/sim_1/behav/xsim/xsim.dir/alu_test_behav/webtalk/
 webtalk_register_client -client project
-webtalk_add_data -client project -key date_generated -value "Mon Feb  3 11:31:45 2020" -context "software_version_and_target_device"
+webtalk_add_data -client project -key date_generated -value "Tue Feb  4 10:50:44 2020" -context "software_version_and_target_device"
 webtalk_add_data -client project -key product_version -value "XSIM v2019.2 (64-bit)" -context "software_version_and_target_device"
 webtalk_add_data -client project -key build_version -value "2708876" -context "software_version_and_target_device"
 webtalk_add_data -client project -key os_platform -value "LIN64" -context "software_version_and_target_device"
@@ -14,7 +14,7 @@ webtalk_add_data -client project -key target_package -value "not_applicable" -co
 webtalk_add_data -client project -key target_speed -value "not_applicable" -context "software_version_and_target_device"
 webtalk_add_data -client project -key random_id -value "595ad07d-2098-44f2-9832-ae6efc3034df" -context "software_version_and_target_device"
 webtalk_add_data -client project -key project_id -value "886a700603d0403c9fc0c2f185282a13" -context "software_version_and_target_device"
-webtalk_add_data -client project -key project_iteration -value "41" -context "software_version_and_target_device"
+webtalk_add_data -client project -key project_iteration -value "47" -context "software_version_and_target_device"
 webtalk_add_data -client project -key os_name -value "Ubuntu" -context "user_environment"
 webtalk_add_data -client project -key os_release -value "Ubuntu 18.04.3 LTS" -context "user_environment"
 webtalk_add_data -client project -key cpu_name -value "Intel(R) Core(TM) i7-5557U CPU @ 3.10GHz" -context "user_environment"
@@ -25,9 +25,9 @@ webtalk_register_client -client xsim
 webtalk_add_data -client xsim -key runall -value "true" -context "xsim\\command_line_options"
 webtalk_add_data -client xsim -key Command -value "xsim" -context "xsim\\command_line_options"
 webtalk_add_data -client xsim -key trace_waveform -value "true" -context "xsim\\usage"
-webtalk_add_data -client xsim -key runtime -value "9970 ns" -context "xsim\\usage"
+webtalk_add_data -client xsim -key runtime -value "10250 ns" -context "xsim\\usage"
 webtalk_add_data -client xsim -key iteration -value "0" -context "xsim\\usage"
-webtalk_add_data -client xsim -key Simulation_Time -value "0.04_sec" -context "xsim\\usage"
+webtalk_add_data -client xsim -key Simulation_Time -value "0.02_sec" -context "xsim\\usage"
 webtalk_add_data -client xsim -key Simulation_Memory -value "125916_KB" -context "xsim\\usage"
-webtalk_transmit -clientid 1528017521 -regid "" -xml /home/anthony/Documents/PhilosophyV/philosophy_v_001/philosophy_v_001.sim/sim_1/behav/xsim/xsim.dir/alu_test_behav/webtalk/usage_statistics_ext_xsim.xml -html /home/anthony/Documents/PhilosophyV/philosophy_v_001/philosophy_v_001.sim/sim_1/behav/xsim/xsim.dir/alu_test_behav/webtalk/usage_statistics_ext_xsim.html -wdm /home/anthony/Documents/PhilosophyV/philosophy_v_001/philosophy_v_001.sim/sim_1/behav/xsim/xsim.dir/alu_test_behav/webtalk/usage_statistics_ext_xsim.wdm -intro "<H3>XSIM Usage Report</H3><BR>"
+webtalk_transmit -clientid 3637063945 -regid "" -xml /home/anthony/Documents/PhilosophyV/philosophy_v_001/philosophy_v_001.sim/sim_1/behav/xsim/xsim.dir/alu_test_behav/webtalk/usage_statistics_ext_xsim.xml -html /home/anthony/Documents/PhilosophyV/philosophy_v_001/philosophy_v_001.sim/sim_1/behav/xsim/xsim.dir/alu_test_behav/webtalk/usage_statistics_ext_xsim.html -wdm /home/anthony/Documents/PhilosophyV/philosophy_v_001/philosophy_v_001.sim/sim_1/behav/xsim/xsim.dir/alu_test_behav/webtalk/usage_statistics_ext_xsim.wdm -intro "<H3>XSIM Usage Report</H3><BR>"
 webtalk_terminate
