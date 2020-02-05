@@ -47,8 +47,12 @@ module alu(x, y, funct, z, equal, zero, overflow);
 			`ALU_FUNCT_OR  : z = x | y;
 			`ALU_FUNCT_XOR : z = x ^ y;
 			`ALU_FUNCT_NOR : z = ~(x | y);
+			`ALU_OP_SLT : z = {31'b0, x_s < y_s}; 
+			`ALU_OP_SLL : z = x << y;
+			`ALU_OP_SRL : z = x >> y;
 			`ALU_FUNCT_ADD : z = x + y;
 			`ALU_FUNCT_SUB : z = x - y;
+			`ALU_OP_SRA : z = x_s >>> y_s;
 			default : z = 0;
 		endcase
 	end

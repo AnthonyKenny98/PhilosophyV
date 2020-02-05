@@ -2,6 +2,8 @@
 
 module alu_test;
     
+    // TODO: Test SLT, SLL, SRL, SRA
+    
     // TODO
     parameter N = 32;
     
