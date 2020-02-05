@@ -1,0 +1,9 @@
+`ifndef OPCODE_DEFINES
+`define OPCODE_DEFINES
+
+`define OPCODE_WIDTH 7
+
+`define OPCODE_ALU_IMM 4'b0010011
+`define OPCODE_ALU_REG 4'b0110011
+
+`endif

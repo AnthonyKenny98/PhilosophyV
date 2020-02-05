@@ -1,4 +1,8 @@
 INFO: [VRFC 10-2263] Analyzing Verilog file "/home/anthony/Documents/PhilosophyV/src/modules/alu/alu.v" into library xil_defaultlib
 INFO: [VRFC 10-311] analyzing module alu
-INFO: [VRFC 10-2263] Analyzing Verilog file "/home/anthony/Documents/PhilosophyV/src/modules_tb/alu/alu_tb.v" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module alu_test
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/anthony/Documents/PhilosophyV/src/modules/control_unit/alu_decoder/alu_decoder.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module alu_decoder
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/anthony/Documents/PhilosophyV/src/philosophy_v_core.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module philosophy_v_core
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/anthony/Documents/PhilosophyV/src/philosophy_v_core_tb.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module philosophy_v_core_tb

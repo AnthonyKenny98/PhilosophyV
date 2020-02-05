@@ -1,5 +1,5 @@
 # compile verilog/system verilog design source files
-verilog xil_defaultlib  --include "../../../../../src/modules/alu" --include "../../../../../src/modules/control_unit/alu_decoder" --include "../../../../../src/modules/memory" \
+verilog xil_defaultlib  --include "../../../../../src/isa/rv32i" --include "../../../../../src/modules/alu" --include "../../../../../src/modules/control_unit/alu_decoder" --include "../../../../../src/modules/memory" \
 "../../../../../src/modules/alu/alu.v" \
 "../../../../../src/modules_tb/alu/alu_tb.v" \
 

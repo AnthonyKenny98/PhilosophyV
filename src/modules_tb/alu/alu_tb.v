@@ -1,4 +1,4 @@
-`include "alu_defines.h"
+`include "alu_funct_defines.h"
 
 module alu_test;
     
