@@ -2,3 +2,6 @@ Running: xsim.dir/philosophy_v_core_tb_behav/xsimk -simmode gui -wdb philosophy_
 Design successfully loaded
 Design Loading Memory Usage: 43972 KB (Peak: 44092 KB)
 Design Loading CPU Usage: 20 ms
+Simulation completed
+Simulation Memory Usage: 125708 KB (Peak: 183240 KB)
+Simulation CPU Usage: 20 ms

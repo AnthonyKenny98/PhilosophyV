@@ -23,20 +23,30 @@
 
 `include "alu_funct_defines.h"
 
-module philosophy_v_core(instr, a, b, c);
+module philosophy_v_core(clk, rstb, c); //instr, a, b);
 
     // Parameter Definition
     parameter BIT_WIDTH = 32;
     
     // Inputs
-    input wire [(BIT_WIDTH-1):0] a, b;
-    input wire [(`INSTR_WIDTH-1):0] instr;
+    input wire clk, rstb;
+    //input wire [(BIT_WIDTH-1):0] a, b;
+    //input wire [(`INSTR_WIDTH-1):0] instr;
     
     // Outputs
     output wire [(BIT_WIDTH-1):0] c;
     
     // Internal Wires
     wire [(`ALU_FUNCT_WIDTH-1):0] alu_funct_w;
+    
+    wire [(BIT_WIDTH-1):0] addr, MemReadData;
+    
+    wire [(`INSTR_WIDTH-1):0] instr;
+    wire [(BIT_WIDTH-1):0] a, b;
+    
+    assign instr = MemReadData;
+    assign a = {27'b0, instr[24:20]};
+    assign b = {27'b0, instr[19:15]};
     
     // ALU Decoder
     alu_decoder #(.N(BIT_WIDTH)) ALU_DECODER (
@@ -53,6 +63,21 @@ module philosophy_v_core(instr, a, b, c);
         .z(c)
     );
 
+    synth_dual_port_memory #(
+        .N(32),
+        .I_LENGTH(1024),
+        .D_LENGTH(0)) MEMORY(
+            
+            // Inputs
+            .clk(clk),
+            .rstb(rstb),
+//            .wr_ena0(),
+            .addr0(addr),
+//            .din0(),
+            
+            //Outputs
+            .dout0(MemReadData)
+    );
 
     initial begin
     end
