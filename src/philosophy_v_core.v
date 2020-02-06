@@ -19,44 +19,43 @@
 // 
 //////////////////////////////////////////////////////////////////////////////////
 
-`define INSTR_WIDTH 32
+`include "instr_defines.h"
 
 `include "alu_funct_defines.h"
 
-module philosophy_v_core(clk, rstb, c); //instr, a, b);
+module philosophy_v_core(clk, rstb, c, addr); //instr, a, b);
 
     // Parameter Definition
-    parameter BIT_WIDTH = 32;
+    parameter BUS_WIDTH = 32;
     
     // Inputs
     input wire clk, rstb;
-    //input wire [(BIT_WIDTH-1):0] a, b;
-    //input wire [(`INSTR_WIDTH-1):0] instr;
+    input wire [(BUS_WIDTH-1):0] addr;
     
     // Outputs
-    output wire [(BIT_WIDTH-1):0] c;
+    output wire [(BUS_WIDTH-1):0] c;
     
     // Internal Wires
     wire [(`ALU_FUNCT_WIDTH-1):0] alu_funct_w;
     
-    wire [(BIT_WIDTH-1):0] addr, MemReadData;
+    wire [(BUS_WIDTH-1):0] MemReadData;
     
     wire [(`INSTR_WIDTH-1):0] instr;
-    wire [(BIT_WIDTH-1):0] a, b;
+    wire [(BUS_WIDTH-1):0] a, b;
     
     assign instr = MemReadData;
     assign a = {27'b0, instr[24:20]};
     assign b = {27'b0, instr[19:15]};
     
     // ALU Decoder
-    alu_decoder #(.N(BIT_WIDTH)) ALU_DECODER (
+    alu_decoder #(.N(BUS_WIDTH)) ALU_DECODER (
         .funct3(instr[14:12]),
         .funct7(instr[31:25]),
         .alu_funct(alu_funct_w)
     );
     
     // ALU
-    alu #(.N(BIT_WIDTH)) ALU (
+    alu #(.N(BUS_WIDTH)) ALU (
         .funct(alu_funct_w),
         .x(a),
         .y(b),

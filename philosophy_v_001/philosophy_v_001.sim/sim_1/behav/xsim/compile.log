@@ -8,5 +8,3 @@ INFO: [VRFC 10-2263] Analyzing Verilog file "/home/anthony/Documents/PhilosophyV
 INFO: [VRFC 10-311] analyzing module synth_dual_port_memory
 INFO: [VRFC 10-2263] Analyzing Verilog file "/home/anthony/Documents/PhilosophyV/src/run_philosophy_v_core.v" into library xil_defaultlib
 INFO: [VRFC 10-311] analyzing module run_philosophy_v_core
-INFO: [VRFC 10-2458] undeclared symbol clk, assumed default net type wire [/home/anthony/Documents/PhilosophyV/src/run_philosophy_v_core.v:38]
-WARNING: [VRFC 10-2938] 'clk' is already implicitly declared on line 38 [/home/anthony/Documents/PhilosophyV/src/run_philosophy_v_core.v:47]
