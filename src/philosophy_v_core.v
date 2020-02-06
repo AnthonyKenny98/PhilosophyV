@@ -21,8 +21,6 @@
 
 `include "instr_defines.h"
 
-`include "alu_funct_defines.h"
-
 module philosophy_v_core(clk, rstb, c, addr); //instr, a, b);
 
     // Parameter Definition
