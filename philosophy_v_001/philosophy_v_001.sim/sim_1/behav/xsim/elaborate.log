@@ -4,7 +4,5 @@ Running: /tools/Xilinx/Vivado/2019.2/bin/unwrapped/lnx64.o/xelab -wto 886a700603
 Using 8 slave threads.
 Starting static elaboration
 Pass Through NonSizing Optimizer
-WARNING: [VRFC 10-2861] module 'alu_decoder' does not have a parameter named N [/home/anthony/Documents/PhilosophyV/src/modules/philv_core/philv_core.v:80]
-WARNING: [VRFC 10-2861] module 'registerFile' does not have a parameter named N [/home/anthony/Documents/PhilosophyV/src/modules/philv_core/philv_core.v:87]
-ERROR: [VRFC 10-2063] Module <doubleRegister> not found while processing module instance <REGISTER_FILE_OUTPUT> [/home/anthony/Documents/PhilosophyV/src/modules/philv_core/philv_core.v:103]
-ERROR: [XSIM 43-3322] Static elaboration of top level Verilog design unit(s) in library work failed.
+Completed static elaboration
+INFO: [XSIM 43-4323] No Change in HDL. Linking previously generated obj files to create kernel

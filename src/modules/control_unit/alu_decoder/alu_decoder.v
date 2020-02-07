@@ -24,8 +24,6 @@
 `include "funct_defines.h"
 
 module alu_decoder(funct3, funct7, alu_funct);
-
-    // Parameter Definitions
     
     // Inputs
     input wire [(`FUNCT3_WIDTH-1):0] funct3;

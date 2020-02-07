@@ -42,17 +42,12 @@ module registerFile(clk, rst, rdAddr0, rdAddr1, wrAddr, rdData0, rdData1, wrData
 
 	wire signed [REG_WIDTH-1:0] r00, r01, r02, r03, r04, r05, r06, r07, r08, r09, r10, r11, r12, r13, r14, r15, r16, r17, r18, r19, r20, r21, r22, r23, r24, r25, r26, r27, r28, r29, r30, r31;
 
-	assign r00 = 0; //RV32i has the first register as all zeros
+    // TODO: SET BACK TO 0
+	assign r00 = 1; //RV32i has the first register as all zeros
 	
     register #(.N(REG_WIDTH)) R01 (.clk(clk), .d(wrData), .q(r01), .rst(rst), .ena(reg_enas[01]));
-	
-	// Preliminary Testing
-	assign r02 = 2;
-	assign r03 = 3;
-	
-	// register #(.N(REG_WIDTH)) R02 (.clk(clk), .d(wrData), .q(r02), .rst(rst), .ena(reg_enas[02]));
-	//register #(.N(REG_WIDTH)) R03 (.clk(clk), .d(wrData), .q(r03), .rst(rst), .ena(reg_enas[03]));
-	
+	register #(.N(REG_WIDTH)) R02 (.clk(clk), .d(wrData), .q(r02), .rst(rst), .ena(reg_enas[02]));
+	register #(.N(REG_WIDTH)) R03 (.clk(clk), .d(wrData), .q(r03), .rst(rst), .ena(reg_enas[03]));
 	register #(.N(REG_WIDTH)) R04 (.clk(clk), .d(wrData), .q(r04), .rst(rst), .ena(reg_enas[04]));
 	register #(.N(REG_WIDTH)) R05 (.clk(clk), .d(wrData), .q(r05), .rst(rst), .ena(reg_enas[05]));
 	register #(.N(REG_WIDTH)) R06 (.clk(clk), .d(wrData), .q(r06), .rst(rst), .ena(reg_enas[06]));

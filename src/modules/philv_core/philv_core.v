@@ -42,7 +42,9 @@ module philosophy_v_core(clk, rstb, c, addr); //instr, a, b);
     
     wire [(`INSTR_WIDTH-1):0] _instr_;
     wire [(BUS_WIDTH-1):0] _reg_rd0_, _reg_rd1_;
-    wire [(BUS_WIDTH-1):0] _alu_src_a_, _alu_src_b_;
+    wire [(BUS_WIDTH-1):0] _alu_src_a_, _alu_src_b_, _alu_result_, _alu_out_;
+    
+    assign c = _alu_out_;
     
     // MEMORY
     synth_dual_port_memory #(
@@ -67,8 +69,8 @@ module philosophy_v_core(clk, rstb, c, addr); //instr, a, b);
         
         // Inputs
         .clk(clk),
-        .rst(0),
-        .ena(1),
+        .rst(1'b0),
+        .ena(1'b1),
         .d(_mem_read_data_),
         
         //Outputs
@@ -77,22 +79,22 @@ module philosophy_v_core(clk, rstb, c, addr); //instr, a, b);
 
     
     // ALU DECODER
-    alu_decoder #(.N(BUS_WIDTH)) ALU_DECODER (
+    alu_decoder ALU_DECODER (
         .funct3(_instr_[`INSTR_FUNCT3_RANGE]),
         .funct7(_instr_[`INSTR_FUNCT7_RANGE]),
         .alu_funct(_alu_funct_)
     );
     
     // REGISTER FILE
-	registerFile #(.N(BUS_WIDTH)) REGISTER_FILE (	
+	registerFile #(.REG_WIDTH(BUS_WIDTH)) REGISTER_FILE (	
 	    // Inputs 
 	    .clk(clk),
-	    .rst(0),
+	    .rst(1'b0),
 	    .rdAddr0(_instr_[`INSTR_RS1_RANGE]),
 	    .rdAddr1(_instr_[`INSTR_RS2_RANGE]),
-	    //.wrAddr (RegDstWire),
-	    //.wrData (RegFileWrite),
-	    //.wrEna(RegWrite),
+	    .wrAddr (_instr_[`INSTR_RD_RANGE]),
+	    .wrData (_alu_out_),
+	    .wrEna(1'b1), //TODO
 											
         // Outputs
         .rdData0(_reg_rd0_),
@@ -105,8 +107,8 @@ module philosophy_v_core(clk, rstb, c, addr); //instr, a, b);
     ) REGISTER_FILE_OUTPUT (
         // Inputs
         .clk(clk),
-        .rst(0),
-        .ena(1),
+        .rst(1'b0),
+        .ena(1'b1),
         .dA(_reg_rd0_),
         .dB(_reg_rd1_),
         
@@ -120,7 +122,20 @@ module philosophy_v_core(clk, rstb, c, addr); //instr, a, b);
         .funct(_alu_funct_),
         .x(_alu_src_a_),
         .y(_alu_src_b_),
-        .z(c)
+        .z(_alu_result_)
+    );
+    
+    // ALU_OUT_REG
+    register #(.N(BUS_WIDTH)) ALU_OUT_REG (
+        
+        // Inputs
+        .clk(clk),
+        .rst(1'b0),
+        .ena(1'b1),
+        .d(_alu_result_),
+        
+        //Outputs
+        .q(c)
     );
 
     initial begin
