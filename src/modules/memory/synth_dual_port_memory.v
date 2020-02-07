@@ -136,21 +136,22 @@ always @(*) begin
 end
 
 //`ifndef SYNTHESIS
-//reg [8*100:0] INIT_INST;
+reg [8*100:0] INIT_INST;
 //reg [8*100:0] INIT_DATA;
-//initial begin
-//	if(!$value$plusargs("INIT_INST=%s", INIT_INST)) begin
-//		INIT_INST="current_test.mem";
-//	end
+initial begin
+	if(!$value$plusargs("INIT_INST=%s", INIT_INST)) begin
+		INIT_INST="current_test.tv";
+	end
 	//if(!$value$plusargs("INIT_DATA=%s", INIT_DATA)) begin
 	//	$display("no data file was supplied, using tests/zero.memh");
 	//	INIT_DATA = "tests/zero.memb";
 	//end
-//	$display("initializing %m's instruction memory from '%s' and data memory from '%s'", INIT_INST, INIT_DATA);
+	//$display("initializing %m's instruction memory from '%s' and data memory from '%s'", INIT_INST, INIT_DATA);
+	$display("initializing %m's instruction memory from '%s'", INIT_INST);
 	
-//	$readmemb(INIT_INST, IMEM, 0, I_LENGTH-1);
+	$readmemb(INIT_INST, IMEM, 0, I_LENGTH-1);
 //	$readmemb(INIT_DATA, DMEM, 0, D_LENGTH-1);
-//end
+end
 //`else
 //initial begin
 //	$readmemh("tests/i_synth.memh", IMEM, 0, I_LENGTH-1);

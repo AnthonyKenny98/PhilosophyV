@@ -1,19 +1,22 @@
 Vivado Simulator 2019.2
 Copyright 1986-1999, 2001-2019 Xilinx, Inc. All Rights Reserved.
-Running: /tools/Xilinx/Vivado/2019.2/bin/unwrapped/lnx64.o/xelab -wto 886a700603d0403c9fc0c2f185282a13 --incr --debug typical --relax --mt 8 -L xil_defaultlib -L unisims_ver -L unimacro_ver -L secureip --snapshot run_philosophy_v_core_behav xil_defaultlib.run_philosophy_v_core xil_defaultlib.glbl -log elaborate.log 
+Running: /tools/Xilinx/Vivado/2019.2/bin/unwrapped/lnx64.o/xelab -wto 886a700603d0403c9fc0c2f185282a13 --incr --debug typical --relax --mt 8 -L xil_defaultlib -L unisims_ver -L unimacro_ver -L secureip --snapshot run_philv_core_behav xil_defaultlib.run_philv_core xil_defaultlib.glbl -log elaborate.log 
 Using 8 slave threads.
 Starting static elaboration
 Pass Through NonSizing Optimizer
-WARNING: [VRFC 10-2861] module 'alu_decoder' does not have a parameter named N [/home/anthony/Documents/PhilosophyV/src/philosophy_v_core.v:49]
-WARNING: [VRFC 10-5021] port 'rstb' is not connected on this instance [/home/anthony/Documents/PhilosophyV/src/run_philosophy_v_core.v:38]
+WARNING: [VRFC 10-2861] module 'alu_decoder' does not have a parameter named N [/home/anthony/Documents/PhilosophyV/src/modules/philv_core/philv_core.v:81]
+WARNING: [VRFC 10-3091] actual bit length 32 differs from formal bit length 1 for port 'rst' [/home/anthony/Documents/PhilosophyV/src/modules/philv_core/philv_core.v:72]
+WARNING: [VRFC 10-3091] actual bit length 32 differs from formal bit length 1 for port 'ena' [/home/anthony/Documents/PhilosophyV/src/modules/philv_core/philv_core.v:73]
+WARNING: [VRFC 10-5021] port 'rstb' is not connected on this instance [/home/anthony/Documents/PhilosophyV/src/modules_tb/philv_core/run_phil_v_core.v:38]
 Completed static elaboration
 Starting simulation data flow analysis
 Completed simulation data flow analysis
 Time Resolution for simulation is 1ps
+Compiling module xil_defaultlib.synth_dual_port_memory(D_LENGTH=...
+Compiling module xil_defaultlib.register
 Compiling module xil_defaultlib.alu_decoder
 Compiling module xil_defaultlib.alu
-Compiling module xil_defaultlib.synth_dual_port_memory(I_LENGTH=...
 Compiling module xil_defaultlib.philosophy_v_core
-Compiling module xil_defaultlib.run_philosophy_v_core
+Compiling module xil_defaultlib.run_philv_core
 Compiling module xil_defaultlib.glbl
-Built simulation snapshot run_philosophy_v_core_behav
+Built simulation snapshot run_philv_core_behav
