@@ -4,24 +4,7 @@ Running: /tools/Xilinx/Vivado/2019.2/bin/unwrapped/lnx64.o/xelab -wto 886a700603
 Using 8 slave threads.
 Starting static elaboration
 Pass Through NonSizing Optimizer
-WARNING: [VRFC 10-2861] module 'alu_decoder' does not have a parameter named N [/home/anthony/Documents/PhilosophyV/src/modules/philv_core/philv_core.v:79]
-WARNING: [VRFC 10-2861] module 'registerFile' does not have a parameter named N [/home/anthony/Documents/PhilosophyV/src/modules/philv_core/philv_core.v:86]
-WARNING: [VRFC 10-3091] actual bit length 32 differs from formal bit length 1 for port 'rst' [/home/anthony/Documents/PhilosophyV/src/modules/philv_core/philv_core.v:69]
-WARNING: [VRFC 10-3091] actual bit length 32 differs from formal bit length 1 for port 'ena' [/home/anthony/Documents/PhilosophyV/src/modules/philv_core/philv_core.v:70]
-WARNING: [VRFC 10-3091] actual bit length 32 differs from formal bit length 1 for port 'rst' [/home/anthony/Documents/PhilosophyV/src/modules/philv_core/philv_core.v:89]
-WARNING: [VRFC 10-5021] port 'rstb' is not connected on this instance [/home/anthony/Documents/PhilosophyV/src/modules_tb/philv_core/run_phil_v_core.v:38]
-WARNING: [VRFC 10-5021] port 'wrAddr' is not connected on this instance [/home/anthony/Documents/PhilosophyV/src/modules/philv_core/philv_core.v:86]
-Completed static elaboration
-Starting simulation data flow analysis
-Completed simulation data flow analysis
-Time Resolution for simulation is 1ps
-Compiling module xil_defaultlib.synth_dual_port_memory(D_LENGTH=...
-Compiling module xil_defaultlib.register
-Compiling module xil_defaultlib.alu_decoder
-Compiling module xil_defaultlib.decoder(N=5)
-Compiling module xil_defaultlib.registerFile
-Compiling module xil_defaultlib.alu
-Compiling module xil_defaultlib.philosophy_v_core
-Compiling module xil_defaultlib.run_philv_core
-Compiling module xil_defaultlib.glbl
-Built simulation snapshot run_philv_core_behav
+WARNING: [VRFC 10-2861] module 'alu_decoder' does not have a parameter named N [/home/anthony/Documents/PhilosophyV/src/modules/philv_core/philv_core.v:80]
+WARNING: [VRFC 10-2861] module 'registerFile' does not have a parameter named N [/home/anthony/Documents/PhilosophyV/src/modules/philv_core/philv_core.v:87]
+ERROR: [VRFC 10-2063] Module <doubleRegister> not found while processing module instance <REGISTER_FILE_OUTPUT> [/home/anthony/Documents/PhilosophyV/src/modules/philv_core/philv_core.v:103]
+ERROR: [XSIM 43-3322] Static elaboration of top level Verilog design unit(s) in library work failed.

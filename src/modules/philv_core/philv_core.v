@@ -41,7 +41,8 @@ module philosophy_v_core(clk, rstb, c, addr); //instr, a, b);
     wire [(BUS_WIDTH-1):0] _mem_read_data_;
     
     wire [(`INSTR_WIDTH-1):0] _instr_;
-    wire [(BUS_WIDTH-1):0] _a_, _b_;
+    wire [(BUS_WIDTH-1):0] _reg_rd0_, _reg_rd1_;
+    wire [(BUS_WIDTH-1):0] _alu_src_a_, _alu_src_b_;
     
     // MEMORY
     synth_dual_port_memory #(
@@ -75,14 +76,14 @@ module philosophy_v_core(clk, rstb, c, addr); //instr, a, b);
     );
 
     
-    // ALU Decoder
+    // ALU DECODER
     alu_decoder #(.N(BUS_WIDTH)) ALU_DECODER (
         .funct3(_instr_[`INSTR_FUNCT3_RANGE]),
         .funct7(_instr_[`INSTR_FUNCT7_RANGE]),
         .alu_funct(_alu_funct_)
     );
     
-    // Register File
+    // REGISTER FILE
 	registerFile #(.N(BUS_WIDTH)) REGISTER_FILE (	
 	    // Inputs 
 	    .clk(clk),
@@ -94,15 +95,31 @@ module philosophy_v_core(clk, rstb, c, addr); //instr, a, b);
 	    //.wrEna(RegWrite),
 											
         // Outputs
-        .rdData0(_a_),
-        .rdData1(_b_)
+        .rdData0(_reg_rd0_),
+        .rdData1(_reg_rd1_)
     );
+    
+    // REGISTER_FILE_OUTPUT
+    doubleRegister #(
+        .BUS_WIDTH(BUS_WIDTH)
+    ) REGISTER_FILE_OUTPUT (
+        // Inputs
+        .clk(clk),
+        .rst(0),
+        .ena(1),
+        .dA(_reg_rd0_),
+        .dB(_reg_rd1_),
+        
+        // Outputs
+        .qA(_alu_src_a_),
+        .qB(_alu_src_b_)
+    ); 
     
     // ALU
     alu #(.N(BUS_WIDTH)) ALU (
         .funct(_alu_funct_),
-        .x(_a_),
-        .y(_b_),
+        .x(_alu_src_a_),
+        .y(_alu_src_b_),
         .z(c)
     );
 
