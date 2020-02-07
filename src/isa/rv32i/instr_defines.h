@@ -3,4 +3,10 @@
 
 `define INSTR_WIDTH 32
 
+// Define Ranges
+`define INSTR_FUNCT7_RANGE 31:25
+`define INSTR_FUNCT3_RANGE 14:12
+`define INSTR_RS2_RANGE 24:20
+`define INSTR_RS1_RANGE 19:15 
+
 `endif

@@ -43,10 +43,6 @@ module philosophy_v_core(clk, rstb, c, addr); //instr, a, b);
     wire [(`INSTR_WIDTH-1):0] _instr_;
     wire [(BUS_WIDTH-1):0] _a_, _b_;
     
-    assign _instr_ = _mem_read_data_;
-    assign _a_ = {27'b0, _instr_[24:20]};
-    assign _b_ = {27'b0, _instr_[19:15]};
-    
     // MEMORY
     synth_dual_port_memory #(
         .N(BUS_WIDTH),
@@ -67,11 +63,13 @@ module philosophy_v_core(clk, rstb, c, addr); //instr, a, b);
     
     // INSTRUCTION REGISTER
     register #(.N(BUS_WIDTH)) INSTR_REGISTER (
+        
         // Inputs
         .clk(clk),
         .rst(0),
         .ena(1),
         .d(_mem_read_data_),
+        
         //Outputs
         .q(_instr_)
     );
@@ -79,9 +77,25 @@ module philosophy_v_core(clk, rstb, c, addr); //instr, a, b);
     
     // ALU Decoder
     alu_decoder #(.N(BUS_WIDTH)) ALU_DECODER (
-        .funct3(_instr_[14:12]),
-        .funct7(_instr_[31:25]),
+        .funct3(_instr_[`INSTR_FUNCT3_RANGE]),
+        .funct7(_instr_[`INSTR_FUNCT7_RANGE]),
         .alu_funct(_alu_funct_)
+    );
+    
+    // Register File
+	registerFile #(.N(BUS_WIDTH)) REGISTER_FILE (	
+	    // Inputs 
+	    .clk(clk),
+	    .rst(0),
+	    .rdAddr0(_instr_[`INSTR_RS1_RANGE]),
+	    .rdAddr1(_instr_[`INSTR_RS2_RANGE]),
+	    //.wrAddr (RegDstWire),
+	    //.wrData (RegFileWrite),
+	    //.wrEna(RegWrite),
+											
+        // Outputs
+        .rdData0(_a_),
+        .rdData1(_b_)
     );
     
     // ALU
