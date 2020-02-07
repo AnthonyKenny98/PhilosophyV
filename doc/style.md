@@ -17,11 +17,11 @@ exampleModuleA
 
 ### <a name=#instances></a> Instances
 
-EXAMPLE_MODULE_A
+EXAMPLE\_MODULE\_A
 
 ### <a name=#wires></a> Wires
 
-_wire_in_example_module_
+\_wire\_in\_module\_
 
 ### <a name=#ports></a> Ports
 
