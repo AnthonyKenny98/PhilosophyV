@@ -135,7 +135,7 @@ module philosophy_v_core(clk, rstb, c, addr); //instr, a, b);
         .d(_alu_result_),
         
         //Outputs
-        .q(c)
+        .q(_alu_out_)
     );
 
     initial begin
