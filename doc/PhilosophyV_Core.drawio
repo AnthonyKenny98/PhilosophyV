@@ -1,4 +1,4 @@
-<mxfile host="www.draw.io" modified="2020-02-10T18:55:01.062Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.130 Safari/537.36" etag="dR1FrXg9Zz5EXvvUzZ3e" version="12.6.5" type="github">
+<mxfile host="www.draw.io" modified="2020-02-10T19:00:40.602Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.130 Safari/537.36" etag="ON2EUONK-rYKi4Vu3v-q" version="12.6.5" type="github">
   <diagram id="l-QONBMP0DDUvviEroiV" name="Core">
     <mxGraphModel dx="3114" dy="1949" grid="1" gridSize="10" guides="0" tooltips="1" connect="1" arrows="0" fold="0" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -432,7 +432,7 @@
         <mxCell id="JDJYhe-PeFsWq8iMDvUq-164" value="" style="group" vertex="1" connectable="0" parent="1">
           <mxGeometry x="660" y="-80" width="160" height="200" as="geometry"/>
         </mxCell>
-        <mxCell id="JDJYhe-PeFsWq8iMDvUq-133" value="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;Main&lt;br&gt;Control&lt;br&gt;Unit&lt;br&gt;&lt;/b&gt;&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;shadow=0;glass=0;comic=0;fillColor=#dae8fc;fontSize=10;align=center;strokeColor=#6c8ebf;" vertex="1" parent="JDJYhe-PeFsWq8iMDvUq-164">
+        <mxCell id="JDJYhe-PeFsWq8iMDvUq-133" value="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;Main&lt;br&gt;Controller&lt;br&gt;&lt;/b&gt;&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;shadow=0;glass=0;comic=0;fillColor=#dae8fc;fontSize=10;align=center;strokeColor=#6c8ebf;" vertex="1" parent="JDJYhe-PeFsWq8iMDvUq-164">
           <mxGeometry width="160" height="200" as="geometry"/>
         </mxCell>
         <mxCell id="JDJYhe-PeFsWq8iMDvUq-134" value="pcWrite" style="text;html=1;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;shadow=0;glass=0;comic=0;fontSize=10;fontColor=#000000;" vertex="1" parent="JDJYhe-PeFsWq8iMDvUq-164">
