@@ -1,6 +1,6 @@
-<mxfile host="www.draw.io" modified="2020-02-10T16:26:57.119Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.130 Safari/537.36" etag="J_YdWf1XlXShR870Rk7R" version="12.6.5" type="github">
+<mxfile host="www.draw.io" modified="2020-02-10T16:27:09.643Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.130 Safari/537.36" etag="4m84KO77r6ipQapbhkdk" version="12.6.5" type="github">
   <diagram id="l-QONBMP0DDUvviEroiV" name="Core">
-    <mxGraphModel dx="1771" dy="1236" grid="1" gridSize="10" guides="0" tooltips="1" connect="1" arrows="0" fold="0" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="2150" dy="1455" grid="1" gridSize="10" guides="0" tooltips="1" connect="1" arrows="0" fold="0" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0"/>
         <mxCell id="1" parent="0"/>
@@ -482,7 +482,7 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="JDJYhe-PeFsWq8iMDvUq-169" value="alu_src_b" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;shadow=0;glass=0;comic=0;fontSize=10;fontColor=#6C8EBF;" vertex="1" parent="1">
+        <mxCell id="JDJYhe-PeFsWq8iMDvUq-169" value="alu_src_b[1:0]" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;shadow=0;glass=0;comic=0;fontSize=10;fontColor=#6C8EBF;" vertex="1" parent="1">
           <mxGeometry x="820" width="70" height="20" as="geometry"/>
         </mxCell>
       </root>
