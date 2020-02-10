@@ -1,9 +1,12 @@
 `ifndef INSTR_DEFINES
 `define INSTR_DEFINES
 
+// Define Widths
 `define INSTR_WIDTH 32
+`define INSTR_OPCODE_WIDTH 7
 
 // Define Ranges
+`define INSTR_OPCODE_RANGE 6:0
 `define INSTR_FUNCT7_RANGE 31:25
 `define INSTR_FUNCT3_RANGE 14:12
 `define INSTR_RS2_RANGE 24:20
