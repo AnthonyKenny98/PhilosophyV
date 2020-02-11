@@ -1,4 +1,4 @@
-<mxfile host="www.draw.io" modified="2020-02-11T00:27:18.907Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.130 Safari/537.36" etag="lVJ8UQkfJTaTLBnbXw0e" version="12.6.5" type="github" pages="2">
+<mxfile host="www.draw.io" modified="2020-02-11T00:29:30.238Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.130 Safari/537.36" etag="Gr_uPiEfkDaFPPndC-12" version="12.6.5" type="github" pages="2">
   <diagram id="l-QONBMP0DDUvviEroiV" name="Core">
     <mxGraphModel dx="3114" dy="1949" grid="1" gridSize="10" guides="0" tooltips="1" connect="1" arrows="0" fold="0" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -508,6 +508,9 @@
       <root>
         <mxCell id="hZtiJtiiv7U99mvsQCZV-0"/>
         <mxCell id="hZtiJtiiv7U99mvsQCZV-1" parent="hZtiJtiiv7U99mvsQCZV-0"/>
+        <mxCell id="hZtiJtiiv7U99mvsQCZV-2" value="&lt;font size=&quot;1&quot;&gt;&lt;span style=&quot;font-size: 12px&quot;&gt;&lt;u style=&quot;font-weight: bold&quot;&gt;FETCH&lt;/u&gt;&lt;br&gt;regFileWrite = 1;&lt;br&gt;ALUSrcB = REGOUT;&lt;br&gt;&lt;/span&gt;&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;rounded=0;shadow=0;glass=0;comic=0;fillColor=#dae8fc;fontSize=7;align=center;strokeColor=#6c8ebf;" vertex="1" parent="hZtiJtiiv7U99mvsQCZV-1">
+          <mxGeometry x="40" y="40" width="230" height="230" as="geometry"/>
+        </mxCell>
       </root>
     </mxGraphModel>
   </diagram>
