@@ -32,14 +32,12 @@ module run_philv_core;
     // Outputs
     wire [(N-1):0] c;
     reg clk;
-    reg [(`INSTR_WIDTH-1):0] addr = 32'h00400000;
     
     // Init Unit Under Test
     philosophy_v_core uut (
         .clk(clk),
         .rstb(1'b0),
-        .c(c),
-        .addr(addr)
+        .c(c)
     );
     
     ///////////////////////////////////////////////////////////////////////////
@@ -48,7 +46,6 @@ module run_philv_core;
     
     // Generate clk for testing
     integer i;
-    reg [8*100:0] INIT_INST;
     initial begin
     
         clk = 0;
@@ -61,7 +58,7 @@ module run_philv_core;
     
     // Print z on falling edge
     always @(negedge clk) begin
-        $display("PC.q = %h, MemReadData = %b, Instr = %b, R1 = %h, R2 = %h, ALU_SRC_A = %d, ALU_SRC_B = %d, ALU_RESULT = %d, ALU_OUT = %d, r03 = %d", addr, uut._mem_read_data_, uut._instr_, uut._reg_rd0_, uut._reg_rd1_, uut._alu_src_a_, uut._alu_src_b_, uut._alu_result_, uut.c, uut.REGISTER_FILE.r03);
+        $display("PC.q = %h, MemReadData = %b, Instr = %b, R1 = %h, R2 = %h, ALU_SRC_A = %d, ALU_SRC_B = %d, ALU_RESULT = %d, ALU_OUT = %d, r03 = %d", uut.PROGRAM_COUNTER.q, uut._mem_read_data_, uut._instr_, uut._reg_rd0_, uut._reg_rd1_, uut._alu_src_a_, uut._alu_src_b_, uut._alu_result_, uut.c, uut.REGISTER_FILE.r03);
     end
 
 

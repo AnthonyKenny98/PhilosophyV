@@ -22,15 +22,15 @@
 `include "philv_core.h"
 `include "instr_defines.h"
 `include "alu_funct_defines.h"
+`include "program_count_defines.h"
 
-module philosophy_v_core(clk, rstb, c, addr); //instr, a, b);
+module philosophy_v_core(clk, rstb, c);
 
     // Data Bus Width
     parameter BUS_WIDTH = 32;
     
     // Inputs
     input wire clk, rstb;
-    input wire [(BUS_WIDTH-1):0] addr;
     
     // Outputs
     output wire [(BUS_WIDTH-1):0] c;
@@ -38,10 +38,11 @@ module philosophy_v_core(clk, rstb, c, addr); //instr, a, b);
     // Control Signals
     wire [(`ALU_FUNCT_WIDTH-1):0] _alu_funct_;
     wire [(`ALU_SRC_B_WIDTH-1):0] _alu_src_b_select_;
-    wire _reg_wr_ena_;
+    wire _reg_wr_ena_, _pc_ena_;
 
     // Data Bus Wires
     wire [(`INSTR_WIDTH-1):0] _instr_;
+    wire [(BUS_WIDTH-1):0] _program_count_;
     wire [(BUS_WIDTH-1):0] _mem_read_data_;
     wire [(BUS_WIDTH-1):0] _reg_rd0_, _reg_rd1_;
     wire [(BUS_WIDTH-1):0] _reg_out_1_;
@@ -61,6 +62,7 @@ module philosophy_v_core(clk, rstb, c, addr); //instr, a, b);
         // Inputs
         .opCode(_instr_[`INSTR_OPCODE_RANGE]),
         // Outputs
+        .PCEna(_pc_ena_),
         .ALUSrcB(_alu_src_b_select_),
         .regFileWrite(_reg_wr_ena_)
     );
@@ -77,6 +79,17 @@ module philosophy_v_core(clk, rstb, c, addr); //instr, a, b);
     ///////////////////////////////////////////////////////////////////////////
 
 
+    // Program Counter Register
+    register #(.N(`INSTR_WIDTH)) PROGRAM_COUNTER (
+        // Inputs
+        .clk(clk),
+        .rst(1'b0),
+        .ena(_pc_ena_),
+        .d(_alu_result_),
+        // Outputs
+        .q(_program_count_)
+    );
+
     // MEMORY
     synth_dual_port_memory #(
         .N(BUS_WIDTH),
@@ -88,7 +101,7 @@ module philosophy_v_core(clk, rstb, c, addr); //instr, a, b);
             .clk(clk),
             .rstb(rstb),
 //            .wr_ena0(),
-            .addr0(addr),
+            .addr0(_program_count_),
 //            .din0(),
             
             //Outputs
@@ -178,5 +191,6 @@ module philosophy_v_core(clk, rstb, c, addr); //instr, a, b);
     );
 
     initial begin
+        PROGRAM_COUNTER.q = `PC_START_ADDRESS;
     end
 endmodule
