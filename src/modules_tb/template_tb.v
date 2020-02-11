@@ -4,16 +4,16 @@
 
 
 // Include Any Files Here
-`include "template_defines.h"
+`include "template_defines.h"                                           // TODO
 
 // Define any module specific constants here
-`define N 32
+`define N 32                                                            // TODO
 
 // Define Number of Test Vectors here
-`define TV_LEN 100
+`define TV_LEN 100                                                      // TODO
 
 // Define Test Vector File here. Should be [template].tv
-`define TV_FILE "template.tv"
+`define TV_FILE "template.tv"                                           // TODO
 
 // Define Test Module for unit named template
 module template_test;
@@ -22,19 +22,19 @@ module template_test;
     // vector, and should be the sum of all inputs and outputs you need to test.
     // This should be the only parameter, and is only such and defined within
     // the test module for the ability to make it dynamic (e.g. = 3*N not 96).
-    parameter TV_WIDTH = 3*N;
+    parameter TV_WIDTH = 3*N;                                           // TODO
     
     // Inputs (reg)
-    reg [`N-1:0] inputA, inputB;
+    reg [`N-1:0] inputA, inputB;                                        // TODO
     
     // Real Outputs (wire)
-    wire [`N-1:0] outputC;
+    wire [`N-1:0] outputC;                                              // TODO
 
     // Expected Outputs (reg). Should have same name with suffix "_x"
-    reg [`N-1:0] outputC_x;
+    reg [`N-1:0] outputC_x;                                             // TODO
     
     // Init Unit Under Test
-    template uut (
+    template uut (                                                      // TODO
         .inputX(inputA),
         .inputY(inputB),
         .outputZ(inputC)
@@ -58,7 +58,7 @@ module template_test;
         
     // Apply test vectors on rising clk edge
     always @(posedge clk) begin
-        #2; {inputA, inputB, outputC_x} = test_vectors[vectornum];
+        #2; {inputA, inputB, outputC_x} = test_vectors[vectornum];      // TODO
     end
     
     // Check results on falling clk edge
@@ -66,7 +66,7 @@ module template_test;
         // Check for error in test vector
         if (outputC !== outputC_x) begin
             $display("ERROR - TV #%d\n===============",vectornum);
-            $display("custom error message here");
+            $display("custom error message here");                     // TODO
             errors = errors + 1;
         end
         vectornum = vectornum + 1;
