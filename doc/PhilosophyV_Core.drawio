@@ -1,4 +1,4 @@
-<mxfile host="www.draw.io" modified="2020-02-11T00:29:30.238Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.130 Safari/537.36" etag="Gr_uPiEfkDaFPPndC-12" version="12.6.5" type="github" pages="2">
+<mxfile host="www.draw.io" modified="2020-02-11T02:16:02.708Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.130 Safari/537.36" etag="kvuKHTG0BmyimCapt0BX" version="12.6.5" type="github" pages="2">
   <diagram id="l-QONBMP0DDUvviEroiV" name="Core">
     <mxGraphModel dx="3114" dy="1949" grid="1" gridSize="10" guides="0" tooltips="1" connect="1" arrows="0" fold="0" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -435,7 +435,7 @@
         <mxCell id="JDJYhe-PeFsWq8iMDvUq-133" value="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;Main&lt;br&gt;Controller&lt;br&gt;&lt;/b&gt;&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;shadow=0;glass=0;comic=0;fillColor=#dae8fc;fontSize=10;align=center;strokeColor=#6c8ebf;" vertex="1" parent="JDJYhe-PeFsWq8iMDvUq-164">
           <mxGeometry width="160" height="200" as="geometry"/>
         </mxCell>
-        <mxCell id="JDJYhe-PeFsWq8iMDvUq-134" value="pcWrite" style="text;html=1;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;shadow=0;glass=0;comic=0;fontSize=10;fontColor=#000000;" vertex="1" parent="JDJYhe-PeFsWq8iMDvUq-164">
+        <mxCell id="JDJYhe-PeFsWq8iMDvUq-134" value="PCEna" style="text;html=1;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;shadow=0;glass=0;comic=0;fontSize=10;fontColor=#000000;" vertex="1" parent="JDJYhe-PeFsWq8iMDvUq-164">
           <mxGeometry x="93.33333333333333" y="30" width="66.66666666666667" height="20" as="geometry"/>
         </mxCell>
         <mxCell id="JDJYhe-PeFsWq8iMDvUq-144" value="opCode" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;shadow=0;glass=0;comic=0;fontSize=10;fontColor=#000000;" vertex="1" parent="JDJYhe-PeFsWq8iMDvUq-164">
