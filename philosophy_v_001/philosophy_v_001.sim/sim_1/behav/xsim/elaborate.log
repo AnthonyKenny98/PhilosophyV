@@ -11,11 +11,11 @@ Completed simulation data flow analysis
 Time Resolution for simulation is 1ps
 Compiling module xil_defaultlib.main_controller
 Compiling module xil_defaultlib.alu_decoder
-Compiling module xil_defaultlib.register
+Compiling module xil_defaultlib.register_default
 Compiling module xil_defaultlib.synth_dual_port_memory(D_LENGTH=...
 Compiling module xil_defaultlib.decoder(N=5)
 Compiling module xil_defaultlib.registerFile
-Compiling module xil_defaultlib.doubleRegister
+Compiling module xil_defaultlib.register(NUM_VAL=2)
 Compiling module xil_defaultlib.mux2
 Compiling module xil_defaultlib.mux4
 Compiling module xil_defaultlib.alu

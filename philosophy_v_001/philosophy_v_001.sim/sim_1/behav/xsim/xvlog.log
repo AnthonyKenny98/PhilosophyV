@@ -4,8 +4,6 @@ INFO: [VRFC 10-2263] Analyzing Verilog file "/home/anthony/Documents/PhilosophyV
 INFO: [VRFC 10-311] analyzing module alu_decoder
 INFO: [VRFC 10-2263] Analyzing Verilog file "/home/anthony/Documents/PhilosophyV/src/modules/combinatorial/decoder.v" into library xil_defaultlib
 INFO: [VRFC 10-311] analyzing module decoder
-INFO: [VRFC 10-2263] Analyzing Verilog file "/home/anthony/Documents/PhilosophyV/src/modules/registers/doubleRegister.v" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module doubleRegister
 INFO: [VRFC 10-2263] Analyzing Verilog file "/home/anthony/Documents/PhilosophyV/src/modules/control/main_controller/main_controller.v" into library xil_defaultlib
 INFO: [VRFC 10-311] analyzing module main_controller
 INFO: [VRFC 10-2263] Analyzing Verilog file "/home/anthony/Documents/PhilosophyV/src/modules/combinatorial/mux/mux2.v" into library xil_defaultlib

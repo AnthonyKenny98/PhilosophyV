@@ -22,21 +22,37 @@
 
 module register(clk, rst, d, q, ena);
 
+	// Size of Data Bus. Must be uniform between different register lanes
 	parameter N = 32;
-	input wire clk, rst, ena;
-	input wire [N-1:0] d;
-	output reg [N-1:0] q;
+	// Number of values in register
+	parameter NUM_VAL = 1;
 
-	always @(posedge clk) begin
-		if(rst) begin
-			q <= 0;
+	// Control Inputs
+	input wire clk, rst, ena;
+
+	// D inputs
+	input wire [NUM_VAL*N-1:0] d;
+	
+	// Q Outputs
+	output reg [NUM_VAL*N-1:0] q;
+
+	// Generate Logic for each register val
+	genvar r;
+	generate 
+		for (r = 1; r<=NUM_VAL; r=r+1) begin : REGISTERS
+
+			always @(posedge clk) begin
+				if(rst) begin
+					q[r*N-1:(r-1)*N] <= 0;
+				end
+				else if (ena) begin
+					q[r*N-1:(r-1)*N] <= d[r*N-1:(r-1)*N];
+				end
+				else begin
+					q[r*N-1:(r-1)*N] <= q[r*N-1:(r-1)*N];
+				end
+			end
 		end
-		else if (ena) begin
-			q <= d;
-		end
-		else begin
-			q <= q;
-		end
-	end
+	endgenerate
 	
 endmodule

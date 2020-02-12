@@ -3,7 +3,6 @@ verilog xil_defaultlib  --include "../../../../../src/modules/control/control_si
 "../../../../../src/modules/alu/alu.v" \
 "../../../../../src/modules/control/alu_decoder/alu_decoder.v" \
 "../../../../../src/modules/combinatorial/decoder.v" \
-"../../../../../src/modules/registers/doubleRegister.v" \
 "../../../../../src/modules/control/main_controller/main_controller.v" \
 "../../../../../src/modules/combinatorial/mux/mux2.v" \
 "../../../../../src/modules/combinatorial/mux/mux4.v" \

@@ -62,7 +62,7 @@ module philosophy_v_core(clk, rstb, c);
         // Inputs
         .opCode(_instr_[`INSTR_OPCODE_RANGE]),
         // Outputs
-        .PCEna(_pc_ena_),
+        .PCWrite(_pc_ena_),
         .ALUSrcB(_alu_src_b_select_),
         .regFileWrite(_reg_wr_ena_)
     );
@@ -141,19 +141,23 @@ module philosophy_v_core(clk, rstb, c);
 
 
     // REGISTER_FILE_OUTPUT REGISTER
-    doubleRegister #(
-        .BUS_WIDTH(BUS_WIDTH)
-    ) REGISTER_FILE_OUTPUT (
+    register #(
+        .N(BUS_WIDTH),
+        .NUM_VAL(2)
+    )   REGISTER_FILE_OUTPUT (
+        
         // Inputs
         .clk(clk),
         .rst(1'b0),
         .ena(1'b1),
-        .dA(_reg_rd0_),
-        .dB(_reg_rd1_),
-        
-        // Outputs
-        .qA(_alu_src_a_),
-        .qB(_reg_out_1_)
+        .d({
+            _reg_rd0_,
+            _reg_rd1_
+        }),
+        .q({
+            _alu_src_a_,
+            _reg_out_1_
+        })
     ); 
 
 
