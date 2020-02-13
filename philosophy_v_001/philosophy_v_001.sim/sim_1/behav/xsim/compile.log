@@ -5,6 +5,7 @@ INFO: [VRFC 10-311] analyzing module alu_decoder
 INFO: [VRFC 10-2263] Analyzing Verilog file "/home/anthony/Documents/PhilosophyV/src/modules/combinatorial/decoder.v" into library xil_defaultlib
 INFO: [VRFC 10-311] analyzing module decoder
 INFO: [VRFC 10-2263] Analyzing Verilog file "/home/anthony/Documents/PhilosophyV/src/modules/control/main_controller/main_controller.v" into library xil_defaultlib
+WARNING: [VRFC 10-3507] macro 'ALU_SRC_B_REGOUT' redefined [../../../../../src/modules/control/control_signals/alu_src_defines.h:10]
 INFO: [VRFC 10-311] analyzing module main_controller
 INFO: [VRFC 10-2263] Analyzing Verilog file "/home/anthony/Documents/PhilosophyV/src/modules/memory/memory.v" into library xil_defaultlib
 INFO: [VRFC 10-311] analyzing module memory

@@ -37,10 +37,11 @@ module philosophy_v_core(clk, rstb);
     ///////////////////////////////////////////////////////////////////////////
 
     // Control Enable Signals
-    wire _reg_wr_ena_, _pc_ena_;
+    wire _reg_wr_ena_, _pc_ena_, _ir_ena_;
 
     // Control Select Signals
     wire [(`ALU_FUNCT_WIDTH-1):0] _alu_funct_;
+    wire _alu_src_a_select_;
     wire [(`ALU_SRC_B_WIDTH-1):0] _alu_src_b_select_;
 
 
@@ -51,6 +52,7 @@ module philosophy_v_core(clk, rstb);
         .opCode(_instr_[`INSTR_OPCODE_RANGE]),
         // Outputs
         .PCWrite(_pc_ena_),
+        .IRWrite(_ir_ena_),
         .ALUSrcB(_alu_src_b_select_),
         .regFileWrite(_reg_wr_ena_)
     );
@@ -107,8 +109,8 @@ module philosophy_v_core(clk, rstb);
         .clk(clk),
         .rst(1'b0),
 
-        // {}
-        .ena(2'b11),
+        // {PCWrite, IRWrite}
+        .ena({_pc_ena_, _ir_ena_}),
 
         // {Current Instr Addr, Read from Instr Mem} 
         .d({_instr_addr_, _instr_mem_read_data_}),
@@ -152,7 +154,15 @@ module philosophy_v_core(clk, rstb);
     // Busses for ALU inputs and outputs
     wire [(BUS_WIDTH-1):0] _alu_src_a_, _alu_src_b_, _alu_result_;
 
-    assign _alu_src_a_ = _reg_rd0_; 
+    // ALU_SRC_A MUX
+    mux2 #(
+        .BUS_WIDTH(BUS_WIDTH)
+    ) ALU_SRC_A (
+        .selector(_alu_src_a_select_),
+        .in0(_program_count_),
+        .in1(_reg_rd0_),
+        .out(_alu_src_a_)
+    );
 
     // ALU_SRC_B MUX
     mux4 #(

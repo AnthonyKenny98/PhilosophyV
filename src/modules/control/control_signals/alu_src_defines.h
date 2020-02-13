@@ -2,6 +2,8 @@
 `define ALU_SRC_DEFINES
 
 // ALU SRC A
+`define ALU_SRC_A_CONST4 1'b0
+`define ALU_SRC_B_REGOUT 1'b1
 
 // ALU SRC B
 `define ALU_SRC_B_WIDTH 2
