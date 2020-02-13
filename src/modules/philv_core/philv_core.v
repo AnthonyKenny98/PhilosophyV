@@ -24,42 +24,30 @@
 `include "alu_funct_defines.h"
 `include "program_count_defines.h"
 
-module philosophy_v_core(clk, rstb, c);
+module philosophy_v_core(clk, rstb);
 
     // Data Bus Width
     parameter BUS_WIDTH = 32;
     
     // Inputs
     input wire clk, rstb;
-    
-    // Outputs
-    output wire [(BUS_WIDTH-1):0] c;
-    
-    // Control Signals
-    wire [(`ALU_FUNCT_WIDTH-1):0] _alu_funct_;
-    wire [(`ALU_SRC_B_WIDTH-1):0] _alu_src_b_select_;
+
+    ///////////////////////////////////////////////////////////////////////////
+    // CONTROL
+    ///////////////////////////////////////////////////////////////////////////
+
+    // Control Enable Signals
     wire _reg_wr_ena_, _pc_ena_;
 
-    // Data Bus Wires
-    wire [(`INSTR_WIDTH-1):0] _instr_;
-    wire [(BUS_WIDTH-1):0] _program_count_;
-    wire [(BUS_WIDTH-1):0] _mem_read_data_;
-    wire [(BUS_WIDTH-1):0] _reg_rd0_, _reg_rd1_;
-    wire [(BUS_WIDTH-1):0] _reg_out_1_;
-    wire [(BUS_WIDTH-1):0] _alu_src_a_, _alu_src_b_;
-    wire [(BUS_WIDTH-1):0] _alu_result_, _alu_out_;
+    // Control Select Signals
+    wire [(`ALU_FUNCT_WIDTH-1):0] _alu_funct_;
+    wire [(`ALU_SRC_B_WIDTH-1):0] _alu_src_b_select_;
 
-
-    // TODO: Delete
-    assign c = _alu_out_;
-
-    ///////////////////////////////////////////////////////////////////////////
-    // CONTROL UNITS
-    ///////////////////////////////////////////////////////////////////////////
 
     // Main Controller
     main_controller MAIN_CONTROLLER (
         // Inputs
+        .clk(clk),
         .opCode(_instr_[`INSTR_OPCODE_RANGE]),
         // Outputs
         .PCWrite(_pc_ena_),
@@ -75,63 +63,81 @@ module philosophy_v_core(clk, rstb, c);
     );
 
     ///////////////////////////////////////////////////////////////////////////
-    // 
+    // INSTRUCTION FETCH STAGE
     ///////////////////////////////////////////////////////////////////////////
 
+    // Busses for Instruction Address
+    wire [(BUS_WIDTH-1):0] _instr_addr_, _program_count_;
+    
+    // Busses carrying the current Instruction
+    wire [(`INSTR_WIDTH-1):0] _instr_, _instr_mem_read_data_;
+    
 
-    // Program Counter Register
-    register #(.N(`INSTR_WIDTH)) PROGRAM_COUNTER (
-        // Inputs
-        .clk(clk),
-        .rst(1'b0),
-        .ena(_pc_ena_),
-        .d(_alu_result_),
-        // Outputs
-        .q(_program_count_)
+    // Program Counter
+    program_counter #(.N(BUS_WIDTH)) PC_LOGIC (
+        .lastCount(_program_count_),
+        .newCount(_instr_addr_)
     );
 
-    // MEMORY
-    synth_dual_port_memory #(
+
+    // INSTRUCTION MEMORY
+    memory #(
         .N(BUS_WIDTH),
-        .I_LENGTH(`I_MEM_LEN),
-        .D_LENGTH(`D_MEM_LEN)
-    ) MEMORY (
+        .LENGTH(`I_MEM_LEN),
+        .WIDTH(`I_MEM_WIDTH)
+    ) INSTR_MEMORY (
             
             // Inputs
             .clk(clk),
             .rstb(rstb),
-//            .wr_ena0(),
-            .addr0(_program_count_),
-//            .din0(),
+            .wrEna(1'b0),
+            .addr(_instr_addr_),
+            .din(), // TODO
             
             //Outputs
-            .dout0(_mem_read_data_)
+            .dout(_instr_mem_read_data_)
     );
 
 
-    // INSTRUCTION REGISTER
-    register #(.N(BUS_WIDTH)) INSTR_REGISTER (
+    // INSTRUCTION FETCH REGISTER
+    register #(
+        .N(BUS_WIDTH),
+        .NUM_VAL(2)
+    ) IF_REG (
         
         // Inputs
         .clk(clk),
         .rst(1'b0),
         .ena(1'b1),
-        .d(_mem_read_data_),
+
+        // {Current Instr Addr, Read from Instr Mem} 
+        .d({_instr_addr_, _instr_mem_read_data_}),
         
         // Outputs
-        .q(_instr_)
+        .q({_program_count_, _instr_})
     );
 
 
+    ///////////////////////////////////////////////////////////////////////////
+    // INSTRUCTION DECODE STAGE
+    ///////////////////////////////////////////////////////////////////////////
+
+    // Busses carrying read results from REG_FILE
+    wire [(BUS_WIDTH-1):0] _reg_rd0_, _reg_rd1_;
+    
+    // Bus carrying result from EXECUTE state register. Declared here since it
+    // is the input for REG_FILE.wrData
+    wire [(BUS_WIDTH-1):0] _ex_out_;
+
     // REGISTER_FILE
-	registerFile #(.REG_WIDTH(BUS_WIDTH)) REGISTER_FILE (	
+	registerFile #(.REG_WIDTH(BUS_WIDTH)) REG_FILE (	
 	    // Inputs 
 	    .clk(clk),
 	    .rst(1'b0),
 	    .rdAddr0(_instr_[`INSTR_RS1_RANGE]),
 	    .rdAddr1(_instr_[`INSTR_RS2_RANGE]),
 	    .wrAddr (_instr_[`INSTR_RD_RANGE]),
-	    .wrData (_alu_out_),
+	    .wrData (_ex_out_),
 	    .wrEna(_reg_wr_ena_),
 											
         // Outputs
@@ -139,34 +145,21 @@ module philosophy_v_core(clk, rstb, c);
         .rdData1(_reg_rd1_)
     );
 
+    ///////////////////////////////////////////////////////////////////////////
+    // EXECUTE STAGE
+    ///////////////////////////////////////////////////////////////////////////
 
-    // REGISTER_FILE_OUTPUT REGISTER
-    register #(
-        .N(BUS_WIDTH),
-        .NUM_VAL(2)
-    )   REGISTER_FILE_OUTPUT (
-        
-        // Inputs
-        .clk(clk),
-        .rst(1'b0),
-        .ena(1'b1),
-        .d({
-            _reg_rd0_,
-            _reg_rd1_
-        }),
-        .q({
-            _alu_src_a_,
-            _reg_out_1_
-        })
-    ); 
+    // Busses for ALU inputs and outputs
+    wire [(BUS_WIDTH-1):0] _alu_src_a_, _alu_src_b_, _alu_result_;
 
+    assign _alu_src_a_ = _reg_rd0_; 
 
     // ALU_SRC_B MUX
     mux4 #(
         .BUS_WIDTH(BUS_WIDTH)
     ) ALU_SRC_B (
         .selector(_alu_src_b_select_),
-        .in00(_reg_out_1_),
+        .in00(_reg_rd1_),
         .in01(4),
         .in10(),
         .in11(),
@@ -181,8 +174,8 @@ module philosophy_v_core(clk, rstb, c);
         .z(_alu_result_)
     );
     
-    // ALU_OUT_REG
-    register #(.N(BUS_WIDTH)) ALU_OUT_REG (
+    // EXECUTE_REG
+    register #(.N(BUS_WIDTH)) EX_REG (
         
         // Inputs
         .clk(clk),
@@ -191,10 +184,50 @@ module philosophy_v_core(clk, rstb, c);
         .d(_alu_result_),
         
         //Outputs
-        .q(_alu_out_)
+        .q(_ex_out_)
+    );
+
+    ///////////////////////////////////////////////////////////////////////////
+    // MEMORY STAGE
+    ///////////////////////////////////////////////////////////////////////////
+
+    // Bus for output of MEM_REG
+    wire [(BUS_WIDTH-1):0] _mem_out_;
+
+    // EXECUTE_REG
+    register #(.N(BUS_WIDTH)) MEM_REG (
+        
+        // Inputs
+        .clk(clk),
+        .rst(1'b0),
+        .ena(1'b1),
+        .d(_ex_out_),
+        
+        //Outputs
+        .q(_mem_out_)
+    );
+
+    ///////////////////////////////////////////////////////////////////////////
+    // WRITEBACK STAGE
+    ///////////////////////////////////////////////////////////////////////////
+
+    // Bus for output of WB_REG
+    wire [(BUS_WIDTH-1):0] _wb_out_;
+
+    register #(.N(BUS_WIDTH)) WB_REG (
+
+        // Inputs
+        .clk(clk),
+        .rst(1'b0),
+        .ena(1'b1),
+        .d(_mem_out_),
+
+        // Outputs
+        .q(_wb_out_)
     );
 
     initial begin
-        PROGRAM_COUNTER.q = `PC_START_ADDRESS;
+        // TODO: For this to work, the clk has to start low. Maybe fix with rst
+        IF_REG.q[2*BUS_WIDTH-1:BUS_WIDTH] = `PC_START_ADDRESS;
     end
 endmodule

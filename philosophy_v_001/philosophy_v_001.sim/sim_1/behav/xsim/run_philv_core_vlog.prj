@@ -4,12 +4,13 @@ verilog xil_defaultlib  --include "../../../../../src/modules/control/control_si
 "../../../../../src/modules/control/alu_decoder/alu_decoder.v" \
 "../../../../../src/modules/combinatorial/decoder.v" \
 "../../../../../src/modules/control/main_controller/main_controller.v" \
+"../../../../../src/modules/memory/memory.v" \
 "../../../../../src/modules/combinatorial/mux/mux2.v" \
 "../../../../../src/modules/combinatorial/mux/mux4.v" \
 "../../../../../src/modules/philv_core/philv_core.v" \
+"../../../../../src/modules/combinatorial/program_counter/program_counter.v" \
 "../../../../../src/modules/registers/register.v" \
 "../../../../../src/modules/registers/registerFile.v" \
-"../../../../../src/modules/memory/synth_dual_port_memory.v" \
 "../../../../../src/modules_tb/philv_core/run_phil_v_core.v" \
 
 # compile glbl module
