@@ -1,4 +1,4 @@
-<mxfile host="www.draw.io" modified="2020-02-13T04:24:40.934Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.130 Safari/537.36" etag="XhT8O41K3bp0VPQN8vql" version="12.6.5" type="github" pages="2">
+<mxfile host="www.draw.io" modified="2020-02-13T04:42:49.287Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.130 Safari/537.36" etag="SmzvvZDHTVxK1izNbTcK" version="12.6.5" type="github" pages="2">
   <diagram id="l-QONBMP0DDUvviEroiV" name="Core">
     <mxGraphModel dx="2661" dy="1707" grid="1" gridSize="10" guides="0" tooltips="1" connect="1" arrows="0" fold="0" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -20,8 +20,8 @@
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="-830" y="-120" as="sourcePoint"/>
             <Array as="points">
-              <mxPoint x="-880"/>
-              <mxPoint x="-880" y="-180"/>
+              <mxPoint x="-900"/>
+              <mxPoint x="-900" y="-180"/>
               <mxPoint x="-230" y="-180"/>
               <mxPoint x="-230" y="-81"/>
             </Array>
@@ -351,7 +351,7 @@
         <mxCell id="H52QTwc8cEu2d-Yzidcd-15" value="d0" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;shadow=0;glass=0;comic=0;fontSize=7;fontColor=#000000;" vertex="1" parent="H52QTwc8cEu2d-Yzidcd-12">
           <mxGeometry y="29" width="20" height="20" as="geometry"/>
         </mxCell>
-        <mxCell id="H52QTwc8cEu2d-Yzidcd-16" value="d1" style="text;html=1;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;shadow=0;glass=0;comic=0;fontSize=7;fontColor=#000000;" vertex="1" parent="H52QTwc8cEu2d-Yzidcd-12">
+        <mxCell id="H52QTwc8cEu2d-Yzidcd-16" value="q0" style="text;html=1;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;shadow=0;glass=0;comic=0;fontSize=7;fontColor=#000000;" vertex="1" parent="H52QTwc8cEu2d-Yzidcd-12">
           <mxGeometry x="20" y="29" width="20" height="20" as="geometry"/>
         </mxCell>
         <mxCell id="H52QTwc8cEu2d-Yzidcd-20" value="d1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;shadow=0;glass=0;comic=0;fontSize=7;fontColor=#000000;" vertex="1" parent="H52QTwc8cEu2d-Yzidcd-12">
@@ -540,6 +540,9 @@
         </mxCell>
         <mxCell id="H52QTwc8cEu2d-Yzidcd-66" value="&lt;font style=&quot;font-size: 12px&quot;&gt;instr_addr&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;shadow=0;glass=0;comic=0;fontSize=22;fontColor=#000000;" vertex="1" parent="1">
           <mxGeometry x="-760" y="-20" width="40" height="20" as="geometry"/>
+        </mxCell>
+        <mxCell id="H52QTwc8cEu2d-Yzidcd-68" value="&lt;font style=&quot;font-size: 12px&quot;&gt;program_count[31:0]&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;fontSize=22;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="-900" y="-210" width="130" height="30" as="geometry"/>
         </mxCell>
       </root>
     </mxGraphModel>
