@@ -104,11 +104,11 @@ module philosophy_v_core(clk, rstb);
         .N(BUS_WIDTH),
         .NUM_VAL(2)
     ) IF_REG (
-        
-        // Inputs
         .clk(clk),
         .rst(1'b0),
-        .ena(1'b1),
+
+        // {}
+        .ena(2'b11),
 
         // {Current Instr Addr, Read from Instr Mem} 
         .d({_instr_addr_, _instr_mem_read_data_}),

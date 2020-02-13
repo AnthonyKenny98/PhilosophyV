@@ -28,7 +28,8 @@ module register(clk, rst, d, q, ena);
 	parameter NUM_VAL = 1;
 
 	// Control Inputs
-	input wire clk, rst, ena;
+	input wire clk, rst;
+	input wire [NUM_VAL-1:0] ena;
 
 	// D inputs
 	input wire [NUM_VAL*N-1:0] d;
@@ -45,7 +46,7 @@ module register(clk, rst, d, q, ena);
 				if(rst) begin
 					q[r*N-1:(r-1)*N] <= 0;
 				end
-				else if (ena) begin
+				else if (ena[r-1]) begin
 					q[r*N-1:(r-1)*N] <= d[r*N-1:(r-1)*N];
 				end
 				else begin
