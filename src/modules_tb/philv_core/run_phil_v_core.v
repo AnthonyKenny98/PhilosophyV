@@ -43,9 +43,8 @@ module run_philv_core;
     integer i;
     initial begin
         
-        clk = 0;
         for (i = 0; i < `NUM_CYCLES; i = i + 1) begin
-            #10; clk = 1; #10; clk = 0;
+            #10; clk = 0; #10; clk = 1; 
         end
         $finish;
     end
@@ -53,8 +52,9 @@ module run_philv_core;
     
     // Print z on falling edge
     always @(negedge clk) begin
-        $display("PC.q = %h, MemReadData = %b, Instr = %b, R1 = %h, R2 = %h, ALU_SRC_A = %d, ALU_SRC_B = %d, ALU_RESULT = %d, ALU_OUT = %d, r03 = %d", 
-            uut.IF_REG.q[63:32], uut._instr_mem_read_data_, uut._instr_, uut._reg_rd0_, uut._reg_rd1_, uut._alu_src_a_, uut._alu_src_b_, uut._alu_result_, uut._ex_out_, uut.REG_FILE.r03);
+        #5;
+        $display("STATE = %d, IR_PC = %h, IR_I = %b, ALU_SRC_A = %h, ALU_SRC_B = %h, EX = %h, MEM = %h, r03 = %h", 
+            uut.MAIN_CONTROLLER.state, uut.IF_REG.q[63:32], uut.IF_REG.q[31:0], uut._alu_src_a_, uut._alu_src_b_, uut.EX_REG.q, uut.MEM_REG.q, uut.REG_FILE.r03);
     end
 
 

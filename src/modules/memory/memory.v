@@ -16,7 +16,7 @@
 // 
 // Revision:
 // Revision 0.01 - File Created
-// Additional Comments:
+// Additional Comments: READ ONLY - NOT SYNCHRONIZED
 // 
 //////////////////////////////////////////////////////////////////////////////////
 
@@ -27,8 +27,7 @@
 `include "memory_defines.h"
 
 module memory( 
-	clk, rstb,
-	wrEna, addr, din, dout,
+	addr, dout,
 );
 
 // Bus Width 
@@ -39,9 +38,7 @@ parameter LENGTH = 512;
 parameter WIDTH  = 9; // (2^9 = 512)
 
 // Control Inputs
-input wire clk, rstb;
-input wire wrEna;
-input wire [N-1:0] addr, din;
+input wire [N-1:0] addr;
 output reg [N-1:0] dout;
 
 // Memory
@@ -52,11 +49,8 @@ wire [WIDTH-1:0] phy_addr;
 assign phy_addr = addr[WIDTH+1:2];
 
 //instruction memory
-always @(posedge clk) begin
-	if(wrEna) begin
-		MEM[phy_addr] <= din;
-	end
-	dout <= MEM[phy_addr];
+always @(addr) begin
+	dout = MEM[phy_addr];
 end
 
 //`ifndef SYNTHESIS

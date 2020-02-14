@@ -41,7 +41,7 @@ module philosophy_v_core(clk, rstb);
 
     // Control Select Signals
     wire [(`ALU_FUNCT_WIDTH-1):0] _alu_funct_;
-    wire _alu_src_a_select_;
+    wire _alu_src_a_select_, _alu_control_;
     wire [(`ALU_SRC_B_WIDTH-1):0] _alu_src_b_select_;
 
 
@@ -53,6 +53,8 @@ module philosophy_v_core(clk, rstb);
         // Outputs
         .PCWrite(_pc_ena_),
         .IRWrite(_ir_ena_),
+        .ALUOverride(_alu_control_),
+        .ALUSrcA(_alu_src_a_select_),
         .ALUSrcB(_alu_src_b_select_),
         .regFileWrite(_reg_wr_ena_)
     );
@@ -61,6 +63,7 @@ module philosophy_v_core(clk, rstb);
     alu_decoder ALU_DECODER (
         .funct3(_instr_[`INSTR_FUNCT3_RANGE]),
         .funct7(_instr_[`INSTR_FUNCT7_RANGE]),
+        .controlOverride(_alu_control_),
         .alu_funct(_alu_funct_)
     );
 
@@ -77,7 +80,7 @@ module philosophy_v_core(clk, rstb);
 
     // Program Counter
     program_counter #(.N(BUS_WIDTH)) PC_LOGIC (
-        .lastCount(_program_count_),
+        .lastCount(_ex_out_),
         .newCount(_instr_addr_)
     );
 
@@ -90,11 +93,7 @@ module philosophy_v_core(clk, rstb);
     ) INSTR_MEMORY (
             
             // Inputs
-            .clk(clk),
-            .rstb(rstb),
-            .wrEna(1'b0),
-            .addr(_instr_addr_),
-            .din(), // TODO
+            .addr(_program_count_),
             
             //Outputs
             .dout(_instr_mem_read_data_)

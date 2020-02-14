@@ -9,13 +9,15 @@ WARNING: [VRFC 10-3507] macro 'ALU_SRC_B_REGOUT' redefined [../../../../../src/m
 INFO: [VRFC 10-311] analyzing module main_controller
 INFO: [VRFC 10-2263] Analyzing Verilog file "/home/anthony/Documents/PhilosophyV/src/modules/memory/memory.v" into library xil_defaultlib
 INFO: [VRFC 10-311] analyzing module memory
-WARNING: [VRFC 10-2379] empty port in module declaration [/home/anthony/Documents/PhilosophyV/src/modules/memory/memory.v:32]
+WARNING: [VRFC 10-2379] empty port in module declaration [/home/anthony/Documents/PhilosophyV/src/modules/memory/memory.v:31]
 INFO: [VRFC 10-2263] Analyzing Verilog file "/home/anthony/Documents/PhilosophyV/src/modules/combinatorial/mux/mux2.v" into library xil_defaultlib
 INFO: [VRFC 10-311] analyzing module mux2
 INFO: [VRFC 10-2263] Analyzing Verilog file "/home/anthony/Documents/PhilosophyV/src/modules/combinatorial/mux/mux4.v" into library xil_defaultlib
 INFO: [VRFC 10-311] analyzing module mux4
 INFO: [VRFC 10-2263] Analyzing Verilog file "/home/anthony/Documents/PhilosophyV/src/modules/philv_core/philv_core.v" into library xil_defaultlib
 INFO: [VRFC 10-311] analyzing module philosophy_v_core
+INFO: [VRFC 10-2458] undeclared symbol _ex_out_, assumed default net type wire [/home/anthony/Documents/PhilosophyV/src/modules/philv_core/philv_core.v:83]
+WARNING: [VRFC 10-2938] '_ex_out_' is already implicitly declared on line 83 [/home/anthony/Documents/PhilosophyV/src/modules/philv_core/philv_core.v:131]
 INFO: [VRFC 10-2263] Analyzing Verilog file "/home/anthony/Documents/PhilosophyV/src/modules/combinatorial/program_counter/program_counter.v" into library xil_defaultlib
 INFO: [VRFC 10-311] analyzing module program_counter
 INFO: [VRFC 10-2263] Analyzing Verilog file "/home/anthony/Documents/PhilosophyV/src/modules/registers/register.v" into library xil_defaultlib

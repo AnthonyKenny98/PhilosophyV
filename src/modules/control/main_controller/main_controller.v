@@ -28,7 +28,7 @@ module main_controller(
 	// Inputs
 	clk, opCode,
 	// Outputs
-	PCWrite, IRWrite, ALUSrcA, ALUSrcB, regFileWrite
+	PCWrite, IRWrite, ALUOverride, ALUSrcA, ALUSrcB, regFileWrite
 );
 
 	// Input Ports
@@ -36,7 +36,7 @@ module main_controller(
 	input wire [`INSTR_OPCODE_WIDTH-1:0] opCode;
 
 	// Output Ports
-	output reg PCWrite, IRWrite, regFileWrite;
+	output reg PCWrite, IRWrite, regFileWrite, ALUOverride;
 	output reg ALUSrcA;
 	output reg [`ALU_SRC_B_WIDTH-1:0] ALUSrcB;
 
@@ -57,19 +57,29 @@ module main_controller(
 			`CONTROL_STATE_FETCH : begin
 				
 				// Control Signals
-				PCWrite = 1;
+				PCWrite = 0;
 				IRWrite = 1;
 				regFileWrite = 1;
+				ALUOverride = 1;
 
 				// Select Signals
-				ALUSrcA = `ALU_SRC_A_CONST4;
-				ALUSrcB = `ALU_SRC_B_REGOUT;
+				ALUSrcA = `ALU_SRC_A_PC;
+				ALUSrcB = `ALU_SRC_B_CONST4;
 
 				// Next State
-				next_state = state;
+				next_state = `CONTROL_STATE_DECODE;
 			end
 
 			`CONTROL_STATE_DECODE : begin
+
+				// Control Signals
+				PCWrite = 0;
+				IRWrite = 1;
+				regFileWrite = 1;
+				ALUOverride = 0;
+
+				// Next State
+				next_state = state;
 				
 			end
 
