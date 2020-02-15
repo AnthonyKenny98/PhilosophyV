@@ -15,16 +15,15 @@
 // 
 // Revision:
 // Revision 0.01 - File Created
-// Additional Comments:
+// Additional Comments: Runs the Philosophy V Core for a defined number of cycles,
+//                      outputting relevant information each clk cycle. Does not
+//                      perform any checks.
 // 
 //////////////////////////////////////////////////////////////////////////////////
 
-`define INSTR_WIDTH 32
-`define NUM_CYCLES 20
+`define NUM_CYCLES 100
 
 module run_philv_core;
-
-    parameter N = 32;
     
     // Input
     reg clk;
@@ -44,7 +43,6 @@ module run_philv_core;
     initial begin
         clk = 0;
         #100;
-
         for (i = 0; i < `NUM_CYCLES*2; i = i + 1) begin
             #10; clk = ~clk;
         end
@@ -54,9 +52,16 @@ module run_philv_core;
     
     // Print z on falling edge
     always @(negedge clk) begin
-        $display("STATE = %d, IR_PC = %h, IR_I = %b, ALU_SRC_A = %h, ALU_SRC_B = %h, EX = %h, MEM = %h, WB = %h, r03 = %h", 
-            uut.MAIN_CONTROLLER.state, uut.IF_REG.q[63:32], uut.IF_REG.q[31:0], uut._alu_src_a_, uut._alu_src_b_, uut.EX_REG.q, uut.MEM_REG.q, uut.WB_REG.q, uut.REG_FILE.r03);
+        $display(
+            "STATE = %d | ", uut.MAIN_CONTROLLER.state,
+            "IR_PC = %h | ", uut.IF_REG.q[63:32],
+            "IR_I = %b | ",  uut.IF_REG.q[31:0],
+            "ALU_SRC_A = %h | ", uut._alu_src_a_,
+            "ALU_SRC_B = %h | ", uut._alu_src_b_,
+            "EX = %h | ", uut.EX_REG.q,
+            "MEM = %h | ", uut.MEM_REG.q,
+            "WB = %h", uut.WB_REG.q,
+            " | r02 = %h", uut.REG_FILE.r02);
     end
-
 
 endmodule

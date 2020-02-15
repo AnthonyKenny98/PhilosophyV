@@ -57,7 +57,7 @@ end
 reg [8*100:0] INIT_INST;
 initial begin
 	if(!$value$plusargs("INIT_INST=%s", INIT_INST)) begin
-		INIT_INST="current_test.tv";
+		INIT_INST="instr_load.memb";
 	end
 	$display("initializing %m's instruction memory from '%s'", INIT_INST);
 	$readmemb(INIT_INST, MEM, 0, LENGTH-1);
