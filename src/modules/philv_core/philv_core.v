@@ -138,7 +138,7 @@ module philosophy_v_core(clk, rstb);
 	    .rdAddr0(_instr_[`INSTR_RS1_RANGE]),
 	    .rdAddr1(_instr_[`INSTR_RS2_RANGE]),
 	    .wrAddr (_instr_[`INSTR_RD_RANGE]),
-	    .wrData (_ex_out_),
+	    .wrData (_mem_out_),
 	    .wrEna(_reg_wr_ena_),
 											
         // Outputs

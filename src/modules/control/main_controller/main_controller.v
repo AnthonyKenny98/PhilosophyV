@@ -89,11 +89,11 @@ module main_controller(
 				PCWrite = 0;
 				IRWrite = 0;
 				regFileWrite = 0;
-				ALUOverride = 1;
+				ALUOverride = 0;
 
 				// Select Signals
-				ALUSrcA = `ALU_SRC_A_PC;
-				ALUSrcB = `ALU_SRC_B_CONST4;
+				ALUSrcA = `ALU_SRC_A_REGOUT;
+				ALUSrcB = `ALU_SRC_B_REGOUT;
 
 				// Next State
 				next_state = `CONTROL_STATE_MEMORY;
@@ -105,6 +105,9 @@ module main_controller(
 
 				// Control Signals
 				PCWrite = 0;
+				IRWrite = 0;
+				regFileWrite = 0;
+				ALUOverride = 0;
 
 
 				// Next State
@@ -116,6 +119,9 @@ module main_controller(
 
 				// Control Signals
 				PCWrite = 0;
+				IRWrite = 0;
+				regFileWrite = 1;
+				ALUOverride = 0;
 
 				// Next State
 				next_state = `CONTROL_STATE_FETCH;
