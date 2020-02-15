@@ -20,7 +20,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 `define INSTR_WIDTH 32
-`define NUM_CYCLES 10
+`define NUM_CYCLES 20
 
 module run_philv_core;
 
@@ -42,9 +42,11 @@ module run_philv_core;
     // Generate clk for testing
     integer i;
     initial begin
-        
-        for (i = 0; i < `NUM_CYCLES; i = i + 1) begin
-            #10; clk = 0; #10; clk = 1; 
+        clk = 0;
+        #100;
+
+        for (i = 0; i < `NUM_CYCLES*2; i = i + 1) begin
+            #10; clk = ~clk;
         end
         $finish;
     end
@@ -52,7 +54,6 @@ module run_philv_core;
     
     // Print z on falling edge
     always @(negedge clk) begin
-        #5;
         $display("STATE = %d, IR_PC = %h, IR_I = %b, ALU_SRC_A = %h, ALU_SRC_B = %h, EX = %h, MEM = %h, r03 = %h", 
             uut.MAIN_CONTROLLER.state, uut.IF_REG.q[63:32], uut.IF_REG.q[31:0], uut._alu_src_a_, uut._alu_src_b_, uut.EX_REG.q, uut.MEM_REG.q, uut.REG_FILE.r03);
     end

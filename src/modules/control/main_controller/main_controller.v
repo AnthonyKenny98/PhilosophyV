@@ -59,7 +59,7 @@ module main_controller(
 				// Control Signals
 				PCWrite = 0;
 				IRWrite = 1;
-				regFileWrite = 1;
+				regFileWrite = 0;
 				ALUOverride = 1;
 
 				// Select Signals
@@ -73,25 +73,52 @@ module main_controller(
 			`CONTROL_STATE_DECODE : begin
 
 				// Control Signals
-				PCWrite = 0;
-				IRWrite = 1;
-				regFileWrite = 1;
+				PCWrite = 1;
+				IRWrite = 0;
+				regFileWrite = 0;
 				ALUOverride = 0;
 
 				// Next State
-				next_state = state;
+				next_state = `CONTROL_STATE_EXECUTE;
 				
 			end
 
 			`CONTROL_STATE_EXECUTE : begin
+
+				// Control Signals
+				PCWrite = 0;
+				IRWrite = 0;
+				regFileWrite = 0;
+				ALUOverride = 1;
+
+				// Select Signals
+				ALUSrcA = `ALU_SRC_A_PC;
+				ALUSrcB = `ALU_SRC_B_CONST4;
+
+				// Next State
+				next_state = `CONTROL_STATE_MEMORY;
+
 				
 			end
 
 			`CONTROL_STATE_MEMORY : begin
+
+				// Control Signals
+				PCWrite = 0;
+
+
+				// Next State
+				next_state = `CONTROL_STATE_WRITEBACK;
 				
 			end
 
 			`CONTROL_STATE_WRITEBACK : begin
+
+				// Control Signals
+				PCWrite = 0;
+
+				// Next State
+				next_state = `CONTROL_STATE_FETCH;
 				
 			end
 		endcase
