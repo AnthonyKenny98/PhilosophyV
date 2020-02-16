@@ -1,2 +1,9 @@
 # DS_Store
 .DS_Store
+
+# Vivado Project Files
+*.cache/
+*.hw/
+*.ip_user_files/
+*.sim/
+*.srcs/

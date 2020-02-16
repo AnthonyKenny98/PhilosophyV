@@ -36,6 +36,7 @@ parameter N = 32;
 // Instruction Parameters
 parameter LENGTH = 512;
 parameter WIDTH  = 9; // (2^9 = 512)
+parameter MEM_FILE = "load.memb";
 
 // Inputs
 input wire clk;
@@ -68,7 +69,7 @@ end
 reg [8*100:0] INIT_INST;
 initial begin
 	if(!$value$plusargs("INIT_INST=%s", INIT_INST)) begin
-		INIT_INST="instr_load.memb";
+		INIT_INST=MEM_FILE;
 	end
 	$display("initializing %m's instruction memory from '%s'", INIT_INST);
 	$readmemb(INIT_INST, MEM, 0, LENGTH-1);

@@ -32,3 +32,5 @@ INFO: [VRFC 10-311] analyzing module alu_test
 INFO: [VRFC 10-2263] Analyzing Verilog file "/home/anthony/Documents/PhilosophyV/src/test/assembly_tests/cmp_reg_file.v" into library xil_defaultlib
 WARNING: [VRFC 10-3507] macro 'NUM_CYCLES' redefined [/home/anthony/Documents/PhilosophyV/src/test/assembly_tests/cmp_reg_file.v:22]
 INFO: [VRFC 10-311] analyzing module cmp_reg_file
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/anthony/Documents/PhilosophyV/philosophy_v_001/philosophy_v_001.sim/sim_1/behav/xsim/glbl.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module glbl

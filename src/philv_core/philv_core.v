@@ -85,7 +85,8 @@ module philosophy_v_core(clk, rstb);
     memory #(
         .N(BUS_WIDTH),
         .LENGTH(`I_MEM_LEN),
-        .WIDTH(`I_MEM_WIDTH)
+        .WIDTH(`I_MEM_WIDTH),
+        .MEM_FILE(`I_MEM_FILE)
     ) INSTR_MEMORY (
             
             // Inputs
@@ -212,7 +213,25 @@ module philosophy_v_core(clk, rstb);
     // Bus for output of MEM_REG
     wire [(BUS_WIDTH-1):0] _mem_out_;
 
-    // EXECUTE_REG
+    // Bus for output of data memory
+    wire [(BUS_WIDTH-1):0] _data_mem_read_data_;
+
+    // DATA_MEMORY
+
+    memory #(.N(BUS_WIDTH)) DATA_MEMORY (
+        // Inputs
+        .clk(clk),
+        .rdEna(1'b1),
+        .rdAddr(_ex_out_),
+        .wrEna(),
+        .wrAddr(),
+        .wrData(),
+
+        // Outputs
+        .rdData(_data_mem_read_data_)
+    );
+
+    // MEMORY_REG
     register #(.N(BUS_WIDTH)) MEM_REG (
         
         // Inputs
