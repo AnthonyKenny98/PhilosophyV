@@ -23,6 +23,7 @@ sltu $x22, $x1, $x3 	# $x22 = 1
 sltu $x23, $x3, $x1 	# $x23 = 0
 sub $x24, $x1, $x4 		# $x24 = -3
 sub $x25, $x13, $x24 	# $x25 = -5
+# Tests complete, set rest to 0
 and $x26, $x1, $x2 		# $x26 = 0
 and $x27, $x1, $x2 		# $x27 = 0
 and $x28, $x1, $x2 		# $x28 = 0

@@ -1,4 +1,4 @@
-nop
+addi $x0, $x0, 0	# nop
 addi $x1, $x0, 1 	# $x1 = 1
 addi $x2, $x1, 1	# $x2 = 2
 ori $x3, $x2, 1 	# $x3 = 3
@@ -10,4 +10,25 @@ slti $x8, $x6, 7 	# $x8 = 1
 slti $x9, $x6, 5 	# $x9 = 0
 slti $x10, $x6, 6 	# $x10 = 0
 sltiu $x11, $x0, 1  # $x11 = 1
-xori $x12, $x7, 5 	# #x12 = 2
+xori $x12, $x7, 5 	# $x12 = 2
+slli $x13, $x3, 2 	# $x13 = 12
+addi $x13, $x13, 1  # $x13 = 13
+srli $x14, $x13, 2  # $x14 = 3
+addi $x15, $x0, -8 	# $x15 = -8
+srai $x16, $x15, 2  # $x16 = -2
+slti $x17, $x16, 0 	# $x17 = 1
+sltiu $x18, $x16, 0 # $x18 = 0
+# tests complete, set rest to zero
+addi $x19, $x0, 0  	# $x19 = 0
+addi $x20, $x0, 0  	# $x20 = 0
+addi $x21, $x0, 0  	# $x21 = 0
+addi $x22, $x0, 0  	# $x22 = 0
+addi $x23, $x0, 0  	# $x23 = 0
+addi $x24, $x0, 0  	# $x24 = 0
+addi $x25, $x0, 0  	# $x25 = 0
+addi $x26, $x0, 0  	# $x26 = 0
+addi $x27, $x0, 0  	# $x27 = 0
+addi $x28, $x0, 0  	# $x28 = 0
+addi $x29, $x0, 0  	# $x29 = 0
+addi $x30, $x0, 0  	# $x30 = 0
+addi $x31, $x0, 0  	# $x31 = 0
