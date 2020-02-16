@@ -48,9 +48,9 @@ itypes = {
     "andi": (0,7,19),
     "ori": (0,6,19),
     "xori": (0,4,19),
-    # "slli": (0,1,19),
-    # "srai": (32,5,19),
-    # "srli": (0,5,19),
+    "slli": (0,1,19),
+    "srai": (32,5,19),
+    "srli": (0,5,19),
     "slti": (0,2,19),
     "sltiu": (0,3,19)
 }
@@ -248,7 +248,13 @@ def main():
 
             rs1 = dec_to_bin(registers[args[1].strip()], 5)
             rd = dec_to_bin(registers[args[0].strip()], 5)
-            imm = dec_to_bin(args[2].strip(), 12)
+            
+            # Account for shamt
+            if line['instruction'] in ['slli', 'srli', 'srai']:
+                imm = dec_to_bin(itypes[line['instruction']][0], 7)
+                imm = imm + dec_to_bin(args[2].strip(), 5)
+            else:
+                imm = dec_to_bin(args[2].strip(), 12)
 
             funct3 = dec_to_bin(itypes[line['instruction']][1], 3)
             opcode = dec_to_bin(itypes[line['instruction']][2], 7)

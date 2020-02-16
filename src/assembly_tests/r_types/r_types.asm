@@ -1,7 +1,4 @@
-# This asm test relies on the $zero register being incorrecly set to the value
-# of 1. This is because this was written before I type instructions were 
-# implemented.
-nop
+# Only non r-type instruction used here is addi to load 1 into $x1
 addi $x1, $x0, 1        # $x1 = 1
 add $x2, $x1, $x1 		# $x2 = 2
 add $x4, $x2, $x2 		# $x4 = 4
