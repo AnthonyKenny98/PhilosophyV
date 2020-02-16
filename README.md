@@ -10,9 +10,13 @@ As such, I name my processor Philosphy V; both in reference to the RISC-V ISA fo
 + [Built With](#builtwith)
 + [License](#license)
 
-## <a name=#structure></a>Repository Structure
+## <a name=structure></a>Repository Structure
   ```
   PhilosophyV/
+      |
+      |_assembler/              // Contains files neccesary for converting RISCV asm
+      |                         // files to binary, to be loaded into core instruction
+      |                         // memory
       |
       |_isa/                    // Contains documentation regarding the RISCV ISA
       |
@@ -26,12 +30,12 @@ As such, I name my processor Philosphy V; both in reference to the RISC-V ISA fo
       |   |_modules_tb          // Contains src code for verilod test benches
   ```
   
-## <a name=#testing></a>Testing Methodology
+## <a name=testing></a>Testing Methodology
 Tests are run on a module by module basis under the [simulation function](https://www.xilinx.com/products/design-tools/vivado/simulator.html) in Vivado. Test benches (```module_tb.v```) that test a certain module as a Unit Under Test (UUT) import test stimulus and expected results from a test vector file (```module.tv```). A python script for creating large test vectors has also been provided. See [TestingMethodology.md](doc/TestingMethodology.md) for a step by step example of testing an 8 bit adder.
 
 
-## <a name=#builtwith></a>Built With
+## <a name=builtwith></a>Built With
 This project is built using Xilinx's [Vivado Design Suite](https://www.xilinx.com/products/design-tools/vivado.html).
 
-## <a name=#license></a>License
+## <a name=license></a>License
 This project is licensed under the MIT License.  See the [LICENSE](LICENSE) file for more information.
