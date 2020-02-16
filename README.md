@@ -14,20 +14,22 @@ As such, I name my processor Philosphy V; both in reference to the RISC-V ISA fo
   ```
   PhilosophyV/
       |
-      |_assembler/              // Contains files neccesary for converting RISCV asm
-      |                         // files to binary, to be loaded into core instruction
-      |                         // memory
+      |_assembler/                // Contains files neccesary for converting RISCV asm
+      |                           // files to binary, to be loaded into core instruction
+      |                           // memory
       |
-      |_isa/                    // Contains documentation regarding the RISCV ISA
+      |_isa/                      // Contains documentation regarding the RISCV ISA
       |
-      |_philosophy_v_001/        // The Vivado project directory. The project references
-      |                         //    the external module files in src/
+      |_philosophy_v_001/         // The Vivado project directory. The project references
+      |                           //    the external module files in src/
       |
-      |_scripts/                // Contains scripts for creating certain files
+      |_scripts/                  // Contains scripts for creating certain files
       |
       |_src/
-      |   |_modules             // Contains src code for verilog modules
-      |   |_modules_tb          // Contains src code for verilod test benches
+      |   |_philv_core/           // Contains src code for the Philosphy V Core
+      |   |_test/
+      |   |    |_assembly_tests/  // Full processor testing by running .asm files
+      |   |    |_module_tb/       // Module test benches
   ```
   
 ## <a name=testing></a>Testing Methodology
