@@ -4,7 +4,7 @@ There are currently two methods provided for testing the Philosophy V Core and i
 1) [Module Test Benches](#module_tb)
 2) [Assembly Tests](#assembly)
 
-## <a name=#module_tb></a>Module Test Benches
+## <a name=module_tb></a>Module Test Benches
 Consider a 8 bit adder that takes inputs `a` & `b` and outputs `c`. For now let's ignore overflow and other edge cases
 
   1. Create a csv file in the following format:
@@ -97,5 +97,5 @@ Consider a 8 bit adder that takes inputs `a` & `b` and outputs `c`. For now let'
   endmodule
 
   ```
-  ## <a name=#assembly></a>Assembly Tests
+  ## <a name=assembly></a>Assembly Tests
   
