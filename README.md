@@ -14,6 +14,10 @@ As such, I name my processor Philosphy V; both in reference to the RISC-V ISA fo
   ```
   PhilosophyV/
       |
+      |_assembler/              // Contains files neccesary for converting RISCV asm
+      |                         // files to binary, to be loaded into core instruction
+      |                         // memory
+      |
       |_isa/                    // Contains documentation regarding the RISCV ISA
       |
       |_philosophy_v_001/        // The Vivado project directory. The project references
