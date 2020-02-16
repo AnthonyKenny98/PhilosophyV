@@ -1,8 +1,8 @@
 `timescale 1ns / 1ps
 `default_nettype none //helps catch typo-related bugs
 //////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer: 
+// Company: Harvard University School of Engineering and Applied Sciences
+// Engineer: Anthony JW Kenny
 // 
 // Create Date: 02/07/2020 06:30:09 PM
 // Design Name: 

@@ -1,0 +1,38 @@
+Vivado Simulator 2019.2
+Time resolution is 1 ps
+initializing cmp_reg_file.uut.INSTR_MEMORY's instruction memory from '                                                                                      instr_load.memb'
+Initializing Expected Reg File from 'cmp_reg_file.tv'
+Register 00 | Actual = 00000000 | Expected = 00000000
+Register 01 | Actual = 00000001 | Expected = 00000001
+Register 02 | Actual = 00000002 | Expected = 00000002
+Register 03 | Actual = 00000003 | Expected = 00000003
+Register 04 | Actual = 00000004 | Expected = 00000004
+Register 05 | Actual = 00000005 | Expected = 00000005
+Register 06 | Actual = 00000006 | Expected = 00000006
+Register 07 | Actual = 00000007 | Expected = 00000007
+Register 08 | Actual = 00000008 | Expected = 00000008
+Register 09 | Actual = 00000009 | Expected = 00000009
+Register 10 | Actual = 0000000a | Expected = 0000000a
+Register 11 | Actual = 0000000b | Expected = 0000000b
+Register 12 | Actual = 0000000c | Expected = 0000000c
+Register 13 | Actual = fffffff8 | Expected = fffffff8
+Register 14 | Actual = fffffffc | Expected = fffffffc
+Register 15 | Actual = fffffffe | Expected = fffffffe
+Register 16 | Actual = 00000000 | Expected = 00000000
+Register 17 | Actual = 00000002 | Expected = 00000002
+Register 18 | Actual = 00000001 | Expected = 00000001
+Register 19 | Actual = 00000000 | Expected = 00000000
+Register 20 | Actual = 00000001 | Expected = 00000001
+Register 21 | Actual = 00000000 | Expected = 00000000
+Register 22 | Actual = 00000001 | Expected = 00000001
+Register 23 | Actual = 00000000 | Expected = 00000000
+Register 24 | Actual = fffffffd | Expected = fffffffd
+Register 25 | Actual = fffffffb | Expected = fffffffb
+Register 26 | Actual = 00000000 | Expected = 00000000
+Register 27 | Actual = 00000000 | Expected = 00000000
+Register 28 | Actual = 00000000 | Expected = 00000000
+Register 29 | Actual = 00000000 | Expected = 00000000
+Register 30 | Actual = 00000000 | Expected = 00000000
+Register 31 | Actual = 00000000 | Expected = 00000000
+Finished with           0 errors.
+$finish called at time : 20100 ns : File "/home/anthony/Documents/PhilosophyV/src/modules_tb/philv_core/cmp_reg_file.v" Line 132

@@ -59,14 +59,6 @@ module philosophy_v_core(clk, rstb);
         .regFileWrite(_reg_wr_ena_)
     );
 
-    // ALU DECODER
-    alu_decoder ALU_DECODER (
-        .funct3(_instr_[`INSTR_FUNCT3_RANGE]),
-        .funct7(_instr_[`INSTR_FUNCT7_RANGE]),
-        .controlOverride(_alu_control_),
-        .alu_funct(_alu_funct_)
-    );
-
     ///////////////////////////////////////////////////////////////////////////
     // INSTRUCTION FETCH STAGE
     ///////////////////////////////////////////////////////////////////////////
@@ -77,6 +69,9 @@ module philosophy_v_core(clk, rstb);
     // Busses carrying the current Instruction
     wire [(`INSTR_WIDTH-1):0] _instr_, _instr_mem_read_data_;
     
+    // Bus carrying result from EXECUTE state register. Declared here since it
+    // is the input for REG_FILE.wrData
+    wire [(BUS_WIDTH-1):0] _ex_out_;
 
     // Program Counter
     program_counter #(.N(BUS_WIDTH)) PC_LOGIC (
@@ -125,10 +120,22 @@ module philosophy_v_core(clk, rstb);
 
     // Busses carrying read results from REG_FILE
     wire [(BUS_WIDTH-1):0] _reg_rd0_, _reg_rd1_;
-    
-    // Bus carrying result from EXECUTE state register. Declared here since it
-    // is the input for REG_FILE.wrData
-    wire [(BUS_WIDTH-1):0] _ex_out_;
+
+    // Bus carrying sign extended Immed
+    wire [(BUS_WIDTH-1):0] _sign_extended_;
+
+    // ALU DECODER
+    alu_decoder ALU_DECODER (
+        .funct3(_instr_[`INSTR_FUNCT3_RANGE]),
+        .funct7(_instr_[`INSTR_FUNCT7_RANGE]),
+        .controlOverride(_alu_control_),
+        .alu_funct(_alu_funct_)
+    );
+
+    sign_extend SIGN_EXTEND (
+        .in(_instr_[`INSTR_IMM_RANGE]),
+        .out(_sign_extended_)
+    );
 
     // REGISTER_FILE
 	registerFile #(.REG_WIDTH(BUS_WIDTH)) REG_FILE (	
@@ -170,7 +177,7 @@ module philosophy_v_core(clk, rstb);
         .selector(_alu_src_b_select_),
         .in00(_reg_rd1_),
         .in01(4),
-        .in10(),
+        .in10(_sign_extended_),
         .in11(),
         .out(_alu_src_b_)
     );

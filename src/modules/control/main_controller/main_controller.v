@@ -21,6 +21,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 `include "instr_defines.h"
+`include "opcode_defines.h"
 `include "alu_src_defines.h"
 `include "control_state_defines.h"
 
@@ -79,11 +80,15 @@ module main_controller(
 				ALUOverride = 0;
 
 				// Next State
-				next_state = `CONTROL_STATE_EXECUTE;
-				
+				case (opCode) 
+
+					`OPCODE_ALU_REG : next_state = `CONTROL_STATE_EXECUTE_R;
+					`OPCODE_ALU_IMM : next_state = `CONTROL_STATE_EXECUTE_I;
+					default: next_state = `CONTROL_STATE_EXECUTE_R;
+				endcase
 			end
 
-			`CONTROL_STATE_EXECUTE : begin
+			`CONTROL_STATE_EXECUTE_R : begin
 
 				// Control Signals
 				PCWrite = 0;
@@ -94,6 +99,23 @@ module main_controller(
 				// Select Signals
 				ALUSrcA = `ALU_SRC_A_REGOUT;
 				ALUSrcB = `ALU_SRC_B_REGOUT;
+
+				// Next State
+				next_state = `CONTROL_STATE_MEMORY;
+
+			end
+
+			`CONTROL_STATE_EXECUTE_I : begin
+
+				// Control Signals
+				PCWrite = 0;
+				IRWrite = 0;
+				regFileWrite = 0;
+				ALUOverride = 0;
+
+				// Select Signals
+				ALUSrcA = `ALU_SRC_A_REGOUT;
+				ALUSrcB = `ALU_SRC_B_SIGEXT;
 
 				// Next State
 				next_state = `CONTROL_STATE_MEMORY;

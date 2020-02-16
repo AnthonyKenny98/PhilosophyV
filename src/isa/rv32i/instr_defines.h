@@ -12,5 +12,6 @@
 `define INSTR_RS2_RANGE 24:20
 `define INSTR_RS1_RANGE 19:15
 `define INSTR_RD_RANGE  11:7 
+`define INSTR_IMM_RANGE 31:20
 
 `endif

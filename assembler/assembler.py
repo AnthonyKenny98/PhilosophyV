@@ -41,7 +41,18 @@ rtypes = {
     "srl": (0,5,51),
     "slt": (0,2,51),
     "sltu": (0,3,51)
-    # "jr": 8
+}
+
+itypes = {
+    "addi": (0,0,19),
+    "andi": (0,7,19),
+    "ori": (0,6,19),
+    "xori": (0,4,19),
+    # "slli": (0,1,19),
+    # "srai": (32,5,19),
+    # "srli": (0,5,19),
+    "slti": (0,2,19),
+    "sltiu": (0,3,19)
 }
 
 # op_codes = {
@@ -211,8 +222,12 @@ def main():
     machine = ""  # Current machine code word.
 
     for line in parsed_lines:
+        
+        # NOP - TODO: Get rid of this, not an instruction in RISCV
         if line['instruction'] == 'nop':
             machine = 32*'0'
+        
+        # R Types
         elif line['instruction'] in rtypes:
             # Encode an R-type instruction.
             args = line['args']
@@ -226,6 +241,21 @@ def main():
             opcode = dec_to_bin(rtypes[line['instruction']][2], 7)
 
             machine = funct7 + rs2 + rs1 + funct3 + rd + opcode
+
+        # I-Types
+        elif line['instruction'] in itypes:
+            args = line['args']
+
+            rs1 = dec_to_bin(registers[args[1].strip()], 5)
+            rd = dec_to_bin(registers[args[0].strip()], 5)
+            imm = dec_to_bin(args[2].strip(), 12)
+
+            funct3 = dec_to_bin(itypes[line['instruction']][1], 3)
+            opcode = dec_to_bin(itypes[line['instruction']][2], 7)
+
+            machine = imm + rs1 + funct3 + rd + opcode
+
+        
         # else:
         #     # Encode a non-R-type instruction.
         #     args = line['args']

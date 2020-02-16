@@ -11,6 +11,7 @@ verilog xil_defaultlib  --include "../../../../../src/modules/control/control_si
 "../../../../../src/modules/combinatorial/program_counter/program_counter.v" \
 "../../../../../src/modules/registers/register.v" \
 "../../../../../src/modules/registers/registerFile.v" \
+"../../../../../src/modules/combinatorial/sign_extend/sign_extend.v" \
 "../../../../../src/modules_tb/philv_core/run_phil_v_core.v" \
 
 # compile glbl module

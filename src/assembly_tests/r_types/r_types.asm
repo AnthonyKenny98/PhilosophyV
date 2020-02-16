@@ -2,8 +2,8 @@
 # of 1. This is because this was written before I type instructions were 
 # implemented.
 nop
-add $x2, $zero, $x0 	# $x2 = 2
-sub $x1, $x2, $x0 		# $x1 = 1
+addi $x1, $x0, 1        # $x1 = 1
+add $x2, $x1, $x1 		# $x2 = 2
 add $x4, $x2, $x2 		# $x4 = 4
 xor $x5, $tp, $ra		# $x5 = 5
 or 	$x3, $sp, $x1		# $x3 = 3

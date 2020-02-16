@@ -1,4 +1,5 @@
 `timescale 1ns / 1ps
+`default_nettype none //helps catch typo-related bugs
 //////////////////////////////////////////////////////////////////////////////////
 // Company: Harvard University School of Engineering and Applied Sciences
 // Engineer: Anthony JW Kenny
@@ -64,3 +65,4 @@ module alu(x, y, funct, z, equal, zero, overflow);
     // TODO: overflow
     
 endmodule
+`default_nettype wire //some Xilinx IP requires that the default_nettype be set to wire
