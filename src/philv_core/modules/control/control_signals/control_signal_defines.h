@@ -1,0 +1,7 @@
+`ifndef CONTROL_SIGNAL
+`define CONTROL_SIGNAL
+
+`define REG_FILE_WRITE_SRC_MEM 0
+`define REG_FILE_WRITE_SRC_EX 1
+
+`endif
