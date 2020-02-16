@@ -1,4 +1,0 @@
-`ifndef I_MEM_SPACE_DEFINES
-`define I_MEM_SPACE_DEFINES
-`define I_START_ADDRESS 4'h0
-`endif

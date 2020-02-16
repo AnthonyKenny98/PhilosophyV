@@ -2,3 +2,6 @@ Running: xsim.dir/run_philv_core_behav/xsimk -simmode gui -wdb run_philv_core_be
 Design successfully loaded
 Design Loading Memory Usage: 44092 KB (Peak: 44148 KB)
 Design Loading CPU Usage: 20 ms
+Simulation completed
+Simulation Memory Usage: 130188 KB (Peak: 183360 KB)
+Simulation CPU Usage: 30 ms
