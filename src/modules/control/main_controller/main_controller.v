@@ -115,7 +115,7 @@ module main_controller(
 
 				// Select Signals
 				ALUSrcA = `ALU_SRC_A_REGOUT;
-				ALUSrcB = `ALU_SRC_B_SIGEXT;
+				ALUSrcB = `ALU_SRC_B_IMMED;
 
 				// Next State
 				next_state = `CONTROL_STATE_MEMORY;

@@ -121,20 +121,19 @@ module philosophy_v_core(clk, rstb);
     // Busses carrying read results from REG_FILE
     wire [(BUS_WIDTH-1):0] _reg_rd0_, _reg_rd1_;
 
-    // Bus carrying sign extended Immed
-    wire [(BUS_WIDTH-1):0] _sign_extended_;
+    // Busses carrying rs, rd and immed
+    wire [`INSTR_REG_WIDTH-1:0] _rs1_, _rs2_, _rd_;
+    wire [BUS_WIDTH-1:0] _extended_immed_;
 
     // ALU DECODER
-    alu_decoder ALU_DECODER (
-        .funct3(_instr_[`INSTR_FUNCT3_RANGE]),
-        .funct7(_instr_[`INSTR_FUNCT7_RANGE]),
+    instr_decoder INSTR_DECODER (
+        .instr(_instr_),
         .controlOverride(_alu_control_),
-        .alu_funct(_alu_funct_)
-    );
-
-    sign_extend SIGN_EXTEND (
-        .in(_instr_[`INSTR_IMM_RANGE]),
-        .out(_sign_extended_)
+        .alu_funct(_alu_funct_),
+        .rs1(_rs1_),
+        .rs2(_rs2_),
+        .rd(_rd_),
+        .immed(_extended_immed_)
     );
 
     // REGISTER_FILE
@@ -142,9 +141,9 @@ module philosophy_v_core(clk, rstb);
 	    // Inputs 
 	    .clk(clk),
 	    .rst(1'b0),
-	    .rdAddr0(_instr_[`INSTR_RS1_RANGE]),
-	    .rdAddr1(_instr_[`INSTR_RS2_RANGE]),
-	    .wrAddr (_instr_[`INSTR_RD_RANGE]),
+	    .rdAddr0(_rs1_),
+	    .rdAddr1(_rs2_),
+	    .wrAddr (_rd_),
 	    .wrData (_mem_out_),
 	    .wrEna(_reg_wr_ena_),
 											
@@ -177,7 +176,7 @@ module philosophy_v_core(clk, rstb);
         .selector(_alu_src_b_select_),
         .in00(_reg_rd1_),
         .in01(4),
-        .in10(_sign_extended_),
+        .in10(_extended_immed_),
         .in11(),
         .out(_alu_src_b_)
     );

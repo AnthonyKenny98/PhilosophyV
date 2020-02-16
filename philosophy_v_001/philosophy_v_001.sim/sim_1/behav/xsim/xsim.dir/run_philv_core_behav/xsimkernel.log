@@ -1,7 +1,4 @@
-Running: xsim.dir/run_philv_core_behav/xsimk -simmode gui -wdb run_philv_core_behav.wdb -simrunnum 0 -socket 33741
+Running: xsim.dir/run_philv_core_behav/xsimk -simmode gui -wdb run_philv_core_behav.wdb -simrunnum 0 -socket 50435
 Design successfully loaded
-Design Loading Memory Usage: 44084 KB (Peak: 44140 KB)
-Design Loading CPU Usage: 40 ms
-Simulation completed
-Simulation Memory Usage: 130180 KB (Peak: 183352 KB)
-Simulation CPU Usage: 40 ms
+Design Loading Memory Usage: 44092 KB (Peak: 44148 KB)
+Design Loading CPU Usage: 20 ms

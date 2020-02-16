@@ -1,8 +1,8 @@
 # compile verilog/system verilog design source files
 verilog xil_defaultlib  --include "../../../../../src/modules/control/control_signals" --include "../../../../../src/isa/rv32i" --include "../../../../../src/modules/control/main_controller" --include "../../../../../src/modules/memory" --include "../../../../../src/modules/philv_core" \
 "../../../../../src/modules/combinatorial/alu/alu.v" \
-"../../../../../src/modules/control/alu_decoder/alu_decoder.v" \
 "../../../../../src/modules/combinatorial/decoder.v" \
+"../../../../../src/modules/control/instr_decoder/instr_decoder.v" \
 "../../../../../src/modules/control/main_controller/main_controller.v" \
 "../../../../../src/modules/memory/memory.v" \
 "../../../../../src/modules/combinatorial/mux/mux2.v" \
@@ -11,7 +11,6 @@ verilog xil_defaultlib  --include "../../../../../src/modules/control/control_si
 "../../../../../src/modules/combinatorial/program_counter/program_counter.v" \
 "../../../../../src/modules/registers/register.v" \
 "../../../../../src/modules/registers/registerFile.v" \
-"../../../../../src/modules/combinatorial/sign_extend/sign_extend.v" \
 "../../../../../src/modules_tb/philv_core/run_phil_v_core.v" \
 
 # compile glbl module
