@@ -71,7 +71,7 @@ module cmp_reg_file;
 		if (uut.REG_FILE.r07 !== reg_vals[7]) errors = errors + 1;
 		if (uut.REG_FILE.r08 !== reg_vals[8]) errors = errors + 1;
 		if (uut.REG_FILE.r09 !== reg_vals[9]) errors = errors + 1;
-		if (uut.REG_FILE.r10 !== reg_vals[0]) errors = errors + 1;
+		if (uut.REG_FILE.r10 !== reg_vals[10]) errors = errors + 1;
 		if (uut.REG_FILE.r11 !== reg_vals[11]) errors = errors + 1;
 		if (uut.REG_FILE.r12 !== reg_vals[12]) errors = errors + 1;
 		if (uut.REG_FILE.r13 !== reg_vals[13]) errors = errors + 1;
