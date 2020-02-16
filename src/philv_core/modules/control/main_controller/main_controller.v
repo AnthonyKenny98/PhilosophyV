@@ -24,12 +24,13 @@
 `include "opcode_defines.h"
 `include "alu_src_defines.h"
 `include "control_state_defines.h"
+`include "control_signal_defines.h"
 
 module main_controller(
 	// Inputs
 	clk, opCode,
 	// Outputs
-	PCWrite, IRWrite, ALUOverride, ALUSrcA, ALUSrcB, regFileWrite
+	PCWrite, IRWrite, ALUOverride, ALUSrcA, ALUSrcB, regFileWrite, regFileWriteSrc
 );
 
 	// Input Ports
@@ -38,7 +39,7 @@ module main_controller(
 
 	// Output Ports
 	output reg PCWrite, IRWrite, regFileWrite, ALUOverride;
-	output reg ALUSrcA;
+	output reg ALUSrcA, regFileWriteSrc;
 	output reg [`ALU_SRC_B_WIDTH-1:0] ALUSrcB;
 
 	// Internal Reg for State Tracking
@@ -64,6 +65,7 @@ module main_controller(
 				ALUOverride = 1;
 
 				// Select Signals
+				regFileWriteSrc = `REG_FILE_WRITE_SRC_EX;
 				ALUSrcA = `ALU_SRC_A_PC;
 				ALUSrcB = `ALU_SRC_B_CONST4;
 
@@ -78,6 +80,8 @@ module main_controller(
 				IRWrite = 0;
 				regFileWrite = 0;
 				ALUOverride = 0;
+
+				regFileWriteSrc = `REG_FILE_WRITE_SRC_EX;
 
 				// Next State
 				case (opCode) 
@@ -97,6 +101,7 @@ module main_controller(
 				ALUOverride = 0;
 
 				// Select Signals
+				regFileWriteSrc = `REG_FILE_WRITE_SRC_EX;
 				ALUSrcA = `ALU_SRC_A_REGOUT;
 				ALUSrcB = `ALU_SRC_B_REGOUT;
 
@@ -117,6 +122,8 @@ module main_controller(
 				ALUSrcA = `ALU_SRC_A_REGOUT;
 				ALUSrcB = `ALU_SRC_B_IMMED;
 
+				regFileWriteSrc = `REG_FILE_WRITE_SRC_EX;
+
 				// Next State
 				next_state = `CONTROL_STATE_MEMORY;
 
@@ -131,6 +138,8 @@ module main_controller(
 				regFileWrite = 0;
 				ALUOverride = 0;
 
+				regFileWriteSrc = `REG_FILE_WRITE_SRC_EX;
+
 
 				// Next State
 				next_state = `CONTROL_STATE_WRITEBACK;
@@ -144,6 +153,8 @@ module main_controller(
 				IRWrite = 0;
 				regFileWrite = 1;
 				ALUOverride = 0;
+
+				regFileWriteSrc = `REG_FILE_WRITE_SRC_EX;
 
 				// Next State
 				next_state = `CONTROL_STATE_FETCH;

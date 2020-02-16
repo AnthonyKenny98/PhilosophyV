@@ -11,10 +11,9 @@ Time Resolution for simulation is 1ps
 Compiling module xil_defaultlib.main_controller
 Compiling module xil_defaultlib.program_counter
 Compiling module xil_defaultlib.memory
-Compiling module xil_defaultlib.register(NUM_VAL=2)
+Compiling module xil_defaultlib.register_default
 Compiling module xil_defaultlib.instr_decoder
 Compiling module xil_defaultlib.decoder(N=5)
-Compiling module xil_defaultlib.register_default
 Compiling module xil_defaultlib.registerFile
 Compiling module xil_defaultlib.mux2
 Compiling module xil_defaultlib.mux4

@@ -41,7 +41,7 @@ module philosophy_v_core(clk, rstb);
 
     // Control Select Signals
     wire [(`ALU_FUNCT_WIDTH-1):0] _alu_funct_;
-    wire _alu_src_a_select_, _alu_control_;
+    wire _alu_src_a_select_, _alu_control_, _reg_file_src_select_;
     wire [(`ALU_SRC_B_WIDTH-1):0] _alu_src_b_select_;
 
 
@@ -54,6 +54,7 @@ module philosophy_v_core(clk, rstb);
         .PCWrite(_pc_ena_),
         .IRWrite(_ir_ena_),
         .ALUOverride(_alu_control_),
+        .regFileWriteSrc(_reg_file_src_select_),
         .ALUSrcA(_alu_src_a_select_),
         .ALUSrcB(_alu_src_b_select_),
         .regFileWrite(_reg_wr_ena_)
@@ -88,29 +89,28 @@ module philosophy_v_core(clk, rstb);
     ) INSTR_MEMORY (
             
             // Inputs
-            .addr(_program_count_),
+            .clk(clk),
+            .rdEna(_ir_ena_),
+            .rdAddr(_program_count_),
+            .wrEna(1'b0),
+            .wrAddr(),
+            .wrData(),
             
             //Outputs
-            .dout(_instr_mem_read_data_)
+            .rdData(_instr_)
     );
 
 
     // INSTRUCTION FETCH REGISTER
-    register #(
-        .N(BUS_WIDTH),
-        .NUM_VAL(2)
-    ) IF_REG (
+    register #(.N(BUS_WIDTH)) IF_REG (
+        // Inputs
         .clk(clk),
         .rst(1'b0),
-
-        // {PCWrite, IRWrite}
-        .ena({_pc_ena_, _ir_ena_}),
-
-        // {Current Instr Addr, Read from Instr Mem} 
-        .d({_instr_addr_, _instr_mem_read_data_}),
+        .ena(_pc_ena_),
+        .d(_instr_addr_),
         
         // Outputs
-        .q({_program_count_, _instr_})
+        .q(_program_count_)
     );
 
 
@@ -120,6 +120,9 @@ module philosophy_v_core(clk, rstb);
 
     // Busses carrying read results from REG_FILE
     wire [(BUS_WIDTH-1):0] _reg_rd0_, _reg_rd1_;
+
+    // Bus for writeback to register file
+    wire [(BUS_WIDTH-1):0] _reg_file_write_;
 
     // Busses carrying rs, rd and immed
     wire [`INSTR_REG_WIDTH-1:0] _rs1_, _rs2_, _rd_;
@@ -144,7 +147,7 @@ module philosophy_v_core(clk, rstb);
 	    .rdAddr0(_rs1_),
 	    .rdAddr1(_rs2_),
 	    .wrAddr (_rd_),
-	    .wrData (_mem_out_),
+	    .wrData (_reg_file_write_),
 	    .wrEna(_reg_wr_ena_),
 											
         // Outputs
@@ -229,6 +232,13 @@ module philosophy_v_core(clk, rstb);
     // Bus for output of WB_REG
     wire [(BUS_WIDTH-1):0] _wb_out_;
 
+    mux2 #(.BUS_WIDTH(BUS_WIDTH)) REG_FILE_SRC_MUX (
+        .selector(_reg_file_src_select_),
+        .in0(),
+        .in1(_mem_out_),
+        .out(_reg_file_write_)
+    );
+
     register #(.N(BUS_WIDTH)) WB_REG (
 
         // Inputs
@@ -243,6 +253,6 @@ module philosophy_v_core(clk, rstb);
 
     initial begin
         // TODO: For this to work, the clk has to start low. Maybe fix with rst
-        IF_REG.q[2*BUS_WIDTH-1:BUS_WIDTH] = `PC_START_ADDRESS;
+        IF_REG.q = `PC_START_ADDRESS;
     end
 endmodule

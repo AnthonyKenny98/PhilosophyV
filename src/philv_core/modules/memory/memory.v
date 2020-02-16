@@ -27,7 +27,7 @@
 `include "memory_defines.h"
 
 module memory( 
-	addr, dout,
+	clk, rdEna, rdAddr, wrEna, wrAddr, wrData, rdData,
 );
 
 // Bus Width 
@@ -37,20 +37,31 @@ parameter N = 32;
 parameter LENGTH = 512;
 parameter WIDTH  = 9; // (2^9 = 512)
 
-// Control Inputs
-input wire [N-1:0] addr;
-output reg [N-1:0] dout;
+// Inputs
+input wire clk;
+input wire rdEna, wrEna;
+input wire [N-1:0] rdAddr, wrAddr, wrData;
+
+// Outputs
+output reg [N-1:0] rdData;
 
 // Memory
 reg  [N-1:0] MEM [LENGTH-1:0];
 
 // Physical address
-wire [WIDTH-1:0] phy_addr;
-assign phy_addr = addr[WIDTH+1:2];
+wire [WIDTH-1:0] phy_rdAddr, phy_wrAddr;
+assign phy_rdAddr = rdAddr[WIDTH+1:2];
+assign phy_wrAddr = wrAddr[WIDTH+1:2];
 
 //instruction memory
-always @(addr) begin
-	dout = MEM[phy_addr];
+always @(posedge clk) begin
+	if (rdEna) begin
+		rdData <= MEM[phy_rdAddr];
+	end
+	if (wrEna) begin
+		MEM[phy_wrAddr] <= wrData;
+	end
+
 end
 
 //`ifndef SYNTHESIS
