@@ -36,15 +36,15 @@ module instr_decoder(instr, controlOverride, alu_funct, rs1, rs2, rd, immed);
     // Wires used to split instruction
     wire [(`FUNCT3_WIDTH-1):0] funct3;
     wire [(`FUNCT7_WIDTH-1):0] funct7;
-    wire [N-1:0] sign_extended, zero_extended;
+    wire [N-1:0] imm_extended, shamt_extended;
 
     // Funct Codes
     assign funct3 = instr[`INSTR_FUNCT3_RANGE];
     assign funct7 = instr[`INSTR_FUNCT7_RANGE];
 
     // Zero and Sign Extensions
-    assign zero_extended = {{27{1'b0}}, instr[`INSTR_SHAMT_RANGE]};
-    assign sign_extended = {{20{instr[31]}}, instr[`INSTR_IMM_RANGE]};
+    assign shamt_extended = {{27{instr[24]}}, instr[`INSTR_SHAMT_RANGE]};
+    assign imm_extended = {{20{instr[31]}}, instr[`INSTR_IMM_RANGE]};
     
     // Outputs
     output reg [(`ALU_FUNCT_WIDTH-1):0] alu_funct;
@@ -80,9 +80,9 @@ module instr_decoder(instr, controlOverride, alu_funct, rs1, rs2, rd, immed);
 
         // Determine Immed output
         case (funct3)
-            `FUNCT3_SLL : immed = zero_extended;
-            `FUNCT3_SRL : immed = zero_extended;
-            default : immed = sign_extended;   
+            `FUNCT3_SLL : immed = shamt_extended;
+            `FUNCT3_SRL : immed = shamt_extended;
+            default : immed = imm_extended;   
         endcase
 
     // Register outputs
