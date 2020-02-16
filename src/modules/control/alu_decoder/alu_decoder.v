@@ -44,6 +44,7 @@ module alu_decoder(funct3, funct7, controlOverride, alu_funct);
                 `FUNCT3_XOR : alu_funct = `ALU_FUNCT_XOR;
                 `FUNCT3_SLT : alu_funct = `ALU_FUNCT_SLT;
                 `FUNCT3_SLL : alu_funct = `ALU_FUNCT_SLL;
+                `FUNCT3_SLTU: alu_funct = `ALU_FUNCT_SLTU;
                 `FUNCT3_ADD : case (funct7)
                         `FUNCT7_BASE : alu_funct = `ALU_FUNCT_ADD;
                         `FUNCT7_ALT1 : alu_funct = `ALU_FUNCT_SUB;

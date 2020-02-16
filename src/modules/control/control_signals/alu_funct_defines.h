@@ -12,5 +12,6 @@
 `define ALU_FUNCT_ADD 4'b0111
 `define ALU_FUNCT_SUB 4'b1000
 `define ALU_FUNCT_SRA 4'b1011
+`define ALU_FUNCT_SLTU 4'b1100
 
 `endif

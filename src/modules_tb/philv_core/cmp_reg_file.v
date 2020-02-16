@@ -19,7 +19,7 @@
 // 
 //////////////////////////////////////////////////////////////////////////////////
 
-`define NUM_CYCLES 100
+`define NUM_CYCLES 1000
 `define REG_FILE_LEN 32
 `define INIT_RF "cmp_reg_file.tv"
 
