@@ -97,5 +97,30 @@ Consider a 8 bit adder that takes inputs `a` & `b` and outputs `c`. For now let'
   endmodule
 
   ```
-  ## <a name=assembly></a>Assembly Tests
+## <a name=assembly></a>Assembly Tests
+
+Assembly Tests are found in ```PhilosophyV/src/assembly_tests```.
+
+_TODO: Expand on this_.
+
+Steps in creating Assembly Tests:
+  1) Write a ```test.asm``` file that looks like this:
+  ``` 
+    add $x1, $x0, $x0   # $x1 = 0
+  ```
+    
+  2) Write a ```test_expected.csv``` file that looks like this
+  ```
+  32
+  0
+  0
+  ...
+  ```
+  Similarly to our module tests, the 32 on the top line is to indicate these are 32 bit values. Subsequent lines are the expected value of each register, beginning with $x0. This shows $x0 and $x1 are expected to hold the value of 0 at the end of this assembly test.
   
+  3) Compile ```test_expected.csv``` into ```cmp_reg_file.tv``` using the following command:
+  ``` bash
+  $ python3 csv_to_test_vector.py path/to/test_expected.csv path/to/cmp_reg_file.tv
+  ```
+  
+  4) Set ```cmp_reg_file.v``` as top level simulation file in Xilinx and run simulation. This will compare the Philosophy V core's register file with the expected register values and print results.
