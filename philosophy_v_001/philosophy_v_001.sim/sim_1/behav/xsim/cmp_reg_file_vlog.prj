@@ -1,0 +1,24 @@
+# compile verilog/system verilog design source files
+verilog xil_defaultlib  --include "../../../../../src/philv_core/modules/control/control_signals" --include "../../../../../src/philv_core/modules/combinatorial/program_counter" --include "../../../../../src/philv_core/modules/control/main_controller" --include "../../../../../src/philv_core/modules/memory" --include "../../../../../src/philv_core" --include "../../../../../src/philv_core/isa/rv32i" \
+"../../../../../src/philv_core/modules/control/main_controller/main_controller.v" \
+"../../../../../src/philv_core/philv_core.v" \
+"../../../../../src/philv_core/modules/registers/register.v" \
+"../../../../../src/philv_core/modules/registers/registerFile.v" \
+"../../../../../src/philv_core/modules/combinatorial/decoder.v" \
+"../../../../../src/philv_core/modules/combinatorial/instr_decoder/instr_decoder.v" \
+"../../../../../src/philv_core/modules/combinatorial/mux/mux2.v" \
+"../../../../../src/philv_core/modules/memory/memory.v" \
+"../../../../../src/philv_core/modules/combinatorial/mux/mux4.v" \
+"../../../../../src/philv_core/modules/combinatorial/program_counter/program_counter.v" \
+"../../../../../src/philv_core/modules/combinatorial/alu/alu.v" \
+"../../../../../src/test/modules_tb/philv_core/run_phil_v_core.v" \
+"../../../../../src/test/modules_tb/mux/mux2_tb.v" \
+"../../../../../src/test/modules_tb/mux/mux4_tb.v" \
+"../../../../../src/test/modules_tb/alu/alu_tb.v" \
+"../../../../../src/test/assembly_tests/cmp_reg_file.v" \
+
+# compile glbl module
+verilog xil_defaultlib "glbl.v"
+
+# Do not sort compile order
+nosort

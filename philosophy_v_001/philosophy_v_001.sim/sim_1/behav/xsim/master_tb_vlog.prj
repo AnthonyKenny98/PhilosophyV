@@ -1,0 +1,14 @@
+# compile verilog/system verilog design source files
+verilog xil_defaultlib  --include "../../../../../src/modules/control/control_signals" --include "../../../../../src/isa/rv32i" --include "../../../../../src/modules/control/main_controller" --include "../../../../../src/modules/memory" --include "../../../../../src/modules/philv_core" \
+"../../../../../src/modules/combinatorial/alu/alu.v" \
+"../../../../../src/modules_tb/alu/alu_tb.v" \
+"../../../../../src/modules/combinatorial/mux/mux2.v" \
+"../../../../../src/modules/combinatorial/mux/mux4.v" \
+"../../../../../src/modules_tb/mux/mux4_tb.v" \
+"../../../../../src/modules_tb/master_tb.v" \
+
+# compile glbl module
+verilog xil_defaultlib "glbl.v"
+
+# Do not sort compile order
+nosort
