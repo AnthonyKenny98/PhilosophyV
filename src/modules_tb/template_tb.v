@@ -22,7 +22,7 @@ module template_test;
     // vector, and should be the sum of all inputs and outputs you need to test.
     // This should be the only parameter, and is only such and defined within
     // the test module for the ability to make it dynamic (e.g. = 3*N not 96).
-    parameter TV_WIDTH = 3*N;                                           // TODO
+    parameter TV_WIDTH = 3*`N;                                           // TODO
     
     // Inputs (reg)
     reg [`N-1:0] inputA, inputB;                                        // TODO
@@ -43,17 +43,23 @@ module template_test;
     // Test Vectors
     reg [TV_WIDTH-1: 0] test_vectors [`TV_LEN-1:0];
     integer vectornum, errors;
-    
-    // Generate clk - No sensitivity list for continuous cycling
-    reg clk;
-    always begin
-        clk = 1; #10; clk = 0; #10;
-    end
         
-    // Load test vectors at start of test
+    integer i;
+    reg clk;
     initial begin
+        #2000; // Wait for global reset. 
+
+        // Load test vectors at start of test.
         $readmemb(`TV_FILE, test_vectors);
         vectornum = 0; errors = 0;
+
+        $display("========================================");
+        $display("RUNNING TESTBENCH FOR MODULE");
+
+        // Generate clk
+        for (i = 0; i < `TV_LEN; i = i+1) begin
+            clk = 1; #10; clk = 0; #10;
+        end
     end
         
     // Apply test vectors on rising clk edge
@@ -71,8 +77,8 @@ module template_test;
         end
         vectornum = vectornum + 1;
         if (test_vectors[vectornum] === {TV_WIDTH{1'bx}}) begin
-            $display("\n\nTEST BENCH COMPLETE\n===================");
             $display("%d tests finished with %d errors.", vectornum, errors);
+            $display("========================================");
             $finish;
         end  
     end
