@@ -131,7 +131,10 @@ module main_controller(
 				regFileWriteSrc = `REG_FILE_WRITE_SRC_EX;
 
 				// Next State
-				next_state = `CONTROL_STATE_MEMORY;
+				case (opCode) 
+					`OPCODE_STORE : next_state = `CONTROL_STATE_MEMORY_STORE;
+					default : next_state = `CONTROL_STATE_MEMORY;
+				endcase
 			end
 
 			`CONTROL_STATE_MEMORY : begin
@@ -143,10 +146,26 @@ module main_controller(
 				ALUOverride = 0;
 				DMemWrite = 0;
 
+				regFileWriteSrc = `REG_FILE_WRITE_SRC_EX;
+
+
+				// Next State
 				case (opCode)
-					`OPCODE_STORE : DMemWrite = 1;
-					default : DMemWrite = 0;
+					`OPCODE_LOAD : next_state = `CONTROL_STATE_WRITEBACK_MEM;
+					default : next_state = `CONTROL_STATE_WRITEBACK;
 				endcase
+				
+				
+			end
+
+			`CONTROL_STATE_MEMORY_STORE : begin
+
+				// Control Signals
+				PCWrite = 0;
+				IRWrite = 0;
+				regFileWrite = 0;
+				ALUOverride = 0;
+				DMemWrite = 1;
 
 				regFileWriteSrc = `REG_FILE_WRITE_SRC_EX;
 
