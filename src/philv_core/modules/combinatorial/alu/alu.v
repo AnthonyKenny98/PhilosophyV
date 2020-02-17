@@ -47,7 +47,6 @@ module alu(x, y, funct, z, equal, zero, overflow);
             `ALU_FUNCT_AND : z = x & y;
 			`ALU_FUNCT_OR  : z = x | y;
 			`ALU_FUNCT_XOR : z = x ^ y;
-			`ALU_FUNCT_NOR : z = ~(x | y);
 			`ALU_FUNCT_SLT : z = {31'b0, x_s < y_s};
 			`ALU_FUNCT_SLTU: z = {31'b0, x < y};
 			`ALU_FUNCT_SLL : z = x << y;

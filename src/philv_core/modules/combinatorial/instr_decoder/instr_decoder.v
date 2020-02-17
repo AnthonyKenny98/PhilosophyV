@@ -60,7 +60,10 @@ module instr_decoder(instr, controlOverride, alu_funct, rs1, rs2, rd, immed);
     always @(*) begin
         
         // Determine ALU Funct Code
-        if (controlOverride) begin
+        if ((opcode !== `OPCODE_ALU_IMM) && (opcode !== `OPCODE_ALU_REG)) begin
+            alu_funct = `ALU_FUNCT_ADD;
+        end
+        else if (controlOverride) begin
             alu_funct = `ALU_FUNCT_ADD;
         end
         else begin
