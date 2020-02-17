@@ -1,1 +1,2 @@
-lw $x1, 0($zero)
+lw $x1, 4($zero)
+sw $x1, 8($zero)

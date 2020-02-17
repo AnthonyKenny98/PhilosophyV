@@ -56,7 +56,11 @@ itypes = {
 }
 
 loads = {
-    "lw": (2,3)
+    "lw": (2,3),
+}
+
+stores = {
+    "sw": (2, 35)
 }
 
 # op_codes = {
@@ -276,6 +280,18 @@ def main():
             rs1 = dec_to_bin(registers[matchObj.group(2)], 5)
 
             machine = imm + rs1 + funct3 + rd + opcode
+
+        elif line['instruction'] in stores:
+            args = line['args']
+            rs2 = dec_to_bin(registers[args[0].strip()], 5)
+            opcode = dec_to_bin(stores[line['instruction']][1], 7)
+            funct3 = dec_to_bin(stores[line['instruction']][0], 3)
+            arg2 = args[1].strip()
+            matchObj = re.match(r'(-?\d+)\((.+?)\)', arg2)
+            imm = dec_to_bin(matchObj.group(1), 12)
+            rs1 = dec_to_bin(registers[matchObj.group(2)], 5)
+
+            machine = imm[0:7] + rs2 + rs1 + funct3 + imm[7:12] + opcode
         
         # else:
         #     # Encode a non-R-type instruction.

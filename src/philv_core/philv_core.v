@@ -258,7 +258,7 @@ module philosophy_v_core(clk, rstb);
 
     mux2 #(.BUS_WIDTH(BUS_WIDTH)) REG_FILE_SRC_MUX (
         .selector(_reg_file_src_select_),
-        .in0(),
+        .in0(_data_mem_read_data_),
         .in1(_mem_out_),
         .out(_reg_file_write_)
     );
