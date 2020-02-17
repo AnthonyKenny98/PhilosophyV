@@ -52,7 +52,11 @@ itypes = {
     "srai": (32,5,19),
     "srli": (0,5,19),
     "slti": (0,2,19),
-    "sltiu": (0,3,19)
+    "sltiu": (0,3,19),
+}
+
+loads = {
+    "lw": (2,3)
 }
 
 # op_codes = {
@@ -261,6 +265,17 @@ def main():
 
             machine = imm + rs1 + funct3 + rd + opcode
 
+        elif line['instruction'] in loads:
+            args = line['args']
+            rd = dec_to_bin(registers[args[0].strip()], 5)
+            opcode = dec_to_bin(loads[line['instruction']][1], 7)
+            funct3 = dec_to_bin(loads[line['instruction']][0], 3)
+            arg2 = args[1].strip()
+            matchObj = re.match(r'(-?\d+)\((.+?)\)', arg2)
+            imm = dec_to_bin(matchObj.group(1), 12)
+            rs1 = dec_to_bin(registers[matchObj.group(2)], 5)
+
+            machine = imm + rs1 + funct3 + rd + opcode
         
         # else:
         #     # Encode a non-R-type instruction.
