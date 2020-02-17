@@ -37,7 +37,7 @@ module philosophy_v_core(clk, rstb);
     ///////////////////////////////////////////////////////////////////////////
 
     // Control Enable Signals
-    wire _reg_wr_ena_, _pc_ena_, _ir_ena_;
+    wire _reg_wr_ena_, _pc_ena_, _ir_ena_, _dmem_wr_ena_;
 
     // Control Select Signals
     wire [(`ALU_FUNCT_WIDTH-1):0] _alu_funct_;
@@ -53,6 +53,7 @@ module philosophy_v_core(clk, rstb);
         // Outputs
         .PCWrite(_pc_ena_),
         .IRWrite(_ir_ena_),
+        .DMemWrite(_dmem_wr_ena_),
         .ALUOverride(_alu_control_),
         .regFileWriteSrc(_reg_file_src_select_),
         .ALUSrcA(_alu_src_a_select_),
@@ -228,9 +229,9 @@ module philosophy_v_core(clk, rstb);
         .clk(clk),
         .rdEna(1'b1),
         .rdAddr(_ex_out_),
-        .wrEna(),
-        .wrAddr(),
-        .wrData(),
+        .wrEna(_dmem_wr_ena_),
+        .wrAddr(_ex_out_),
+        .wrData(_reg_rd1_),
 
         // Outputs
         .rdData(_data_mem_read_data_)

@@ -30,7 +30,7 @@ module main_controller(
 	// Inputs
 	clk, opCode,
 	// Outputs
-	PCWrite, IRWrite, ALUOverride, ALUSrcA, ALUSrcB, regFileWrite, regFileWriteSrc
+	PCWrite, IRWrite, DMemWrite, ALUOverride, ALUSrcA, ALUSrcB, regFileWrite, regFileWriteSrc
 );
 
 	// Input Ports
@@ -38,7 +38,7 @@ module main_controller(
 	input wire [`INSTR_OPCODE_WIDTH-1:0] opCode;
 
 	// Output Ports
-	output reg PCWrite, IRWrite, regFileWrite, ALUOverride;
+	output reg PCWrite, IRWrite, regFileWrite, DMemWrite, ALUOverride;
 	output reg ALUSrcA, regFileWriteSrc;
 	output reg [`ALU_SRC_B_WIDTH-1:0] ALUSrcB;
 
@@ -63,6 +63,7 @@ module main_controller(
 				IRWrite = 1;
 				regFileWrite = 0;
 				ALUOverride = 1;
+				DMemWrite = 0;
 
 				// Select Signals
 				regFileWriteSrc = `REG_FILE_WRITE_SRC_EX;
@@ -80,6 +81,7 @@ module main_controller(
 				IRWrite = 0;
 				regFileWrite = 0;
 				ALUOverride = 0;
+				DMemWrite = 0;
 
 				regFileWriteSrc = `REG_FILE_WRITE_SRC_EX;
 
@@ -89,6 +91,7 @@ module main_controller(
 					`OPCODE_ALU_REG : next_state = `CONTROL_STATE_EXECUTE_R;
 					`OPCODE_ALU_IMM : next_state = `CONTROL_STATE_EXECUTE_I;
 					`OPCODE_LOAD	: next_state = `CONTROL_STATE_EXECUTE_I;
+					`OPCODE_STORE 	: next_state = `CONTROL_STATE_EXECUTE_I;
 					default: next_state = `CONTROL_STATE_EXECUTE_R;
 				endcase
 			end
@@ -100,6 +103,7 @@ module main_controller(
 				IRWrite = 0;
 				regFileWrite = 0;
 				ALUOverride = 0;
+				DMemWrite = 0;
 
 				// Select Signals
 				regFileWriteSrc = `REG_FILE_WRITE_SRC_EX;
@@ -118,6 +122,7 @@ module main_controller(
 				IRWrite = 0;
 				regFileWrite = 0;
 				ALUOverride = 0;
+				DMemWrite = 0;
 
 				// Select Signals
 				ALUSrcA = `ALU_SRC_A_REGOUT;
@@ -136,6 +141,12 @@ module main_controller(
 				IRWrite = 0;
 				regFileWrite = 0;
 				ALUOverride = 0;
+				DMemWrite = 0;
+
+				case (opCode)
+					`OPCODE_STORE : DMemWrite = 1;
+					default : DMemWrite = 0;
+				endcase
 
 				regFileWriteSrc = `REG_FILE_WRITE_SRC_EX;
 
@@ -156,6 +167,7 @@ module main_controller(
 				IRWrite = 0;
 				regFileWrite = 1;
 				ALUOverride = 0;
+				DMemWrite = 0;
 
 				regFileWriteSrc = `REG_FILE_WRITE_SRC_EX;
 
@@ -171,6 +183,7 @@ module main_controller(
 				IRWrite = 0;
 				regFileWrite = 1;
 				ALUOverride = 0;
+				DMemWrite = 0;
 
 				regFileWriteSrc = `REG_FILE_WRITE_SRC_MEM;
 
