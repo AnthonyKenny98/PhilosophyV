@@ -40,7 +40,9 @@ module instr_decoder_tb;
     // the test module for the ability to make it dynamic (e.g. = 3*N not 96).
     
     // Instruction + controlOverride + alu_funct + 3*registers + extended immed
-    parameter TV_WIDTH =`N + 1 + `ALU_FUNCT_WIDTH + 3*`INSTR_REG_WIDTH + `N;
+    parameter INPUT_TV_WIDTH = `N + 1;
+    parameter OUTPUT_TV_WIDTH = `ALU_FUNCT_WIDTH + 3*`INSTR_REG_WIDTH + `N;
+    parameter TV_WIDTH = INPUT_TV_WIDTH + OUTPUT_TV_WIDTH;
     
     // Inputs (reg)
     reg [`N-1:0] instr;
@@ -57,7 +59,7 @@ module instr_decoder_tb;
     reg [`N-1:0] immed_x;
 
     // Amalgamate actual and expected outputs
-    wire [`TV_LEN-1:0] actual, expected;
+    wire [OUTPUT_TV_WIDTH-1:0] actual, expected;
 
     assign actual = {alu_funct, rs1, rs2, rd, immed};
     assign expected = {alu_funct_x, rs1_x, rs2_x, rd_x, immed_x};
