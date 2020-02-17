@@ -218,7 +218,12 @@ module philosophy_v_core(clk, rstb);
 
     // DATA_MEMORY
 
-    memory #(.N(BUS_WIDTH)) DATA_MEMORY (
+    memory #(
+        .N(BUS_WIDTH),
+        .LENGTH(`D_MEM_LEN),
+        .WIDTH(`D_MEM_WIDTH),
+        .MEM_FILE(`D_MEM_FILE)
+    ) DATA_MEMORY (
         // Inputs
         .clk(clk),
         .rdEna(1'b1),

@@ -88,6 +88,7 @@ module main_controller(
 
 					`OPCODE_ALU_REG : next_state = `CONTROL_STATE_EXECUTE_R;
 					`OPCODE_ALU_IMM : next_state = `CONTROL_STATE_EXECUTE_I;
+					`OPCODE_LOAD	: next_state = `CONTROL_STATE_EXECUTE_I;
 					default: next_state = `CONTROL_STATE_EXECUTE_R;
 				endcase
 			end
@@ -126,8 +127,6 @@ module main_controller(
 
 				// Next State
 				next_state = `CONTROL_STATE_MEMORY;
-
-				
 			end
 
 			`CONTROL_STATE_MEMORY : begin
@@ -142,7 +141,11 @@ module main_controller(
 
 
 				// Next State
-				next_state = `CONTROL_STATE_WRITEBACK;
+				case (opCode)
+					`OPCODE_LOAD : next_state = `CONTROL_STATE_WRITEBACK_MEM;
+					default : next_state = `CONTROL_STATE_WRITEBACK;
+				endcase
+				
 				
 			end
 
@@ -158,6 +161,22 @@ module main_controller(
 
 				// Next State
 				next_state = `CONTROL_STATE_FETCH;
+				
+			end
+
+			`CONTROL_STATE_WRITEBACK_MEM : begin
+
+				// Control Signals
+				PCWrite = 0;
+				IRWrite = 0;
+				regFileWrite = 0;
+				ALUOverride = 0;
+
+				regFileWriteSrc = `REG_FILE_WRITE_SRC_MEM;
+
+
+				// Next State
+				next_state = `CONTROL_STATE_WRITEBACK;
 				
 			end
 		endcase
