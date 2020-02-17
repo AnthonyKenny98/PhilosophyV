@@ -32,6 +32,9 @@ module template_test;
 
     // Expected Outputs (reg). Should have same name with suffix "_x"
     reg [`N-1:0] outputC_x;                                             // TODO
+
+    assign actual = {outputC};
+    assign expected = {outputC_x};
     
     // Init Unit Under Test
     template uut (                                                      // TODO
@@ -54,7 +57,7 @@ module template_test;
         vectornum = 0; errors = 0;
 
         $display("========================================");
-        $display("RUNNING TESTBENCH FOR MODULE");
+        $display("RUNNING TESTBENCH FOR MODULE");                       // TODO
 
         // Generate clk
         for (i = 0; i < `TV_LEN; i = i+1) begin
@@ -70,8 +73,9 @@ module template_test;
     // Check results on falling clk edge
     always @(negedge clk) begin
         // Check for error in test vector
-        if (outputC !== outputC_x) begin
-            $display("ERROR - TV #%d\n===============",vectornum);
+        if (actual !== expected) begin
+            $display("ERROR - TV #%d\n===============", vectornum);
+            $display("Actual = %b | Expected = %b", actual, expected);
             $display("custom error message here");                     // TODO
             errors = errors + 1;
         end

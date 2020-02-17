@@ -23,6 +23,7 @@
 `include "alu_funct_defines.h"
 `include "funct_defines.h"
 `include "instr_defines.h"
+`include "opcode_defines.h"
 
 module instr_decoder(instr, controlOverride, alu_funct, rs1, rs2, rd, immed);
     
@@ -34,9 +35,13 @@ module instr_decoder(instr, controlOverride, alu_funct, rs1, rs2, rd, immed);
     input wire controlOverride;
 
     // Wires used to split instruction
+    wire [(`INSTR_OPCODE_WIDTH-1):0] opcode;
     wire [(`FUNCT3_WIDTH-1):0] funct3;
     wire [(`FUNCT7_WIDTH-1):0] funct7;
     wire [N-1:0] imm_extended, shamt_extended;
+
+    // Opcode
+    assign opcode = instr[`INSTR_OPCODE_RANGE];
 
     // Funct Codes
     assign funct3 = instr[`INSTR_FUNCT3_RANGE];
@@ -55,7 +60,7 @@ module instr_decoder(instr, controlOverride, alu_funct, rs1, rs2, rd, immed);
     always @(*) begin
         
         // Determine ALU Funct Code
-        if (controlOverride) begin
+        if ((controlOverride) || (opcode !== `OPCODE_ALU_IMM) || (opcode !== `OPCODE_ALU_REG)) begin
             alu_funct = `ALU_FUNCT_ADD;
         end
         else begin
