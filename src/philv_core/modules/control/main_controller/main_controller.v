@@ -171,10 +171,7 @@ module main_controller(
 
 
 				// Next State
-				case (opCode)
-					`OPCODE_LOAD : next_state = `CONTROL_STATE_WRITEBACK_MEM;
-					default : next_state = `CONTROL_STATE_WRITEBACK;
-				endcase
+				next_state = `CONTROL_STATE_WRITEBACK;
 				
 				
 			end
