@@ -21,5 +21,6 @@
 
 `define FUNCT3_LW   3'b010
 `define FUNCT3_LB   3'b000
+`define FUNCT3_LH   3'b001
 
 `endif

@@ -264,7 +264,7 @@ module philosophy_v_core(clk, rstb);
         .in00(_data_mem_read_data_),
         .in01(_mem_out_),
         .in10({{24{_data_mem_read_data_[31]}}, _data_mem_read_data_[31:24]}),
-        .in11(),
+        .in11({{16{_data_mem_read_data_[31]}}, _data_mem_read_data_[31:16]}),
         .out(_reg_file_write_)
     );
 

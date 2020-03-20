@@ -5,5 +5,6 @@
 `define REG_FILE_WRITE_SRC_MEM 2'b00
 `define REG_FILE_WRITE_SRC_EX 2'b01
 `define REG_FILE_WRITE_SRC_BYTE 2'b10
+`define REG_FILE_WRITE_SRC_HALF 2'b11
 
 `endif

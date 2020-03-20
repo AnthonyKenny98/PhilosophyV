@@ -206,6 +206,7 @@ module main_controller(
 
 				case (funct3)
 					`FUNCT3_LB : regFileWriteSrc = `REG_FILE_WRITE_SRC_BYTE;
+					`FUNCT3_LH : regFileWriteSrc = `REG_FILE_WRITE_SRC_HALF;
 					default : regFileWriteSrc = `REG_FILE_WRITE_SRC_MEM;
 				endcase
 
