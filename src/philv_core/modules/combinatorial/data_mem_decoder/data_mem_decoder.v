@@ -41,6 +41,8 @@ module data_mem_decoder(in, opcode, funct3, out);
                 `FUNCT3_LW : out = in;
                 `FUNCT3_LH : out = {{16{in[31]}}, in[31:16]}; // Sign Extended Half Word
                 `FUNCT3_LB : out = {{24{in[31]}}, in[31:24]}; // Sign Extended Byte
+                `FUNCT3_LHU : out = {{16{0}}, in[31:16]}; // Zero Extended Half Word
+                `FUNCT3_LBU : out = {{24{0}}, in[31:24]}; // Zero Extended Byte
             endcase
             default : out = in;
         endcase
