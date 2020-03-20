@@ -21,6 +21,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 `include "instr_defines.h"
+`include "funct_defines.h"
 `include "opcode_defines.h"
 `include "alu_src_defines.h"
 `include "control_state_defines.h"
@@ -28,7 +29,7 @@
 
 module main_controller(
 	// Inputs
-	clk, opCode,
+	clk, opCode, funct3,
 	// Outputs
 	PCWrite, IRWrite, DMemWrite, ALUOverride, ALUSrcA, ALUSrcB, regFileWrite, regFileWriteSrc
 );
@@ -36,10 +37,12 @@ module main_controller(
 	// Input Ports
 	input wire clk;
 	input wire [`INSTR_OPCODE_WIDTH-1:0] opCode;
+	input wire [`FUNCT3_WIDTH-1:0] funct3;
 
 	// Output Ports
 	output reg PCWrite, IRWrite, regFileWrite, DMemWrite, ALUOverride;
-	output reg ALUSrcA, regFileWriteSrc;
+	output reg ALUSrcA;
+	output reg [`REG_FILE_WRITE_SRC_WIDTH-1:0] regFileWriteSrc;
 	output reg [`ALU_SRC_B_WIDTH-1:0] ALUSrcB;
 
 	// Internal Reg for State Tracking
@@ -201,7 +204,10 @@ module main_controller(
 				ALUOverride = 0;
 				DMemWrite = 0;
 
-				regFileWriteSrc = `REG_FILE_WRITE_SRC_MEM;
+				case (funct3)
+					`FUNCT3_LB : regFileWriteSrc = `REG_FILE_WRITE_SRC_BYTE;
+					default : regFileWriteSrc = `REG_FILE_WRITE_SRC_MEM;
+				endcase
 
 
 				// Next State
