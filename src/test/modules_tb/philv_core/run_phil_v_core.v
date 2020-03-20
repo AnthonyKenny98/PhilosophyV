@@ -21,7 +21,7 @@
 // 
 //////////////////////////////////////////////////////////////////////////////////
 
-`define NUM_CYCLES 200
+`define NUM_CYCLES 500
 
 module run_philv_core;
     
@@ -54,14 +54,14 @@ module run_philv_core;
     always @(negedge clk) begin
         $display(
             "STATE = %d | ", uut.MAIN_CONTROLLER.state,
-            "IR_PC = %h | ", uut.IF_REG.q[63:32],
-            "IR_I = %b | ",  uut.IF_REG.q[31:0],
+            "PC = %h | ", uut.IF_REG.q,
+            "Instr = %b | ",  uut.INSTR_MEMORY.rdData,
             "ALU_SRC_A = %h | ", uut._alu_src_a_,
             "ALU_SRC_B = %h | ", uut._alu_src_b_,
             "EX = %h | ", uut.EX_REG.q,
             "MEM = %h | ", uut.MEM_REG.q,
             "WB = %h", uut.WB_REG.q,
-            " | r02 = %h", uut.REG_FILE.r02);
+            " | r13 = %h", uut.REG_FILE.r13);
     end
 
 endmodule

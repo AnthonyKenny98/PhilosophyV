@@ -38,7 +38,7 @@ module instr_decoder(instr, controlOverride, alu_funct, rs1, rs2, rd, immed);
     wire [(`INSTR_OPCODE_WIDTH-1):0] opcode;
     wire [(`FUNCT3_WIDTH-1):0] funct3;
     wire [(`FUNCT7_WIDTH-1):0] funct7;
-    wire [N-1:0] imm_extended, shamt_extende, asym_extended;
+    wire [N-1:0] imm_extended, shamt_extended, asym_extended;
 
     // Opcode
     assign opcode = instr[`INSTR_OPCODE_RANGE];
