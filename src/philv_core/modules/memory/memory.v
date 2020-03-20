@@ -47,20 +47,20 @@ input wire [N-1:0] rdAddr, wrAddr, wrData;
 output reg [N-1:0] rdData;
 
 // Memory
-reg  [N-1:0] MEM [LENGTH-1:0];
+reg  [(N/4)-1:0] MEM [(LENGTH*4)-1:0];
 
-// Physical address
-wire [WIDTH-1:0] phy_rdAddr, phy_wrAddr;
-assign phy_rdAddr = rdAddr[WIDTH+1:2];
-assign phy_wrAddr = wrAddr[WIDTH+1:2];
+// // Physical address
+// wire [WIDTH-1:0] phy_rdAddr, phy_wrAddr;
+// assign phy_rdAddr = rdAddr[WIDTH-1:0];
+// assign phy_wrAddr = wrAddr[WIDTH-1:0];
 
 //instruction memory
 always @(posedge clk) begin
 	if (rdEna) begin
-		rdData <= MEM[phy_rdAddr];
+		rdData <= {MEM[rdAddr], MEM[rdAddr+1], MEM[rdAddr+2], MEM[rdAddr+3]};
 	end
 	if (wrEna) begin
-		MEM[phy_wrAddr] <= wrData;
+		{MEM[wrAddr], MEM[wrAddr+1], MEM[wrAddr+2], MEM[wrAddr+3]} <= wrData;
 	end
 
 end
@@ -72,7 +72,7 @@ initial begin
 		INIT_INST=MEM_FILE;
 	end
 	$display("initializing %m's instruction memory from '%s'", INIT_INST);
-	$readmemb(INIT_INST, MEM, 0, LENGTH-1);
+	$readmemb(INIT_INST, MEM, 0, (LENGTH*4)-1);
 end
 //`else
 //initial begin

@@ -87,6 +87,7 @@ module instr_decoder(instr, controlOverride, alu_funct, rs1, rs2, rd, immed);
         // Determine Immed output
         case (opcode)
             `OPCODE_STORE : immed = asym_extended;
+            `OPCODE_LOAD : immed = imm_extended;
             default : case (funct3)
                 `FUNCT3_SLL : immed = shamt_extended;
                 `FUNCT3_SRL : immed = shamt_extended;

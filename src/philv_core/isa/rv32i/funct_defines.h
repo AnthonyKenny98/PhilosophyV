@@ -19,4 +19,7 @@
 `define FUNCT3_OR   3'b110
 `define FUNCT3_AND  3'b111
 
+`define FUNCT3_LW   3'b010
+`define FUNCT3_LB   3'b000
+
 `endif

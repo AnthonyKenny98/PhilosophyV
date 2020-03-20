@@ -320,8 +320,8 @@ def main():
         #             imm = find_label_relative(parsed_lines, line, args[2].strip())
 
         #         machine = op + rs + rt + imm
-
-        output_b.write(machine + '\n')
+        formatted_machine = machine[0:8] + ' ' + machine[8:16] + ' ' + machine[16:24] + ' ' + machine[24:32]
+        output_b.write(formatted_machine + '\n')
 
 if __name__ == "__main__":
     main()
