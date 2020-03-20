@@ -41,8 +41,7 @@ module philosophy_v_core(clk, rstb);
 
     // Control Select Signals
     wire [(`ALU_FUNCT_WIDTH-1):0] _alu_funct_;
-    wire _alu_src_a_select_, _alu_control_;
-    wire [(`REG_FILE_WRITE_SRC_WIDTH-1):0] _reg_file_src_select_;
+    wire _alu_src_a_select_, _alu_control_, _reg_file_src_select_;
     wire [(`ALU_SRC_B_WIDTH-1):0] _alu_src_b_select_;
 
 
@@ -259,12 +258,20 @@ module philosophy_v_core(clk, rstb);
     // Bus for output of WB_REG
     wire [(BUS_WIDTH-1):0] _wb_out_;
 
-    mux4 #(.BUS_WIDTH(BUS_WIDTH)) REG_FILE_SRC_MUX (
+    // 
+    wire [(BUS_WIDTH-1):0] _data_mem_out_;
+
+    data_mem_decoder #(.N(BUS_WIDTH)) DATA_MEM_DECODER (
+        .in(_data_mem_read_data_),
+        .opcode(_instr_[`INSTR_OPCODE_RANGE]),
+        .funct3(_instr_[`INSTR_FUNCT3_RANGE]),
+        .out(_data_mem_out_)
+    );
+
+    mux2 #(.BUS_WIDTH(BUS_WIDTH)) REG_FILE_SRC_MUX (
         .selector(_reg_file_src_select_),
-        .in00(_data_mem_read_data_),
-        .in01(_mem_out_),
-        .in10({{24{_data_mem_read_data_[31]}}, _data_mem_read_data_[31:24]}),
-        .in11({{16{_data_mem_read_data_[31]}}, _data_mem_read_data_[31:16]}),
+        .in0(_data_mem_out_),
+        .in1(_mem_out_),
         .out(_reg_file_write_)
     );
 

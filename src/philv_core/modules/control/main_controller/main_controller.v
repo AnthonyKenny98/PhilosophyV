@@ -41,8 +41,7 @@ module main_controller(
 
 	// Output Ports
 	output reg PCWrite, IRWrite, regFileWrite, DMemWrite, ALUOverride;
-	output reg ALUSrcA;
-	output reg [`REG_FILE_WRITE_SRC_WIDTH-1:0] regFileWriteSrc;
+	output reg ALUSrcA, regFileWriteSrc;
 	output reg [`ALU_SRC_B_WIDTH-1:0] ALUSrcB;
 
 	// Internal Reg for State Tracking
@@ -204,11 +203,7 @@ module main_controller(
 				ALUOverride = 0;
 				DMemWrite = 0;
 
-				case (funct3)
-					`FUNCT3_LB : regFileWriteSrc = `REG_FILE_WRITE_SRC_BYTE;
-					`FUNCT3_LH : regFileWriteSrc = `REG_FILE_WRITE_SRC_HALF;
-					default : regFileWriteSrc = `REG_FILE_WRITE_SRC_MEM;
-				endcase
+				regFileWriteSrc = `REG_FILE_WRITE_SRC_MEM;
 
 
 				// Next State
