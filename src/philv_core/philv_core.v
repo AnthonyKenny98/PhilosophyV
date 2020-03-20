@@ -217,9 +217,22 @@ module philosophy_v_core(clk, rstb);
 
     // Bus for output of data memory
     wire [(BUS_WIDTH-1):0] _data_mem_read_data_;
+    wire [(BUS_WIDTH-1):0] _data_mem_out_;
+
+    wire [(BUS_WIDTH-1):0] _wr_data_;
+
+    // MEMORY DECODER
+    // CONTROLS SHIFTS FOR MEMORY LOADS AND STORES
+    data_mem_decoder #(.N(BUS_WIDTH)) DATA_MEM_DECODER (
+        .in0(_data_mem_read_data_),
+        .in1(_reg_rd1_),
+        .opcode(_instr_[`INSTR_OPCODE_RANGE]),
+        .funct3(_instr_[`INSTR_FUNCT3_RANGE]),
+        .out0(_data_mem_out_),
+        .out1(_wr_data_)
+    );
 
     // DATA_MEMORY
-
     memory #(
         .N(BUS_WIDTH),
         .LENGTH(`D_MEM_LEN),
@@ -232,7 +245,7 @@ module philosophy_v_core(clk, rstb);
         .rdAddr(_ex_out_),
         .wrEna(_dmem_wr_ena_),
         .wrAddr(_ex_out_),
-        .wrData(_reg_rd1_),
+        .wrData(_wr_data_),
 
         // Outputs
         .rdData(_data_mem_read_data_)
@@ -257,16 +270,6 @@ module philosophy_v_core(clk, rstb);
 
     // Bus for output of WB_REG
     wire [(BUS_WIDTH-1):0] _wb_out_;
-
-    // 
-    wire [(BUS_WIDTH-1):0] _data_mem_out_;
-
-    data_mem_decoder #(.N(BUS_WIDTH)) DATA_MEM_DECODER (
-        .in(_data_mem_read_data_),
-        .opcode(_instr_[`INSTR_OPCODE_RANGE]),
-        .funct3(_instr_[`INSTR_FUNCT3_RANGE]),
-        .out(_data_mem_out_)
-    );
 
     mux2 #(.BUS_WIDTH(BUS_WIDTH)) REG_FILE_SRC_MUX (
         .selector(_reg_file_src_select_),

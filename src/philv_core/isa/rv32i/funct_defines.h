@@ -25,4 +25,8 @@
 `define FUNCT3_LBU  3'b100
 `define FUNCT3_LHU  3'b101
 
+`define FUNCT3_SB   3'b000
+`define FUNCT3_SH   3'b001
+`define FUNCT3_SW   3'b010
+
 `endif

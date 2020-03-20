@@ -17,3 +17,9 @@ lh $x16, 4($x14)    # x16 = -32639
 lb $x17, 4($x14)    # x17 = -128
 lhu $x18, 4($x14)   # x18 = 32897
 lbu $x19, 4($x14)   # x19 = 128
+sw $x11, 8($x14)    # Store 16843009 into Memory at address 40
+sh $x11, 12($x14)   # Store 257 into Memory at address 44
+sb $x11, 16($x14)   # Store 1 into Memory at address 48
+lw $x20, 8($x14)    # Load 16843009 into x20
+lw $x21, 12($x14)   # Load 257 into x21
+lw $x22, 16($x14)   # Load 1 into x22
