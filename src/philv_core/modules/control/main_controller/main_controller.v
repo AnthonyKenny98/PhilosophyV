@@ -102,11 +102,20 @@ module main_controller(
 
 				// Select Signals
 				regFileWriteSrc = `REG_FILE_WRITE_SRC_EX;
-				ALUSrcA = `ALU_SRC_A_REGOUT;
 
 				case (opCode)
-					`OPCODE_ALU_REG : ALUSrcB = `ALU_SRC_B_REGOUT;
-					default : ALUSrcB = `ALU_SRC_B_IMMED;
+					`OPCODE_ALU_REG : begin
+						ALUSrcA = `ALU_SRC_A_REGOUT;
+						ALUSrcB = `ALU_SRC_B_REGOUT;
+					end
+					`OPCODE_JUMP : begin
+						ALUSrcA = `ALU_SRC_A_PC;
+						ALUSrcB = `ALU_SRC_B_CONST0;
+					end
+					default : begin
+						ALUSrcA = `ALU_SRC_A_REGOUT;
+						ALUSrcB = `ALU_SRC_B_IMMED;
+					end
 				endcase
 
 				// Next State

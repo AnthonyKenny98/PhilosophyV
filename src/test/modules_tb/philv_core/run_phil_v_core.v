@@ -42,7 +42,7 @@ module run_philv_core;
     integer i;
     initial begin
         clk = 0;
-        #100;
+        #5000;
         for (i = 0; i < `NUM_CYCLES*2; i = i + 1) begin
             #10; clk = ~clk;
         end
@@ -61,7 +61,8 @@ module run_philv_core;
             "EX = %h | ", uut.EX_REG.q,
             "MEM = %h | ", uut.MEM_REG.q,
             "WB = %h", uut.WB_REG.q,
-            " | r13 = %h", uut.REG_FILE.r13);
+            " | r2 = %h", uut.REG_FILE.r02,
+            " | r3 = %h", uut.REG_FILE.r03);
     end
 
 endmodule

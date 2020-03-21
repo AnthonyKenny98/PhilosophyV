@@ -58,7 +58,7 @@ itypes = {
     "srai": (32, 5, 19),
     "srli": (0, 5, 19),
     "slti": (0, 2, 19),
-    "sltiu": (0, 3, 19),
+    "sltiu": (0, 3, 19)
 }
 
 loads = {
@@ -75,30 +75,10 @@ stores = {
     "sb": (0, 35)
 }
 
-# op_codes = {
-#     "add": 0,
-#     "sub": 0,
-#     "and": 0,
-#     "or": 0,
-#     "xor": 0,
-#     "nor": 0,
-#     "sll": 0,
-#     "sra": 0,
-#     "srl": 0,
-#     "slt": 0,
-#     "jr": 0,
-#     "jal": 3,
-#     "beq": 4,
-#     "bne": 5,
-#     "addi": 8,
-#     "andi": 12,
-#     "lw": 35,
-#     "sw": 43,
-#     "xori": 14,
-#     "j": 2,
-#     "slti": 10,
-#     "ori": 13
-# }
+control = {
+    # JALR
+    "jalr": (0, 103)
+}
 
 registers = {
     # Direct numbers
@@ -259,50 +239,50 @@ def main():
     machine = ""  # Current machine code word.
 
     for line in parsed_lines:
-
-        # NOP - TODO: Get rid of this, not an instruction in RISCV
-        if line['instruction'] == 'nop':
-            machine = 32 * '0'
+        instr = line['instruction']
 
         # R Types
-        elif line['instruction'] in rtypes:
-            # Encode an R-type instruction.
+        if instr in rtypes:
             args = line['args']
 
             rs1 = dec_to_bin(registers[args[1].strip()], 5)
             rs2 = dec_to_bin(registers[args[2].strip()], 5)
             rd = dec_to_bin(registers[args[0].strip()], 5)
 
-            funct7 = dec_to_bin(rtypes[line['instruction']][0], 7)
-            funct3 = dec_to_bin(rtypes[line['instruction']][1], 3)
-            opcode = dec_to_bin(rtypes[line['instruction']][2], 7)
+            funct7 = dec_to_bin(rtypes[instr][0], 7)
+            funct3 = dec_to_bin(rtypes[instr][1], 3)
+            opcode = dec_to_bin(rtypes[instr][2], 7)
 
             machine = funct7 + rs2 + rs1 + funct3 + rd + opcode
 
         # I-Types
-        elif line['instruction'] in itypes:
+        elif instr in itypes:
             args = line['args']
 
             rs1 = dec_to_bin(registers[args[1].strip()], 5)
             rd = dec_to_bin(registers[args[0].strip()], 5)
 
             # Account for shamt
-            if line['instruction'] in ['slli', 'srli', 'srai']:
-                imm = dec_to_bin(itypes[line['instruction']][0], 7)
+            if instr in ['slli', 'srli', 'srai']:
+                imm = dec_to_bin(itypes[instr][0], 7)
                 imm = imm + dec_to_bin(args[2].strip(), 5)
             else:
                 imm = dec_to_bin(args[2].strip(), 12)
 
-            funct3 = dec_to_bin(itypes[line['instruction']][1], 3)
-            opcode = dec_to_bin(itypes[line['instruction']][2], 7)
+            funct3 = dec_to_bin(itypes[instr][1], 3)
+            opcode = dec_to_bin(itypes[instr][2], 7)
 
             machine = imm + rs1 + funct3 + rd + opcode
 
-        elif line['instruction'] in loads:
+        # Loads
+        elif instr in loads:
             args = line['args']
+
             rd = dec_to_bin(registers[args[0].strip()], 5)
-            opcode = dec_to_bin(loads[line['instruction']][1], 7)
-            funct3 = dec_to_bin(loads[line['instruction']][0], 3)
+
+            opcode = dec_to_bin(loads[instr][1], 7)
+            funct3 = dec_to_bin(loads[instr][0], 3)
+
             arg2 = args[1].strip()
             match_obj = re.match(r'(-?\d+)\((.+?)\)', arg2)
             imm = dec_to_bin(match_obj.group(1), 12)
@@ -310,11 +290,15 @@ def main():
 
             machine = imm + rs1 + funct3 + rd + opcode
 
-        elif line['instruction'] in stores:
+        # Stores
+        elif instr in stores:
             args = line['args']
+
             rs2 = dec_to_bin(registers[args[0].strip()], 5)
-            opcode = dec_to_bin(stores[line['instruction']][1], 7)
-            funct3 = dec_to_bin(stores[line['instruction']][0], 3)
+
+            opcode = dec_to_bin(stores[instr][1], 7)
+            funct3 = dec_to_bin(stores[instr][0], 3)
+
             arg2 = args[1].strip()
             match_obj = re.match(r'(-?\d+)\((.+?)\)', arg2)
             imm = dec_to_bin(match_obj.group(1), 12)
@@ -322,7 +306,27 @@ def main():
 
             machine = imm[0:7] + rs2 + rs1 + funct3 + imm[7:12] + opcode
 
-        # Format Machine Code and Write to file
+        elif instr in control:
+            args = line['args']
+
+            opcode = dec_to_bin(control[instr][1], 7)
+            rd = dec_to_bin(registers[args[0].strip()], 5)
+
+            if instr == "jalr":
+                funct3 = dec_to_bin(control[instr][0], 3)
+
+                arg2 = args[1].strip()
+                match_obj = re.match(r'(-?\d+)\((.+?)\)', arg2)
+                imm = dec_to_bin(match_obj.group(1), 12)
+                rs1 = dec_to_bin(registers[match_obj.group(2)], 5)
+
+                machine = imm + rs1 + funct3 + rd + opcode
+
+            elif instr == "jal":
+                imm = dec_to_bin(args[1].strip(), 21)
+                machine = imm[0] + imm[10:19] + imm[9] + imm[1:8] + rd + opcode
+
+        # Format Machine Code into little-endian with spaces between bytes
         formatted_machine = machine[24:32] + ' ' + machine[16:24] + ' ' + \
             machine[8:16] + ' ' + machine[0:8]
         output_b.write(formatted_machine + '\n')

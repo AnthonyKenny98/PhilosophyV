@@ -7,5 +7,6 @@
 `define OPCODE_ALU_REG 	7'b0110011
 `define OPCODE_LOAD 	7'b0000011
 `define OPCODE_STORE 	7'b0100011
+`define OPCODE_JUMP     7'b1100111
 
 `endif

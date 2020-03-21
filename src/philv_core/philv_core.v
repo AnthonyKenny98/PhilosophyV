@@ -181,7 +181,7 @@ module philosophy_v_core(clk, rstb);
         .in00(_reg_rd1_),
         .in01(4),
         .in10(_extended_immed_),
-        .in11(),
+        .in11(0),
         .out(_alu_src_b_)
     );
     
