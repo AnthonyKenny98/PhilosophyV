@@ -88,17 +88,10 @@ module main_controller(
 				regFileWriteSrc = `REG_FILE_WRITE_SRC_EX;
 
 				// Next State
-				case (opCode) 
-
-					`OPCODE_ALU_REG : next_state = `CONTROL_STATE_EXECUTE_R;
-					`OPCODE_ALU_IMM : next_state = `CONTROL_STATE_EXECUTE_I;
-					`OPCODE_LOAD	: next_state = `CONTROL_STATE_EXECUTE_I;
-					`OPCODE_STORE 	: next_state = `CONTROL_STATE_EXECUTE_I;
-					default: next_state = `CONTROL_STATE_EXECUTE_R;
-				endcase
+				next_state = `CONTROL_STATE_EXECUTE;
 			end
 
-			`CONTROL_STATE_EXECUTE_R : begin
+			`CONTROL_STATE_EXECUTE : begin
 
 				// Control Signals
 				PCWrite = 0;
@@ -110,33 +103,14 @@ module main_controller(
 				// Select Signals
 				regFileWriteSrc = `REG_FILE_WRITE_SRC_EX;
 				ALUSrcA = `ALU_SRC_A_REGOUT;
-				ALUSrcB = `ALU_SRC_B_REGOUT;
+
+				case (opCode)
+					`OPCODE_ALU_REG : ALUSrcB = `ALU_SRC_B_REGOUT;
+					default : ALUSrcB = `ALU_SRC_B_IMMED;
+				endcase
 
 				// Next State
 				next_state = `CONTROL_STATE_MEMORY;
-
-			end
-
-			`CONTROL_STATE_EXECUTE_I : begin
-
-				// Control Signals
-				PCWrite = 0;
-				IRWrite = 0;
-				regFileWrite = 0;
-				ALUOverride = 0;
-				DMemWrite = 0;
-
-				// Select Signals
-				ALUSrcA = `ALU_SRC_A_REGOUT;
-				ALUSrcB = `ALU_SRC_B_IMMED;
-
-				regFileWriteSrc = `REG_FILE_WRITE_SRC_EX;
-
-				// Next State
-				case (opCode) 
-					`OPCODE_STORE : next_state = `CONTROL_STATE_MEMORY_STORE;
-					default : next_state = `CONTROL_STATE_MEMORY;
-				endcase
 			end
 
 			`CONTROL_STATE_MEMORY : begin
@@ -146,36 +120,17 @@ module main_controller(
 				IRWrite = 0;
 				regFileWrite = 0;
 				ALUOverride = 0;
-				DMemWrite = 0;
-
-				regFileWriteSrc = `REG_FILE_WRITE_SRC_EX;
-
-
-				// Next State
-				case (opCode)
-					`OPCODE_LOAD : next_state = `CONTROL_STATE_WRITEBACK_MEM;
-					default : next_state = `CONTROL_STATE_WRITEBACK;
+				
+				case (opCode) 
+					`OPCODE_STORE : DMemWrite = 1;
+					default : DMemWrite = 0;
 				endcase
-				
-				
-			end
-
-			`CONTROL_STATE_MEMORY_STORE : begin
-
-				// Control Signals
-				PCWrite = 0;
-				IRWrite = 0;
-				regFileWrite = 0;
-				ALUOverride = 0;
-				DMemWrite = 1;
 
 				regFileWriteSrc = `REG_FILE_WRITE_SRC_EX;
 
 
 				// Next State
-				next_state = `CONTROL_STATE_WRITEBACK_NULL;
-				
-				
+				next_state = `CONTROL_STATE_WRITEBACK;	
 			end
 
 			`CONTROL_STATE_WRITEBACK : begin
@@ -187,47 +142,23 @@ module main_controller(
 				ALUOverride = 0;
 				DMemWrite = 0;
 
-				regFileWriteSrc = `REG_FILE_WRITE_SRC_EX;
+				case (opCode)
+					`OPCODE_LOAD : begin
+						regFileWrite = 1;
+						regFileWriteSrc = `REG_FILE_WRITE_SRC_MEM;
+					end
+					`OPCODE_STORE : begin
+						regFileWrite = 0;
+					end
+					default : begin
+						regFileWrite = 1;
+						regFileWriteSrc = `REG_FILE_WRITE_SRC_EX;
+					end
+				endcase
 
 				// Next State
 				next_state = `CONTROL_STATE_FETCH;
-				
-			end
-
-			`CONTROL_STATE_WRITEBACK_MEM : begin
-
-				// Control Signals
-				PCWrite = 0;
-				IRWrite = 0;
-				regFileWrite = 1;
-				ALUOverride = 0;
-				DMemWrite = 0;
-
-				regFileWriteSrc = `REG_FILE_WRITE_SRC_MEM;
-
-
-				// Next State
-				next_state = `CONTROL_STATE_FETCH;
-				
-			end
-
-			`CONTROL_STATE_WRITEBACK_NULL : begin
-
-				// Control Signals
-				PCWrite = 0;
-				IRWrite = 0;
-				regFileWrite = 0;
-				ALUOverride = 0;
-				DMemWrite = 0;
-
-				regFileWriteSrc = `REG_FILE_WRITE_SRC_EX;
-
-
-				// Next State
-				next_state = `CONTROL_STATE_FETCH;
-				
 			end
 		endcase
 	end
-
 endmodule
