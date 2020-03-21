@@ -30,7 +30,7 @@
     <Option Name="IPUserFilesDir" Val="$PPRDIR/../../../../../home/anthony/Documents/PhilosophyV/philosophy_v_001/philosophy_v_001.ip_user_files"/>
     <Option Name="IPStaticSourceDir" Val="$PIPUSERFILESDIR/ipstatic"/>
     <Option Name="EnableBDX" Val="FALSE"/>
-    <Option Name="WTXSimLaunchSim" Val="519"/>
+    <Option Name="WTXSimLaunchSim" Val="543"/>
     <Option Name="WTModelSimLaunchSim" Val="0"/>
     <Option Name="WTQuestaLaunchSim" Val="0"/>
     <Option Name="WTIesLaunchSim" Val="0"/>
@@ -328,7 +328,7 @@
       <File Path="$PPRDIR/../src/philv_core/modules/memory/data_load.memb"/>
       <Config>
         <Option Name="DesignMode" Val="RTL"/>
-        <Option Name="TopModule" Val="run_philv_core"/>
+        <Option Name="TopModule" Val="cmp_reg_file"/>
         <Option Name="TransportPathDelay" Val="0"/>
         <Option Name="TransportIntDelay" Val="0"/>
         <Option Name="SelectedSimModel" Val="rtl"/>

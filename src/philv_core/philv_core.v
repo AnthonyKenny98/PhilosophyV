@@ -79,6 +79,7 @@ module philosophy_v_core(clk, rstb);
     // Program Counter
     program_counter #(.N(BUS_WIDTH)) PC_LOGIC (
         .lastCount(_ex_out_),
+        .opcode(_instr_[`INSTR_OPCODE_RANGE]),
         .newCount(_instr_addr_)
     );
 

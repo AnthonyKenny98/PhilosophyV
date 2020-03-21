@@ -77,7 +77,8 @@ stores = {
 
 control = {
     # JALR
-    "jalr": (0, 103)
+    "jalr": (0, 103),
+    "jal": (0, 111)
 }
 
 registers = {
@@ -324,7 +325,7 @@ def main():
 
             elif instr == "jal":
                 imm = dec_to_bin(args[1].strip(), 21)
-                machine = imm[0] + imm[10:19] + imm[9] + imm[1:8] + rd + opcode
+                machine = imm[0] + imm[10:20] + imm[9] + imm[1:9] + rd + opcode
 
         # Format Machine Code into little-endian with spaces between bytes
         formatted_machine = machine[24:32] + ' ' + machine[16:24] + ' ' + \

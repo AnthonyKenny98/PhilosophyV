@@ -38,7 +38,7 @@ module instr_decoder(instr, controlOverride, alu_funct, rs1, rs2, rd, immed);
     wire [(`INSTR_OPCODE_WIDTH-1):0] opcode;
     wire [(`FUNCT3_WIDTH-1):0] funct3;
     wire [(`FUNCT7_WIDTH-1):0] funct7;
-    wire [N-1:0] imm_extended, shamt_extended, asym_extended;
+    wire [N-1:0] imm_extended, shamt_extended, asym_extended, j_extended;
 
     // Opcode
     assign opcode = instr[`INSTR_OPCODE_RANGE];
@@ -51,6 +51,8 @@ module instr_decoder(instr, controlOverride, alu_funct, rs1, rs2, rd, immed);
     assign shamt_extended = {{27{instr[24]}}, instr[`INSTR_SHAMT_RANGE]};
     assign imm_extended = {{20{instr[31]}}, instr[`INSTR_IMM_RANGE]};
     assign asym_extended = {{20{instr[31]}}, instr[`INSTR_FUNCT7_RANGE], instr[`INSTR_RD_RANGE]};
+    // THis looks really weird, but its the sign extended immediate, arranged in order
+    assign j_extended = {{11{instr[31]}}, instr[31], instr[19:12], instr[20], instr[30:21], {1{1'b0}}};
     
     // Outputs
     output reg [(`ALU_FUNCT_WIDTH-1):0] alu_funct;
@@ -88,6 +90,8 @@ module instr_decoder(instr, controlOverride, alu_funct, rs1, rs2, rd, immed);
         case (opcode)
             `OPCODE_STORE : immed = asym_extended;
             `OPCODE_LOAD : immed = imm_extended;
+            `OPCODE_JALR : immed = imm_extended;
+            `OPCODE_JAL : immed = j_extended;
             default : case (funct3)
                 `FUNCT3_SLL : immed = shamt_extended;
                 `FUNCT3_SRL : immed = shamt_extended;
