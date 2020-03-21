@@ -70,7 +70,7 @@ module philosophy_v_core(clk, rstb);
     wire [(BUS_WIDTH-1):0] _instr_addr_, _program_count_;
     
     // Busses carrying the current Instruction
-    wire [(`INSTR_WIDTH-1):0] _instr_, _instr_mem_read_data_;
+    wire [(`INSTR_WIDTH-1):0] _instr_;
     
     // Bus carrying result from EXECUTE state register. Declared here since it
     // is the input for REG_FILE.wrData
@@ -96,8 +96,6 @@ module philosophy_v_core(clk, rstb);
             .rdEna(_ir_ena_),
             .rdAddr(_program_count_),
             .wrEna(1'b0),
-            .wrAddr(),
-            .wrData(),
             
             //Outputs
             .rdData(_instr_)
@@ -219,17 +217,13 @@ module philosophy_v_core(clk, rstb);
     wire [(BUS_WIDTH-1):0] _data_mem_read_data_;
     wire [(BUS_WIDTH-1):0] _data_mem_out_;
 
-    wire [(BUS_WIDTH-1):0] _wr_data_;
-
     // MEMORY DECODER
     // CONTROLS SHIFTS FOR MEMORY LOADS AND STORES
     data_mem_decoder #(.N(BUS_WIDTH)) DATA_MEM_DECODER (
-        .in0(_data_mem_read_data_),
-        .in1(_reg_rd1_),
+        .in(_data_mem_read_data_),
         .opcode(_instr_[`INSTR_OPCODE_RANGE]),
         .funct3(_instr_[`INSTR_FUNCT3_RANGE]),
-        .out0(_data_mem_out_),
-        .out1(_wr_data_)
+        .out(_data_mem_out_)
     );
 
     // DATA_MEMORY
@@ -241,11 +235,12 @@ module philosophy_v_core(clk, rstb);
     ) DATA_MEMORY (
         // Inputs
         .clk(clk),
+        .access(_instr_[`INSTR_FUNCT3_RANGE]),
         .rdEna(1'b1),
         .rdAddr(_ex_out_),
         .wrEna(_dmem_wr_ena_),
         .wrAddr(_ex_out_),
-        .wrData(_wr_data_),
+        .wrData(_reg_rd1_),
 
         // Outputs
         .rdData(_data_mem_read_data_)

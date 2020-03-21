@@ -1,4 +1,9 @@
 `ifndef I_MEM_SPACE_DEFINES
 `define I_MEM_SPACE_DEFINES
 `define I_START_ADDRESS 4'h0
+
+`define MEM_ACCESS_WIDTH 3
+`define MEM_ACCESS_BYTE 3'b000
+`define MEM_ACCESS_HALF 3'b001
+`define MEM_ACCESS_WORD 3'b010
 `endif

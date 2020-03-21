@@ -189,40 +189,49 @@ def find_label_absolute(parsed_lines, label):
 
 def main():
     """Main."""
+    # Check Usage
     if len(sys.argv) != 3:
         print("Usage: python3 assembler.py [<input.asm>] [<output> (no ext)]")
         return
-    me, inputname, outputname = sys.argv
+
+    # Set up input and output files
+    _, inputname, outputname = sys.argv
     outputname = outputname if outputname != 'default' else 'instr_load'
 
-    f = open(inputname, "r")
-    labels = {}        # Map from label to its address.
-    parsed_lines = []  # List of parsed instructions.
-    # address = 0        # Track the current address of the instruction.
-    line_count = 0     # Number of lines.
+    # Input Assembly File
+    input_asm = open(inputname, "r")
 
+    # Output Binary File
     output_b = open("{}.memb".format(outputname), "w")
 
-    for line in f:
+    labels = {}         # Map from label to its address.
+    parsed_lines = []   # List of parsed instructions.
+    line_count = 0      # Number of lines.
+
+    for line in input_asm:
 
         # Stores attributes about the current line of code, like its label,
         # line number, instruction, and arguments.
         line_attr = {}
 
-        # Handle comments, whitespace.
+        # Handle whitespace.
         line = line.strip()
 
         if line:
             label = ""
+
+            # Remove Comments
             if "#" in line:
                 line = line.split("#")[0].strip()
                 if not line:
                     continue
 
+            # Save Label
             if ":" in line:
                 elems = line.split(":")
                 label = elems[0].strip()
-                labels[label] = 0x400000 + line_count * 4
+                # labels[label] = 0x400000 + line_count * 4
+                labels[label] = line_count * 4
                 line = elems[1].strip()
 
             sp = re.split(r"\s+", line, 1)
@@ -242,8 +251,10 @@ def main():
             # Finally, add this dict to the complete list of instructions.
             parsed_lines.append(line_attr)
 
-            line_count = line_count + 1
-    f.close()
+            line_count += 1
+
+    # Close input file
+    input_asm.close()
 
     machine = ""  # Current machine code word.
 
@@ -312,8 +323,8 @@ def main():
             machine = imm[0:7] + rs2 + rs1 + funct3 + imm[7:12] + opcode
 
         # Format Machine Code and Write to file
-        formatted_machine = machine[0:8] + ' ' + machine[8:16] + ' ' + \
-            machine[16:24] + ' ' + machine[24:32]
+        formatted_machine = machine[24:32] + ' ' + machine[16:24] + ' ' + \
+            machine[8:16] + ' ' + machine[0:8]
         output_b.write(formatted_machine + '\n')
 
 if __name__ == "__main__":

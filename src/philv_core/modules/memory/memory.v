@@ -27,7 +27,7 @@
 `include "memory_defines.h"
 
 module memory( 
-	clk, rdEna, rdAddr, wrEna, wrAddr, wrData, rdData,
+	clk, access, rdEna, rdAddr, wrEna, wrAddr, wrData, rdData,
 );
 
 // Bus Width 
@@ -40,6 +40,7 @@ parameter MEM_FILE = "load.memb";
 
 // Inputs
 input wire clk;
+input wire [`MEM_ACCESS_WIDTH-1:0] access;
 input wire rdEna, wrEna;
 input wire [N-1:0] rdAddr, wrAddr, wrData;
 
@@ -49,18 +50,24 @@ output reg [N-1:0] rdData;
 // Memory
 reg  [(N/4)-1:0] MEM [(LENGTH*4)-1:0];
 
-// // Physical address
-// wire [WIDTH-1:0] phy_rdAddr, phy_wrAddr;
-// assign phy_rdAddr = rdAddr[WIDTH-1:0];
-// assign phy_wrAddr = wrAddr[WIDTH-1:0];
-
-//instruction memory
+// memory
 always @(posedge clk) begin
 	if (rdEna) begin
-		rdData <= {MEM[rdAddr], MEM[rdAddr+1], MEM[rdAddr+2], MEM[rdAddr+3]};
+		// Always read word in little-endian order at read addr
+		rdData <= {MEM[rdAddr+3], MEM[rdAddr+2], MEM[rdAddr+1], MEM[rdAddr]};
 	end
 	if (wrEna) begin
-		{MEM[wrAddr], MEM[wrAddr+1], MEM[wrAddr+2], MEM[wrAddr+3]} <= wrData;
+		case(access)
+			`MEM_ACCESS_BYTE :
+				// Write Least Significant Byte to wrAddr
+				MEM[wrAddr] <= wrData[7:0];
+			`MEM_ACCESS_HALF :
+				// Write Least Significant Half Word to wrAddr
+				{MEM[wrAddr+1], MEM[wrAddr]} <= wrData[15:0];
+			default :
+				// Default to write whole word to memory in litte-endian order 
+				{MEM[wrAddr+3], MEM[wrAddr+2], MEM[wrAddr+1], MEM[wrAddr]} <= wrData;
+		endcase
 	end
 
 end

@@ -173,7 +173,7 @@ module main_controller(
 
 
 				// Next State
-				next_state = `CONTROL_STATE_WRITEBACK;
+				next_state = `CONTROL_STATE_WRITEBACK_NULL;
 				
 				
 			end
@@ -204,6 +204,23 @@ module main_controller(
 				DMemWrite = 0;
 
 				regFileWriteSrc = `REG_FILE_WRITE_SRC_MEM;
+
+
+				// Next State
+				next_state = `CONTROL_STATE_FETCH;
+				
+			end
+
+			`CONTROL_STATE_WRITEBACK_NULL : begin
+
+				// Control Signals
+				PCWrite = 0;
+				IRWrite = 0;
+				regFileWrite = 0;
+				ALUOverride = 0;
+				DMemWrite = 0;
+
+				regFileWriteSrc = `REG_FILE_WRITE_SRC_EX;
 
 
 				// Next State
