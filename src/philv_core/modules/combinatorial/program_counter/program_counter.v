@@ -32,7 +32,7 @@ module program_counter(lastCount, newCount, opcode);
 
     always @(*) begin
         case (opcode)
-            `OPCODE_JAL : newCount = lastCount - 4;
+            // `OPCODE_JAL : newCount = lastCount - 4;
             default: newCount = lastCount;
         endcase
     end

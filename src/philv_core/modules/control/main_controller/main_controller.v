@@ -64,13 +64,11 @@ module main_controller(
 				PCWrite = 0;
 				IRWrite = 1;
 				regFileWrite = 0;
-				ALUOverride = 1;
+				ALUOverride = 0;
 				DMemWrite = 0;
 
 				// Select Signals
 				regFileWriteSrc = `REG_FILE_WRITE_SRC_EX;
-				ALUSrcA = `ALU_SRC_A_PC;
-				ALUSrcB = `ALU_SRC_B_CONST4;
 
 				// Next State
 				next_state = `CONTROL_STATE_DECODE;
@@ -94,7 +92,7 @@ module main_controller(
 			`CONTROL_STATE_EXECUTE : begin
 
 				// Control Signals
-				PCWrite = 1;
+				PCWrite = 0;
 				IRWrite = 0;
 				regFileWrite = 0;
 				ALUOverride = 0;
@@ -132,14 +130,23 @@ module main_controller(
 				PCWrite = 0;
 				IRWrite = 0;
 				regFileWrite = 0;
-				ALUOverride = 0;
+				ALUOverride = 1;
 
-				// For Jump Instr - is calculating the address during mem
+				// Calculate next address
 				case (opCode)
-					`OPCODE_JAL : ALUSrcA = `ALU_SRC_A_PC;
-					default: ALUSrcA = `ALU_SRC_A_REGOUT;
+					`OPCODE_JALR : begin
+						ALUSrcA = `ALU_SRC_A_REGOUT;
+						ALUSrcB = `ALU_SRC_B_IMMED;
+					end
+					`OPCODE_JAL : begin
+						ALUSrcA = `ALU_SRC_A_PC;
+						ALUSrcB = `ALU_SRC_B_IMMED;
+					end
+					default: begin
+						ALUSrcA = `ALU_SRC_A_PC;
+						ALUSrcB = `ALU_SRC_B_CONST4;
+					end
 				endcase
-				ALUSrcB = `ALU_SRC_B_IMMED;
 				
 				case (opCode) 
 					`OPCODE_STORE : DMemWrite = 1;
@@ -156,13 +163,8 @@ module main_controller(
 			`CONTROL_STATE_WRITEBACK : begin
 
 				// Control Signals
-				case (opCode)
-					`OPCODE_JALR : PCWrite = 1;
-					`OPCODE_JAL : PCWrite = 1;
-					default : PCWrite = 0;
-				endcase
+				PCWrite = 1;
 				IRWrite = 0;
-				regFileWrite = 1;
 				ALUOverride = 0;
 				DMemWrite = 0;
 

@@ -58,12 +58,21 @@ module instr_decoder(instr, controlOverride, alu_funct, rs1, rs2, rd, immed);
     output reg [(`ALU_FUNCT_WIDTH-1):0] alu_funct;
     output reg [(`INSTR_REG_WIDTH-1):0] rs1, rs2, rd;
     output reg [(N-1):0] immed;
+
+    reg test;
+    initial begin
+        test = 0;
+    end
     
-    // Sequential Logic
+    // Logic
     always @(*) begin
+        test = ~test;
         
         // Determine ALU Funct Code
-        if (controlOverride || ((opcode !== `OPCODE_ALU_IMM) && (opcode !== `OPCODE_ALU_REG))) begin
+        if (controlOverride) begin
+            alu_funct = `ALU_FUNCT_ADD;
+        end
+        else if ((opcode !== `OPCODE_ALU_IMM) && (opcode !== `OPCODE_ALU_REG)) begin
             alu_funct = `ALU_FUNCT_ADD;
         end
         else begin
@@ -75,8 +84,8 @@ module instr_decoder(instr, controlOverride, alu_funct, rs1, rs2, rd, immed);
                 `FUNCT3_SLL : alu_funct = `ALU_FUNCT_SLL;
                 `FUNCT3_SLTU: alu_funct = `ALU_FUNCT_SLTU;
                 `FUNCT3_ADD : case (funct7)
-                    `FUNCT7_BASE : alu_funct = `ALU_FUNCT_ADD;
                     `FUNCT7_ALT1 : alu_funct = `ALU_FUNCT_SUB;
+                    default : alu_funct = `ALU_FUNCT_ADD;
                 endcase
                 `FUNCT3_SRL : case (funct7)
                     `FUNCT7_BASE : alu_funct = `ALU_FUNCT_SRL;
