@@ -67,9 +67,6 @@ module instr_decoder(instr, controlOverride, alu_funct, rs1, rs2, rd, immed);
         if (controlOverride) begin
             alu_funct = `ALU_FUNCT_ADD;
         end
-        else if ((opcode !== `OPCODE_ALU_IMM) && (opcode !== `OPCODE_ALU_REG)) begin
-            alu_funct = `ALU_FUNCT_ADD;
-        end
         else if (opcode == `OPCODE_BRANCH) begin
             case (funct3)
                 `FUNCT3_BLT : alu_funct = `ALU_FUNCT_SLT;
@@ -77,6 +74,9 @@ module instr_decoder(instr, controlOverride, alu_funct, rs1, rs2, rd, immed);
                 `FUNCT3_BLTU : alu_funct = `ALU_FUNCT_SLTU;
                 `FUNCT3_BGEU : alu_funct = `ALU_FUNCT_SLTU;
             endcase
+        end
+        else if ((opcode !== `OPCODE_ALU_IMM) && (opcode !== `OPCODE_ALU_REG)) begin
+            alu_funct = `ALU_FUNCT_ADD;
         end
         else begin
             case (funct3)

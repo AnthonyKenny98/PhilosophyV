@@ -81,7 +81,12 @@ jumps = {
 }
 
 branch = {
-    "beq": (0, 99)
+    "beq": (0, 99),
+    "bne": (1, 99),
+    "blt": (4, 99),
+    "bge": (5, 99),
+    "bltu": (6, 99),
+    "bgeu": (7, 99),
 }
 
 registers = {
