@@ -38,7 +38,7 @@ module instr_decoder(instr, controlOverride, alu_funct, rs1, rs2, rd, immed);
     wire [(`INSTR_OPCODE_WIDTH-1):0] opcode;
     wire [(`FUNCT3_WIDTH-1):0] funct3;
     wire [(`FUNCT7_WIDTH-1):0] funct7;
-    wire [N-1:0] imm_extended, shamt_extended, asym_extended, j_extended;
+    wire [N-1:0] imm_extended, shamt_extended, asym_extended, j_extended, b_extended;
 
     // Opcode
     assign opcode = instr[`INSTR_OPCODE_RANGE];
@@ -53,20 +53,15 @@ module instr_decoder(instr, controlOverride, alu_funct, rs1, rs2, rd, immed);
     assign asym_extended = {{20{instr[31]}}, instr[`INSTR_FUNCT7_RANGE], instr[`INSTR_RD_RANGE]};
     // THis looks really weird, but its the sign extended immediate, arranged in order
     assign j_extended = {{11{instr[31]}}, instr[31], instr[19:12], instr[20], instr[30:21], {1{1'b0}}};
+    assign b_extended = {{19{instr[31]}}, instr[31], instr[7], instr[30:25], instr[11:8], {1{1'b0}}};
     
     // Outputs
     output reg [(`ALU_FUNCT_WIDTH-1):0] alu_funct;
     output reg [(`INSTR_REG_WIDTH-1):0] rs1, rs2, rd;
     output reg [(N-1):0] immed;
-
-    reg test;
-    initial begin
-        test = 0;
-    end
     
     // Logic
     always @(*) begin
-        test = ~test;
         
         // Determine ALU Funct Code
         if (controlOverride) begin
@@ -74,6 +69,14 @@ module instr_decoder(instr, controlOverride, alu_funct, rs1, rs2, rd, immed);
         end
         else if ((opcode !== `OPCODE_ALU_IMM) && (opcode !== `OPCODE_ALU_REG)) begin
             alu_funct = `ALU_FUNCT_ADD;
+        end
+        else if (opcode == `OPCODE_BRANCH) begin
+            case (funct3)
+                `FUNCT3_BLT : alu_funct = `ALU_FUNCT_SLT;
+                `FUNCT3_BGE : alu_funct = `ALU_FUNCT_SLT;
+                `FUNCT3_BLTU : alu_funct = `ALU_FUNCT_SLTU;
+                `FUNCT3_BGEU : alu_funct = `ALU_FUNCT_SLTU;
+            endcase
         end
         else begin
             case (funct3)
@@ -101,6 +104,7 @@ module instr_decoder(instr, controlOverride, alu_funct, rs1, rs2, rd, immed);
             `OPCODE_LOAD : immed = imm_extended;
             `OPCODE_JALR : immed = imm_extended;
             `OPCODE_JAL : immed = j_extended;
+            `OPCODE_BRANCH: immed = b_extended;
             default : case (funct3)
                 `FUNCT3_SLL : immed = shamt_extended;
                 `FUNCT3_SRL : immed = shamt_extended;

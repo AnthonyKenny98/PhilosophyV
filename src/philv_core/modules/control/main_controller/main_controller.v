@@ -29,13 +29,14 @@
 
 module main_controller(
 	// Inputs
-	clk, opCode, funct3,
+	clk, opCode, funct3, branch,
 	// Outputs
 	PCWrite, IRWrite, DMemWrite, ALUOverride, ALUSrcA, ALUSrcB, regFileWrite, regFileWriteSrc
 );
 
 	// Input Ports
 	input wire clk;
+	input wire branch;
 	input wire [`INSTR_OPCODE_WIDTH-1:0] opCode;
 	input wire [`FUNCT3_WIDTH-1:0] funct3;
 
@@ -114,6 +115,10 @@ module main_controller(
 						ALUSrcA = `ALU_SRC_A_PC;
 						ALUSrcB = `ALU_SRC_B_CONST4;
 					end
+					`OPCODE_BRANCH : begin
+						ALUSrcA = `ALU_SRC_A_REGOUT;
+						ALUSrcB = `ALU_SRC_B_REGOUT;
+					end
 					default : begin
 						ALUSrcA = `ALU_SRC_A_REGOUT;
 						ALUSrcB = `ALU_SRC_B_IMMED;
@@ -142,6 +147,14 @@ module main_controller(
 						ALUSrcA = `ALU_SRC_A_PC;
 						ALUSrcB = `ALU_SRC_B_IMMED;
 					end
+					`OPCODE_BRANCH : begin
+						ALUSrcA = `ALU_SRC_A_PC;
+						if (branch) begin
+							ALUSrcB = `ALU_SRC_B_IMMED;
+						end else begin
+							ALUSrcB = `ALU_SRC_B_CONST4;
+						end
+					end
 					default: begin
 						ALUSrcA = `ALU_SRC_A_PC;
 						ALUSrcB = `ALU_SRC_B_CONST4;
@@ -169,12 +182,11 @@ module main_controller(
 				DMemWrite = 0;
 
 				case (opCode)
+					`OPCODE_STORE : regFileWrite = 0;
+					`OPCODE_BRANCH : regFileWrite = 0;
 					`OPCODE_LOAD : begin
 						regFileWrite = 1;
 						regFileWriteSrc = `REG_FILE_WRITE_SRC_MEM;
-					end
-					`OPCODE_STORE : begin
-						regFileWrite = 0;
 					end
 					default : begin
 						regFileWrite = 1;

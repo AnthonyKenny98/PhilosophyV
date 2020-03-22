@@ -75,10 +75,13 @@ stores = {
     "sb": (0, 35)
 }
 
-control = {
-    # JALR
+jumps = {
     "jalr": (0, 103),
     "jal": (0, 111)
+}
+
+branch = {
+    "beq": (0, 99)
 }
 
 registers = {
@@ -241,10 +244,10 @@ def main():
 
     for line in parsed_lines:
         instr = line['instruction']
+        args = line['args']
 
         # R Types
         if instr in rtypes:
-            args = line['args']
 
             rs1 = dec_to_bin(registers[args[1].strip()], 5)
             rs2 = dec_to_bin(registers[args[2].strip()], 5)
@@ -258,7 +261,6 @@ def main():
 
         # I-Types
         elif instr in itypes:
-            args = line['args']
 
             rs1 = dec_to_bin(registers[args[1].strip()], 5)
             rd = dec_to_bin(registers[args[0].strip()], 5)
@@ -277,7 +279,6 @@ def main():
 
         # Loads
         elif instr in loads:
-            args = line['args']
 
             rd = dec_to_bin(registers[args[0].strip()], 5)
 
@@ -293,7 +294,6 @@ def main():
 
         # Stores
         elif instr in stores:
-            args = line['args']
 
             rs2 = dec_to_bin(registers[args[0].strip()], 5)
 
@@ -307,14 +307,13 @@ def main():
 
             machine = imm[0:7] + rs2 + rs1 + funct3 + imm[7:12] + opcode
 
-        elif instr in control:
-            args = line['args']
+        elif instr in jumps:
 
-            opcode = dec_to_bin(control[instr][1], 7)
+            opcode = dec_to_bin(jumps[instr][1], 7)
             rd = dec_to_bin(registers[args[0].strip()], 5)
 
             if instr == "jalr":
-                funct3 = dec_to_bin(control[instr][0], 3)
+                funct3 = dec_to_bin(jumps[instr][0], 3)
 
                 arg2 = args[1].strip()
                 match_obj = re.match(r'(-?\d+)\((.+?)\)', arg2)
@@ -326,6 +325,17 @@ def main():
             elif instr == "jal":
                 imm = dec_to_bin(args[1].strip(), 21)
                 machine = imm[0] + imm[10:20] + imm[9] + imm[1:9] + rd + opcode
+
+        elif instr in branch:
+
+            opcode = dec_to_bin(branch[instr][1], 7)
+            funct3 = dec_to_bin(branch[instr][0], 3)
+            rs1 = dec_to_bin(registers[args[0].strip()], 5)
+            rs2 = dec_to_bin(registers[args[1].strip()], 5)
+            imm = dec_to_bin(args[2].strip(), 13)[0:12]
+
+            machine = imm[0] + imm[2:8] + rs2 + rs1 + \
+                funct3 + imm[8:12] + imm[1] + opcode
 
         # Format Machine Code into little-endian with spaces between bytes
         formatted_machine = machine[24:32] + ' ' + machine[16:24] + ' ' + \

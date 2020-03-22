@@ -44,6 +44,8 @@ module philosophy_v_core(clk, rstb);
     wire _alu_src_a_select_, _alu_control_, _reg_file_src_select_;
     wire [(`ALU_SRC_B_WIDTH-1):0] _alu_src_b_select_;
 
+    wire _branch_;
+
 
     // Main Controller
     main_controller MAIN_CONTROLLER (
@@ -51,6 +53,7 @@ module philosophy_v_core(clk, rstb);
         .clk(clk),
         .opCode(_instr_[`INSTR_OPCODE_RANGE]),
         .funct3(_instr_[`INSTR_FUNCT3_RANGE]),
+        .branch(_branch_),
         // Outputs
         .PCWrite(_pc_ena_),
         .IRWrite(_ir_ena_),
@@ -79,7 +82,6 @@ module philosophy_v_core(clk, rstb);
     // Program Counter
     program_counter #(.N(BUS_WIDTH)) PC_LOGIC (
         .lastCount(_ex_out_),
-        .opcode(_instr_[`INSTR_OPCODE_RANGE]),
         .newCount(_instr_addr_)
     );
 
@@ -163,6 +165,7 @@ module philosophy_v_core(clk, rstb);
 
     // Busses for ALU inputs and outputs
     wire [(BUS_WIDTH-1):0] _alu_src_a_, _alu_src_b_, _alu_result_;
+    wire _alu_equal_;
 
     // ALU_SRC_A MUX
     mux2 #(
@@ -189,9 +192,17 @@ module philosophy_v_core(clk, rstb);
     // ALU
     alu #(.N(BUS_WIDTH)) ALU (
         .funct(_alu_funct_),
+        .equal(_alu_equal_),
         .x(_alu_src_a_),
         .y(_alu_src_b_),
         .z(_alu_result_)
+    );
+
+    branch #(.N(BUS_WIDTH)) BRANCH (
+        .aluOut(_alu_result_),
+        .funct3(_instr_[`INSTR_FUNCT3_RANGE]),
+        .aluEqual(_alu_equal_),
+        .branch(_branch_)
     );
     
     // EXECUTE_REG

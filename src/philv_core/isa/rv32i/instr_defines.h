@@ -6,6 +6,7 @@
 `define INSTR_OPCODE_WIDTH 7
 `define INSTR_REG_WIDTH 5
 `define INSTR_IMM_WIDTH 12
+`define INSTR_FUNCT3_WIDTH 3
 
 // Define Ranges
 `define INSTR_FUNCT7_RANGE 31:25
