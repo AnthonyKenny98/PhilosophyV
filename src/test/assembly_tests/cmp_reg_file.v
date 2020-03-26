@@ -45,7 +45,7 @@ module cmp_reg_file;
     integer errors;
 
     // Register file values in order
-    reg [31:0] reg_vals [31:0];
+    reg [33:0] reg_vals [37:0];
 
     initial begin
     	errors = 0;
@@ -94,6 +94,13 @@ module cmp_reg_file;
 		if (uut.REG_FILE.r30 !== reg_vals[30]) errors = errors + 1;
 		if (uut.REG_FILE.r31 !== reg_vals[31]) errors = errors + 1;
 
+        if (uut.EDGCOL_REGISTER_FILE.rdData0 !== reg_vals[32]) errors = errors + 1;
+        if (uut.EDGCOL_REGISTER_FILE.rdData1 !== reg_vals[33]) errors = errors + 1;
+        if (uut.EDGCOL_REGISTER_FILE.rdData2 !== reg_vals[34]) errors = errors + 1;
+        if (uut.EDGCOL_REGISTER_FILE.rdData3 !== reg_vals[35]) errors = errors + 1;
+        if (uut.EDGCOL_REGISTER_FILE.rdData4 !== reg_vals[36]) errors = errors + 1;
+        if (uut.EDGCOL_REGISTER_FILE.rdData5 !== reg_vals[37]) errors = errors + 1;
+
 		$display("Register 00 | Actual = %h | Expected = %h", uut.REG_FILE.r00, reg_vals[0]);
 		$display("Register 01 | Actual = %h | Expected = %h", uut.REG_FILE.r01, reg_vals[1]);
 		$display("Register 02 | Actual = %h | Expected = %h", uut.REG_FILE.r02, reg_vals[2]);
@@ -126,6 +133,13 @@ module cmp_reg_file;
 		$display("Register 29 | Actual = %h | Expected = %h", uut.REG_FILE.r29, reg_vals[29]);
 		$display("Register 30 | Actual = %h | Expected = %h", uut.REG_FILE.r30, reg_vals[30]);
 		$display("Register 31 | Actual = %h | Expected = %h", uut.REG_FILE.r31, reg_vals[31]);
+
+        $display("Register e0 | Actual = %h | Expected = %h", uut.EDGCOL_REGISTER_FILE.rdData0, reg_vals[32]);
+        $display("Register e1 | Actual = %h | Expected = %h", uut.EDGCOL_REGISTER_FILE.rdData1, reg_vals[33]);
+        $display("Register e2 | Actual = %h | Expected = %h", uut.EDGCOL_REGISTER_FILE.rdData2, reg_vals[34]);
+        $display("Register e3 | Actual = %h | Expected = %h", uut.EDGCOL_REGISTER_FILE.rdData3, reg_vals[35]);
+        $display("Register e4 | Actual = %h | Expected = %h", uut.EDGCOL_REGISTER_FILE.rdData4, reg_vals[36]);
+        $display("Register e5 | Actual = %h | Expected = %h", uut.EDGCOL_REGISTER_FILE.rdData5, reg_vals[37]);
 
 		$display("Finished with %d errors.", errors);
 

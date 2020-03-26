@@ -24,6 +24,8 @@
 `include "alu_funct_defines.h"
 `include "program_count_defines.h"
 
+`include "Xedgcol_instr_defines.h"
+
 module philosophy_v_core(clk, rstb);
 
     // Data Bus Width
@@ -38,6 +40,8 @@ module philosophy_v_core(clk, rstb);
 
     // Control Enable Signals
     wire _reg_wr_ena_, _pc_ena_, _ir_ena_, _dmem_wr_ena_;
+
+    wire _edgcol_wr_ena_;
 
     // Control Select Signals
     wire [(`ALU_FUNCT_WIDTH-1):0] _alu_funct_;
@@ -62,7 +66,8 @@ module philosophy_v_core(clk, rstb);
         .regFileWriteSrc(_reg_file_src_select_),
         .ALUSrcA(_alu_src_a_select_),
         .ALUSrcB(_alu_src_b_select_),
-        .regFileWrite(_reg_wr_ena_)
+        .regFileWrite(_reg_wr_ena_),
+        .edgcolWrEna(_edgcol_wr_ena_)
     );
 
     ///////////////////////////////////////////////////////////////////////////
@@ -296,6 +301,28 @@ module philosophy_v_core(clk, rstb);
         // Outputs
         .q(_wb_out_)
     );
+
+    ///////////////////////////////////////////////////////////////////////////
+    // Implement Honeybee
+    ///////////////////////////////////////////////////////////////////////////
+
+    wire [BUS_WIDTH-1:0] _e0_, _e1_, _e2_, _e3_, _e4_, _e5_;
+
+    edgcolRegisterFile #(.REG_WIDTH(BUS_WIDTH)) EDGCOL_REGISTER_FILE (
+        .clk(clk),
+        .rst(1'b0),
+        .wrEna(_edgcol_wr_ena_),
+        .wrAddr(_instr_[`XEDGCOL_INSTR_RD_RANGE]),
+        .wrData({_instr_[`XEDGCOL_INSTR_IMM_RANGE], {6{1'b0}}}), // 0 extend the LSB of imm
+        .rdData0(_e0_),
+        .rdData1(_e1_),
+        .rdData2(_e2_),
+        .rdData3(_e3_),
+        .rdData4(_e4_),
+        .rdData5(_e5_)
+    );
+
+   
 
     initial begin
         // TODO: For this to work, the clk has to start low. Maybe fix with rst

@@ -27,11 +27,14 @@
 `include "control_state_defines.h"
 `include "control_signal_defines.h"
 
+`include "Xedgcol_instr_defines.h"
+`include "Xedgcol_opcode_defines.h"
+
 module main_controller(
 	// Inputs
 	clk, opCode, funct3, branch,
 	// Outputs
-	PCWrite, IRWrite, DMemWrite, ALUOverride, ALUSrcA, ALUSrcB, regFileWrite, regFileWriteSrc
+	PCWrite, IRWrite, DMemWrite, ALUOverride, ALUSrcA, ALUSrcB, regFileWrite, regFileWriteSrc, edgcolWrEna
 );
 
 	// Input Ports
@@ -41,7 +44,7 @@ module main_controller(
 	input wire [`FUNCT3_WIDTH-1:0] funct3;
 
 	// Output Ports
-	output reg PCWrite, IRWrite, regFileWrite, DMemWrite, ALUOverride;
+	output reg PCWrite, IRWrite, regFileWrite, DMemWrite, ALUOverride, edgcolWrEna;
 	output reg ALUSrcA, regFileWriteSrc;
 	output reg [`ALU_SRC_B_WIDTH-1:0] ALUSrcB;
 
@@ -67,6 +70,7 @@ module main_controller(
 				regFileWrite = 0;
 				ALUOverride = 0;
 				DMemWrite = 0;
+				edgcolWrEna = 0;
 
 				// Select Signals
 				regFileWriteSrc = `REG_FILE_WRITE_SRC_EX;
@@ -83,8 +87,13 @@ module main_controller(
 				regFileWrite = 0;
 				ALUOverride = 0;
 				DMemWrite = 0;
+				edgcolWrEna = 0;
 
 				regFileWriteSrc = `REG_FILE_WRITE_SRC_EX;
+
+				if (opCode[`XEDGCOL_INSTR_OPCODE_RANGE] == `XEDGCOL_OPCODE_LI) begin
+					edgcolWrEna = 1;
+				end
 
 				// Next State
 				next_state = `CONTROL_STATE_EXECUTE;
@@ -98,6 +107,7 @@ module main_controller(
 				regFileWrite = 0;
 				ALUOverride = 0;
 				DMemWrite = 0;
+				edgcolWrEna = 0;
 
 				// Select Signals
 				regFileWriteSrc = `REG_FILE_WRITE_SRC_EX;
@@ -136,6 +146,7 @@ module main_controller(
 				IRWrite = 0;
 				regFileWrite = 0;
 				ALUOverride = 1;
+				edgcolWrEna = 0;
 
 				// Calculate next address
 				case (opCode)
@@ -180,19 +191,24 @@ module main_controller(
 				IRWrite = 0;
 				ALUOverride = 0;
 				DMemWrite = 0;
+				edgcolWrEna = 0;
 
-				case (opCode)
-					`OPCODE_STORE : regFileWrite = 0;
-					`OPCODE_BRANCH : regFileWrite = 0;
-					`OPCODE_LOAD : begin
-						regFileWrite = 1;
-						regFileWriteSrc = `REG_FILE_WRITE_SRC_MEM;
-					end
-					default : begin
-						regFileWrite = 1;
-						regFileWriteSrc = `REG_FILE_WRITE_SRC_EX;
-					end
-				endcase
+				if (opCode[`XEDGCOL_INSTR_OPCODE_RANGE] == 3'bX00) begin
+					regFileWrite = 0;
+				end else begin
+					case (opCode)
+						`OPCODE_STORE : regFileWrite = 0;
+						`OPCODE_BRANCH : regFileWrite = 0;
+						`OPCODE_LOAD : begin
+							regFileWrite = 1;
+							regFileWriteSrc = `REG_FILE_WRITE_SRC_MEM;
+						end
+						default : begin
+							regFileWrite = 1;
+							regFileWriteSrc = `REG_FILE_WRITE_SRC_EX;
+						end
+					endcase
+				end
 
 				// Next State
 				next_state = `CONTROL_STATE_FETCH;

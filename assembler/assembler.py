@@ -11,6 +11,7 @@
 
 import sys
 import re
+import bitstring
 
 
 def bin_to_hex(x):
@@ -35,6 +36,13 @@ def dec_to_bin(value, nbits):
     if len(value) > nbits:
         value = value[-nbits:]
     return value
+
+
+def dec_to_float_bin(val):
+    """Convert Decimal to Binary."""
+    val = float(val)
+    return str(bitstring.BitArray(float=val, length=32).bin)
+
 
 rtypes = {
     "add": (0, 0, 51),
@@ -87,6 +95,10 @@ branch = {
     "bge": (5, 99),
     "bltu": (6, 99),
     "bgeu": (7, 99),
+}
+
+Xedgcol = {
+    "li.e": 0
 }
 
 registers = {
@@ -157,6 +169,22 @@ registers = {
     '$t4': 29,
     '$t5': 30,
     '$t6': 31,
+
+    # XEDGCOL
+    '$e0': 0,
+    '$e1': 1,
+    '$e2': 2,
+    '$e3': 3,
+    '$e4': 4,
+    '$e5': 5,
+
+    '$px0': 0,
+    '$py0': 1,
+    '$pz0': 2,
+    '$px1': 3,
+    '$py1': 4,
+    '$pz1': 5,
+
 }
 
 
@@ -341,6 +369,16 @@ def main():
 
             machine = imm[0] + imm[2:8] + rs2 + rs1 + \
                 funct3 + imm[8:12] + imm[1] + opcode
+
+        elif instr in Xedgcol:
+            opcode = dec_to_bin(Xedgcol[instr], 3)
+            rd = dec_to_bin(registers[args[0].strip()], 3)
+            imm = dec_to_float_bin(args[1].strip())
+
+            machine = imm[0:26] + rd + opcode
+
+        else:
+            raise Exception("BAA")
 
         # Format Machine Code into little-endian with spaces between bytes
         formatted_machine = machine[24:32] + ' ' + machine[16:24] + ' ' + \
