@@ -35,8 +35,8 @@ addi $x31, $x0, 0
 li.e $e0, 0.5
 li.e $e1, 0.5
 li.e $e2, 0.5
-li.e $e3, 0.75
-li.e $e4, 0.75
-li.e $e5, 0.75
+li.e $e3, 1.5
+li.e $e4, 0.5
+li.e $e5, 0.5
 ecol $x1, $x2
 

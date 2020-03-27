@@ -62,7 +62,7 @@ module main_controller(
 		state <= next_state;
 	end
 
-	always @(state, opCode) begin
+	always @(state, opCode, HBDone) begin
 		case(state)
 
 			`CONTROL_STATE_FETCH : begin
@@ -151,8 +151,8 @@ module main_controller(
 				if (opCode[`XEDGCOL_INSTR_OPCODE_RANGE] == `XEDGCOL_OPCODE_ECOL) begin
 					execSrc = 1;
 					case (HBDone) 
-						0 : next_state = state;
-						1 : next_state = `CONTROL_STATE_MEMORY;
+						1'b0 : next_state = state;
+						1'b1 : next_state = `CONTROL_STATE_MEMORY;
 					endcase
 				end else begin
 					next_state = `CONTROL_STATE_MEMORY;
@@ -217,7 +217,7 @@ module main_controller(
 				execSrc = 0;
 				HBStart = 0;
 
-				if (opCode[1:0] == 2'b00) begin // Clean up - this is the prefix for Xedgcol
+				if (opCode[`XEDGCOL_INSTR_OPCODE_RANGE] == `XEDGCOL_OPCODE_LI) begin // Clean up - this is the prefix for Xedgcol
 					regFileWrite = 0;
 				end else begin
 					case (opCode)
