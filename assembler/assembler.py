@@ -98,7 +98,8 @@ branch = {
 }
 
 Xedgcol = {
-    "li.e": 0
+    "li.e": 0,
+    "ecol": 4
 }
 
 registers = {
@@ -372,10 +373,16 @@ def main():
 
         elif instr in Xedgcol:
             opcode = dec_to_bin(Xedgcol[instr], 3)
-            rd = dec_to_bin(registers[args[0].strip()], 3)
-            imm = dec_to_float_bin(args[1].strip())
 
-            machine = imm[0:26] + rd + opcode
+            if instr == "li.e":
+                imm = dec_to_float_bin(args[1].strip())
+                rd1 = dec_to_bin(registers[args[0].strip()], 3)
+                machine = imm[0:26] + rd1 + opcode
+
+            elif instr == "ecol":
+                rd1 = dec_to_bin(registers[args[0].strip()], 5)
+                rd2 = dec_to_bin(registers[args[1].strip()], 5)
+                machine = '0' * 19 + rd2 + rd1 + opcode
 
         else:
             raise Exception("BAA")

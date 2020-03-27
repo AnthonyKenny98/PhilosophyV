@@ -32,21 +32,24 @@
 
 module main_controller(
 	// Inputs
-	clk, opCode, funct3, branch,
+	clk, opCode, funct3, branch, HBDone,
 	// Outputs
-	PCWrite, IRWrite, DMemWrite, ALUOverride, ALUSrcA, ALUSrcB, regFileWrite, regFileWriteSrc, edgcolWrEna
+	PCWrite, IRWrite, DMemWrite, ALUOverride, ALUSrcA, ALUSrcB,
+	regFileWrite, regFileWriteSrc, edgcolWrEna, execSrc, HBStart
 );
 
 	// Input Ports
 	input wire clk;
 	input wire branch;
+	input wire HBDone;
 	input wire [`INSTR_OPCODE_WIDTH-1:0] opCode;
 	input wire [`FUNCT3_WIDTH-1:0] funct3;
 
 	// Output Ports
 	output reg PCWrite, IRWrite, regFileWrite, DMemWrite, ALUOverride, edgcolWrEna;
-	output reg ALUSrcA, regFileWriteSrc;
+	output reg ALUSrcA, regFileWriteSrc, execSrc;
 	output reg [`ALU_SRC_B_WIDTH-1:0] ALUSrcB;
+	output reg HBStart;
 
 	// Internal Reg for State Tracking
 	reg [3:0] state, next_state;
@@ -71,6 +74,11 @@ module main_controller(
 				ALUOverride = 0;
 				DMemWrite = 0;
 				edgcolWrEna = 0;
+				
+				// 
+				execSrc = 0;
+				HBStart = 0;
+
 
 				// Select Signals
 				regFileWriteSrc = `REG_FILE_WRITE_SRC_EX;
@@ -88,12 +96,15 @@ module main_controller(
 				ALUOverride = 0;
 				DMemWrite = 0;
 				edgcolWrEna = 0;
+				execSrc = 0;
+				HBStart = 0;
 
 				regFileWriteSrc = `REG_FILE_WRITE_SRC_EX;
 
-				if (opCode[`XEDGCOL_INSTR_OPCODE_RANGE] == `XEDGCOL_OPCODE_LI) begin
-					edgcolWrEna = 1;
-				end
+				case (opCode[`XEDGCOL_INSTR_OPCODE_RANGE])
+					`XEDGCOL_OPCODE_LI : edgcolWrEna = 1;
+					`XEDGCOL_OPCODE_ECOL : HBStart = 1;
+				endcase
 
 				// Next State
 				next_state = `CONTROL_STATE_EXECUTE;
@@ -108,6 +119,8 @@ module main_controller(
 				ALUOverride = 0;
 				DMemWrite = 0;
 				edgcolWrEna = 0;
+				execSrc = 0;
+				HBStart = 0;
 
 				// Select Signals
 				regFileWriteSrc = `REG_FILE_WRITE_SRC_EX;
@@ -135,8 +148,15 @@ module main_controller(
 					end
 				endcase
 
-				// Next State
-				next_state = `CONTROL_STATE_MEMORY;
+				if (opCode[`XEDGCOL_INSTR_OPCODE_RANGE] == `XEDGCOL_OPCODE_ECOL) begin
+					execSrc = 1;
+					case (HBDone) 
+						0 : next_state = state;
+						1 : next_state = `CONTROL_STATE_MEMORY;
+					endcase
+				end else begin
+					next_state = `CONTROL_STATE_MEMORY;
+				end
 			end
 
 			`CONTROL_STATE_MEMORY : begin
@@ -147,6 +167,8 @@ module main_controller(
 				regFileWrite = 0;
 				ALUOverride = 1;
 				edgcolWrEna = 0;
+				execSrc = 0;
+				HBStart = 0;
 
 				// Calculate next address
 				case (opCode)
@@ -192,8 +214,10 @@ module main_controller(
 				ALUOverride = 0;
 				DMemWrite = 0;
 				edgcolWrEna = 0;
+				execSrc = 0;
+				HBStart = 0;
 
-				if (opCode[`XEDGCOL_INSTR_OPCODE_RANGE] == 3'bX00) begin
+				if (opCode[1:0] == 2'b00) begin // Clean up - this is the prefix for Xedgcol
 					regFileWrite = 0;
 				end else begin
 					case (opCode)

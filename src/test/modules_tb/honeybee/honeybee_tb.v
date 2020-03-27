@@ -45,7 +45,7 @@ module honeybee_tb;
     // Return output bus from HoneyBee
     wire [OUT_WIDTH-1:0] collisions;
 
-    honeybee_0 uut (
+    honeybee uut (
         .ap_clk(clk),        // input wire ap_clk
         .ap_rst(rst),        // input wire ap_rst
         .ap_start(start),    // input wire ap_start
@@ -80,7 +80,6 @@ module honeybee_tb;
             #5; clk= ~clk;
             case (i)
                 10: start = 1;
-                11: start = 0;
             endcase
             #5; clk = ~clk;
         end
@@ -106,6 +105,7 @@ module honeybee_tb;
             "ready = %b | ", ready,
             "collisions = %b", collisions
         );
+         #100;
         $finish;
     end
 endmodule

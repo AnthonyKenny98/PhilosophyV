@@ -45,10 +45,12 @@ module philosophy_v_core(clk, rstb);
 
     // Control Select Signals
     wire [(`ALU_FUNCT_WIDTH-1):0] _alu_funct_;
-    wire _alu_src_a_select_, _alu_control_, _reg_file_src_select_;
+    wire _alu_src_a_select_, _alu_control_, _reg_file_src_select_, _exec_src_select_;
     wire [(`ALU_SRC_B_WIDTH-1):0] _alu_src_b_select_;
 
     wire _branch_;
+
+    wire _hb_start_, _hb_done_;
 
 
     // Main Controller
@@ -58,6 +60,7 @@ module philosophy_v_core(clk, rstb);
         .opCode(_instr_[`INSTR_OPCODE_RANGE]),
         .funct3(_instr_[`INSTR_FUNCT3_RANGE]),
         .branch(_branch_),
+        .HBDone(_hb_done_),
         // Outputs
         .PCWrite(_pc_ena_),
         .IRWrite(_ir_ena_),
@@ -67,7 +70,9 @@ module philosophy_v_core(clk, rstb);
         .ALUSrcA(_alu_src_a_select_),
         .ALUSrcB(_alu_src_b_select_),
         .regFileWrite(_reg_wr_ena_),
-        .edgcolWrEna(_edgcol_wr_ena_)
+        .edgcolWrEna(_edgcol_wr_ena_),
+        .execSrc(_exec_src_select_),
+        .HBStart(_hb_start_)
     );
 
     ///////////////////////////////////////////////////////////////////////////
@@ -169,8 +174,11 @@ module philosophy_v_core(clk, rstb);
     ///////////////////////////////////////////////////////////////////////////
 
     // Busses for ALU inputs and outputs
-    wire [(BUS_WIDTH-1):0] _alu_src_a_, _alu_src_b_, _alu_result_;
+    wire [(BUS_WIDTH-1):0] _alu_src_a_, _alu_src_b_, _alu_result_, _exec_in_;
     wire _alu_equal_;
+
+    // Bus for output of honeybee
+    wire [63:0] _collision_;
 
     // ALU_SRC_A MUX
     mux2 #(
@@ -209,6 +217,13 @@ module philosophy_v_core(clk, rstb);
         .aluEqual(_alu_equal_),
         .branch(_branch_)
     );
+
+    mux2 #(.BUS_WIDTH(BUS_WIDTH)) EX_MUX (
+        .selector(_exec_src_select_),
+        .in0(_alu_result_),
+        .in1(_collision_[32:0]),
+        .out(_exec_in_)
+    );
     
     // EXECUTE_REG
     register #(.N(BUS_WIDTH)) EX_REG (
@@ -217,7 +232,7 @@ module philosophy_v_core(clk, rstb);
         .clk(clk),
         .rst(1'b0),
         .ena(1'b1),
-        .d(_alu_result_),
+        .d(_exec_in_),
         
         //Outputs
         .q(_ex_out_)
@@ -280,26 +295,11 @@ module philosophy_v_core(clk, rstb);
     // WRITEBACK STAGE
     ///////////////////////////////////////////////////////////////////////////
 
-    // Bus for output of WB_REG
-    wire [(BUS_WIDTH-1):0] _wb_out_;
-
     mux2 #(.BUS_WIDTH(BUS_WIDTH)) REG_FILE_SRC_MUX (
         .selector(_reg_file_src_select_),
         .in0(_data_mem_out_),
         .in1(_mem_out_),
         .out(_reg_file_write_)
-    );
-
-    register #(.N(BUS_WIDTH)) WB_REG (
-
-        // Inputs
-        .clk(clk),
-        .rst(1'b0),
-        .ena(1'b1),
-        .d(_mem_out_),
-
-        // Outputs
-        .q(_wb_out_)
     );
 
     ///////////////////////////////////////////////////////////////////////////
@@ -320,6 +320,22 @@ module philosophy_v_core(clk, rstb);
         .rdData3(_e3_),
         .rdData4(_e4_),
         .rdData5(_e5_)
+    );
+
+    honeybee HONEYBEE (
+        .ap_clk(clk),        // input wire ap_clk
+        .ap_rst(1'b0),        // input wire ap_rst
+        .ap_start(_hb_start_),    // input wire ap_start
+        .ap_done(_hb_done_),      // output wire ap_done
+        .ap_idle(),      // output wire ap_idle
+        .ap_ready(),    // output wire ap_ready
+        .ap_return(_collision_),  // output wire [7 : 0] ap_return
+        .edge_p1_x(_e1_),  // input wire [31 : 0] edge_p1_x
+        .edge_p1_y(_e1_),  // input wire [31 : 0] edge_p1_y
+        .edge_p1_z(_e2_),  // input wire [31 : 0] edge_p1_z
+        .edge_p2_x(_e3_),  // input wire [31 : 0] edge_p2_x
+        .edge_p2_y(_e4_),  // input wire [31 : 0] edge_p2_y
+        .edge_p2_z(_e5_)  // input wire [31 : 0] edge_p2_z
     );
 
    

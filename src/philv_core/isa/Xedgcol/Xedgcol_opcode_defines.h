@@ -2,5 +2,6 @@
 `define XEDGCOL_OPCODE_DEFINES
 
 `define XEDGCOL_OPCODE_LI 3'b000
+`define XEDGCOL_OPCODE_ECOL 3'b100
 
 `endif
