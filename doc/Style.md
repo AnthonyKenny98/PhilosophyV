@@ -1,6 +1,6 @@
 # Style
 
-Documentation (partly for my own benefit) detailing style decisions for the verilog code that makes up this project.
+Documentation (partly for my own benefit) detailing style decisions for the verilog code that makes up this project. These conventions apply to everything within the ```PhilosophyV/src/``` directory.
 
 ## Table of Contents
 + [File Naming](#files)
