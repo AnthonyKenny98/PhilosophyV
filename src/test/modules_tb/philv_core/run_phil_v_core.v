@@ -29,7 +29,7 @@ module run_philv_core;
     reg clk;
     
     // Init Unit Under Test
-    philosophy_v_core uut (
+    philosophyVCore uut (
         .clk(clk),
         .rstb(1'b0)
     );

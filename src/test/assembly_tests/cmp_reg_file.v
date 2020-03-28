@@ -29,7 +29,7 @@ module cmp_reg_file;
     reg clk;
     
     // Init Unit Under Test
-    philosophy_v_core uut (
+    philosophyVCore uut (
         .clk(clk),
         .rstb(1'b0)
     );

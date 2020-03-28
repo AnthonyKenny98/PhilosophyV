@@ -1,11 +1,11 @@
 `timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer: 
+// Company: Harvard University, School of Engineering and Applied Sciences
+// Engineer: Anthony JW Kenny
 // 
 // Create Date: 02/04/2020 11:30:15 AM
 // Design Name: 
-// Module Name: instr_decoder
+// Module Name: instrController
 // Project Name: 
 // Target Devices: 
 // Tool Versions: 
@@ -28,7 +28,7 @@
 `include "Xedgcol_instr_defines.h"
 `include "Xedgcol_opcode_defines.h"
 
-module instr_decoder(instr, controlOverride, alu_funct, rs1, rs2, rd, immed);
+module instrController(instr, controlOverride, alu_funct, rs1, rs2, rd, immed);
     
     // Bus Width
     parameter N = 32;
@@ -54,8 +54,11 @@ module instr_decoder(instr, controlOverride, alu_funct, rs1, rs2, rd, immed);
     assign shamt_extended = {{27{instr[24]}}, instr[`INSTR_SHAMT_RANGE]};
     assign imm_extended = {{20{instr[31]}}, instr[`INSTR_IMM_RANGE]};
     assign asym_extended = {{20{instr[31]}}, instr[`INSTR_FUNCT7_RANGE], instr[`INSTR_RD_RANGE]};
-    // THis looks really weird, but its the sign extended immediate, arranged in order
+    
+    // These looks really weird, but its the sign extended immediate, arranged in order
+    // For J-Types
     assign j_extended = {{11{instr[31]}}, instr[31], instr[19:12], instr[20], instr[30:21], {1{1'b0}}};
+    // For B-Types
     assign b_extended = {{19{instr[31]}}, instr[31], instr[7], instr[30:25], instr[11:8], {1{1'b0}}};
     
     // Outputs
@@ -115,7 +118,7 @@ module instr_decoder(instr, controlOverride, alu_funct, rs1, rs2, rd, immed);
             endcase
         endcase 
 
-    // Register outputs
+        // Register outputs
         rs1 = instr[`INSTR_RS1_RANGE];
         rs2 = instr[`INSTR_RS2_RANGE];
 

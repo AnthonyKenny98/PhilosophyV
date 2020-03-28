@@ -4,8 +4,8 @@
 // Engineer: Anthony JW Kenny
 // 
 // Create Date: 02/04/2020 11:42:31 AM
-// Design Name: 
-// Module Name: philosophy_v_core
+// Design Name: PhilosophyV
+// Module Name: philosophyVCore
 // Project Name: 
 // Target Devices: 
 // Tool Versions: 
@@ -26,7 +26,7 @@
 
 `include "Xedgcol_instr_defines.h"
 
-module philosophy_v_core(clk, rstb);
+module philosophyVCore(clk, rstb);
 
     // Data Bus Width
     parameter BUS_WIDTH = 32;
@@ -144,7 +144,7 @@ module philosophy_v_core(clk, rstb);
     wire [BUS_WIDTH-1:0] _extended_immed_;
 
     // ALU DECODER
-    instr_decoder INSTR_DECODER (
+    instrController #(.N(BUS_WIDTH)) INSTR_CONTROLLER (
         .instr(_instr_),
         .controlOverride(_alu_control_),
         .alu_funct(_alu_funct_),
@@ -212,7 +212,7 @@ module philosophy_v_core(clk, rstb);
         .z(_alu_result_)
     );
 
-    branchControl #(.N(BUS_WIDTH)) BRANCH (
+    branchController #(.N(BUS_WIDTH)) BRANCH_CONTROLLER (
         .aluOut(_alu_result_),
         .funct3(_instr_[`INSTR_FUNCT3_RANGE]),
         .aluEqual(_alu_equal_),
@@ -252,7 +252,7 @@ module philosophy_v_core(clk, rstb);
 
     // MEMORY DECODER
     // CONTROLS SHIFTS FOR MEMORY LOADS AND STORES
-    data_mem_decoder #(.N(BUS_WIDTH)) DATA_MEM_DECODER (
+    dataMemController #(.N(BUS_WIDTH)) DATA_MEM_CONTROLLER (
         .in(_data_mem_read_data_),
         .opcode(_instr_[`INSTR_OPCODE_RANGE]),
         .funct3(_instr_[`INSTR_FUNCT3_RANGE]),
