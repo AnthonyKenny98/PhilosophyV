@@ -22,7 +22,7 @@
 `include "instr_defines.h"
 `include "funct_defines.h"
 
-module branch(aluOut, aluEqual, funct3, branch);
+module branchControl(aluOut, aluEqual, funct3, branch);
 
     // BUS WIDTH
     parameter N = 32;
@@ -40,10 +40,10 @@ module branch(aluOut, aluEqual, funct3, branch);
         case (funct3)
             `FUNCT3_BEQ : branch = aluEqual;
             `FUNCT3_BNE : branch = ~aluEqual;
-            `FUNCT3_BLT : branch = aluOut == 32'b1;
-            `FUNCT3_BGE : branch = aluOut == 32'b0;
-            `FUNCT3_BLTU : branch = aluOut == 32'b1;
-            `FUNCT3_BGEU : branch = aluOut == 32'b0;
+            `FUNCT3_BLT : branch = aluOut == N'b1;
+            `FUNCT3_BGE : branch = aluOut == N'b0;
+            `FUNCT3_BLTU : branch = aluOut == N'b1;
+            `FUNCT3_BGEU : branch = aluOut == N'b0;
             default : branch = 0;
         endcase
     end

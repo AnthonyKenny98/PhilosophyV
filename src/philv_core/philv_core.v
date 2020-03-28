@@ -212,7 +212,7 @@ module philosophy_v_core(clk, rstb);
         .z(_alu_result_)
     );
 
-    branch #(.N(BUS_WIDTH)) BRANCH (
+    branchControl #(.N(BUS_WIDTH)) BRANCH (
         .aluOut(_alu_result_),
         .funct3(_instr_[`INSTR_FUNCT3_RANGE]),
         .aluEqual(_alu_equal_),

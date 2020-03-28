@@ -83,7 +83,7 @@
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PPRDIR/../src/philv_core/modules/combinatorial/branch/branch.v">
+      <File Path="$PPRDIR/../src/philv_core/modules/control/branchControl/branchControl.v">
         <FileInfo>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
@@ -96,7 +96,7 @@
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PPRDIR/../src/philv_core/modules/combinatorial/data_mem_decoder/data_mem_decoder.v">
+      <File Path="$PPRDIR/../src/philv_core/modules/control/data_mem_decoder/data_mem_decoder.v">
         <FileInfo>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
@@ -171,7 +171,7 @@
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PPRDIR/../src/philv_core/modules/combinatorial/instr_decoder/instr_decoder.v">
+      <File Path="$PPRDIR/../src/philv_core/modules/control/instr_decoder/instr_decoder.v">
         <FileInfo>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
