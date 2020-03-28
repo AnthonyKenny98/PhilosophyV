@@ -25,6 +25,9 @@
 `include "instr_defines.h"
 `include "opcode_defines.h"
 
+`include "Xedgcol_instr_defines.h"
+`include "Xedgcol_opcode_defines.h"
+
 module instr_decoder(instr, controlOverride, alu_funct, rs1, rs2, rd, immed);
     
     // Bus Width
@@ -115,7 +118,13 @@ module instr_decoder(instr, controlOverride, alu_funct, rs1, rs2, rd, immed);
     // Register outputs
         rs1 = instr[`INSTR_RS1_RANGE];
         rs2 = instr[`INSTR_RS2_RANGE];
-        rd = instr[`INSTR_RD_RANGE];
+
+        // Determine Reg File Write Address
+        if (opcode[`XEDGCOL_INSTR_OPCODE_RANGE] == `XEDGCOL_OPCODE_ECOL && controlOverride) begin
+            rd = instr[`INSTR_RS1_RANGE];
+        end else begin
+            rd = instr[`INSTR_RD_RANGE];
+        end
     end
     
 endmodule

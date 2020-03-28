@@ -45,7 +45,7 @@ module philosophy_v_core(clk, rstb);
 
     // Control Select Signals
     wire [(`ALU_FUNCT_WIDTH-1):0] _alu_funct_;
-    wire _alu_src_a_select_, _alu_control_, _reg_file_src_select_, _exec_src_select_;
+    wire _alu_src_a_select_, _alu_control_, _reg_file_src_select_, _exec_src_select_, _mem_src_select_;
     wire [(`ALU_SRC_B_WIDTH-1):0] _alu_src_b_select_;
 
     wire _branch_;
@@ -71,6 +71,7 @@ module philosophy_v_core(clk, rstb);
         .ALUSrcB(_alu_src_b_select_),
         .regFileWrite(_reg_wr_ena_),
         .edgcolWrEna(_edgcol_wr_ena_),
+        .memSrc(_mem_src_select_),
         .execSrc(_exec_src_select_),
         .HBStart(_hb_start_)
     );
@@ -243,7 +244,7 @@ module philosophy_v_core(clk, rstb);
     ///////////////////////////////////////////////////////////////////////////
 
     // Bus for output of MEM_REG
-    wire [(BUS_WIDTH-1):0] _mem_out_;
+    wire [(BUS_WIDTH-1):0] _mem_out_, _mem_in_;
 
     // Bus for output of data memory
     wire [(BUS_WIDTH-1):0] _data_mem_read_data_;
@@ -278,6 +279,13 @@ module philosophy_v_core(clk, rstb);
         .rdData(_data_mem_read_data_)
     );
 
+    mux2 #(.N(BUS_WIDTH)) MEM_MUX (
+        .selector(_mem_src_select_),
+        .in0(_ex_out_),
+        .in1(_collision_[63:32]),
+        .out(_mem_in_)
+    );
+
     // MEMORY_REG
     register #(.N(BUS_WIDTH)) MEM_REG (
         
@@ -285,7 +293,7 @@ module philosophy_v_core(clk, rstb);
         .clk(clk),
         .rst(1'b0),
         .ena(1'b1),
-        .d(_ex_out_),
+        .d(_mem_in_),
         
         //Outputs
         .q(_mem_out_)

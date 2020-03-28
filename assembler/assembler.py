@@ -382,7 +382,8 @@ def main():
             elif instr == "ecol":
                 rd1 = dec_to_bin(registers[args[0].strip()], 5)
                 rd2 = dec_to_bin(registers[args[1].strip()], 5)
-                machine = '0' * 19 + rd2 + rd1 + opcode
+                machine = ('0' * 12) + rd2 + ("0" * 3) + \
+                    rd1 + ("0" * 4) + opcode
 
         else:
             raise Exception("BAA")

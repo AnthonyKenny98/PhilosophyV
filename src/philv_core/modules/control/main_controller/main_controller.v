@@ -35,7 +35,7 @@ module main_controller(
 	clk, opCode, funct3, branch, HBDone,
 	// Outputs
 	PCWrite, IRWrite, DMemWrite, ALUOverride, ALUSrcA, ALUSrcB,
-	regFileWrite, regFileWriteSrc, edgcolWrEna, execSrc, HBStart
+	regFileWrite, regFileWriteSrc, edgcolWrEna, execSrc, memSrc, HBStart
 );
 
 	// Input Ports
@@ -47,7 +47,7 @@ module main_controller(
 
 	// Output Ports
 	output reg PCWrite, IRWrite, regFileWrite, DMemWrite, ALUOverride, edgcolWrEna;
-	output reg ALUSrcA, regFileWriteSrc, execSrc;
+	output reg ALUSrcA, regFileWriteSrc, execSrc, memSrc;
 	output reg [`ALU_SRC_B_WIDTH-1:0] ALUSrcB;
 	output reg HBStart;
 
@@ -77,6 +77,7 @@ module main_controller(
 				
 				// 
 				execSrc = 0;
+				memSrc = 0;
 				HBStart = 0;
 
 
@@ -97,6 +98,7 @@ module main_controller(
 				DMemWrite = 0;
 				edgcolWrEna = 0;
 				execSrc = 0;
+				memSrc = 0;
 				HBStart = 0;
 
 				regFileWriteSrc = `REG_FILE_WRITE_SRC_EX;
@@ -120,6 +122,7 @@ module main_controller(
 				DMemWrite = 0;
 				edgcolWrEna = 0;
 				execSrc = 0;
+				memSrc = 0;
 				HBStart = 0;
 
 				// Select Signals
@@ -150,6 +153,7 @@ module main_controller(
 
 				if (opCode[`XEDGCOL_INSTR_OPCODE_RANGE] == `XEDGCOL_OPCODE_ECOL) begin
 					execSrc = 1;
+					memSrc = 1;
 					case (HBDone) 
 						1'b0 : next_state = state;
 						1'b1 : next_state = `CONTROL_STATE_MEMORY;
@@ -168,6 +172,7 @@ module main_controller(
 				ALUOverride = 1;
 				edgcolWrEna = 0;
 				execSrc = 0;
+				memSrc = 0;
 				HBStart = 0;
 
 				// Calculate next address
@@ -199,6 +204,11 @@ module main_controller(
 					default : DMemWrite = 0;
 				endcase
 
+				if (opCode[`XEDGCOL_INSTR_OPCODE_RANGE] == `XEDGCOL_OPCODE_ECOL) begin
+					regFileWrite = 1;
+					regFileWriteSrc = `REG_FILE_WRITE_SRC_EX;
+				end
+
 				regFileWriteSrc = `REG_FILE_WRITE_SRC_EX;
 
 
@@ -215,6 +225,7 @@ module main_controller(
 				DMemWrite = 0;
 				edgcolWrEna = 0;
 				execSrc = 0;
+				memSrc = 0;
 				HBStart = 0;
 
 				if (opCode[`XEDGCOL_INSTR_OPCODE_RANGE] == `XEDGCOL_OPCODE_LI) begin // Clean up - this is the prefix for Xedgcol
