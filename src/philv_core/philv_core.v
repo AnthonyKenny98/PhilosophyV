@@ -279,7 +279,7 @@ module philosophyVCore(clk, rstb);
         .rdData(_data_mem_read_data_)
     );
 
-    mux2 #(.N(BUS_WIDTH)) MEM_MUX (
+    mux2 #(.BUS_WIDTH(BUS_WIDTH)) MEM_MUX (
         .selector(_mem_src_select_),
         .in0(_ex_out_),
         .in1(_collision_[63:32]),

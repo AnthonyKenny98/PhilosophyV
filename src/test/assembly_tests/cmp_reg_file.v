@@ -52,8 +52,11 @@ module cmp_reg_file;
 
     	// Run Philosophy V Core for NUM_CYCLES
         clk = 0; #100;
-        for (i = 0; i < `NUM_CYCLES*2; i = i + 1) begin
-        	#10; clk = ~clk;
+        // for (i = 0; i < `NUM_CYCLES*2; i = i + 1) begin
+        // 	#10; clk = ~clk;
+        // end
+        while (uut._instr_ != 32'b0 || uut._program_count_ == 0) begin
+            #5; clk = ~clk;
         end
 
     	// Load expected register values
