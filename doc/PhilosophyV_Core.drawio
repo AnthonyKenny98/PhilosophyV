@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2020-03-30T22:01:39.538Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36" etag="LOu1jTRyDAHcBn4lj30k" version="12.9.4" type="github" pages="3">
+<mxfile host="app.diagrams.net" modified="2020-03-30T22:02:07.604Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36" etag="a2f9pk_5aNChqjFyfjV7" version="12.9.4" type="github" pages="3">
   <diagram id="l-QONBMP0DDUvviEroiV" name="Core">
     <mxGraphModel dx="3240" dy="1963" grid="1" gridSize="10" guides="0" tooltips="1" connect="1" arrows="0" fold="0" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -1650,15 +1650,6 @@
         </mxCell>
         <mxCell id="ulm6JMO-Ilno_R5Uy9MG-24" value="&lt;span style=&quot;font-size: 10px&quot;&gt;Equal&lt;br style=&quot;font-size: 10px&quot;&gt;&lt;/span&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;rotation=90;fontSize=10;" vertex="1" parent="ulm6JMO-Ilno_R5Uy9MG-1">
           <mxGeometry x="298" y="-50" width="29" height="9" as="geometry" />
-        </mxCell>
-        <mxCell id="ulm6JMO-Ilno_R5Uy9MG-25" value="" style="group;fillColor=#f8cecc;strokeColor=#b85450;fontSize=10;" vertex="1" connectable="0" parent="ulm6JMO-Ilno_R5Uy9MG-1">
-          <mxGeometry y="300" width="160" height="240" as="geometry" />
-        </mxCell>
-        <mxCell id="ulm6JMO-Ilno_R5Uy9MG-26" value="&lt;b style=&quot;font-size: 22px&quot;&gt;EXTENSION&lt;br&gt;REGISTER FILE&lt;br&gt;&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;shadow=0;glass=0;comic=0;fontSize=22;fontColor=#000000;" vertex="1" parent="ulm6JMO-Ilno_R5Uy9MG-1">
-          <mxGeometry x="60" y="410" width="40" height="20" as="geometry" />
-        </mxCell>
-        <mxCell id="ulm6JMO-Ilno_R5Uy9MG-27" value="" style="triangle;whiteSpace=wrap;html=1;fontSize=10;rotation=90;fillColor=#FFFFFF;strokeColor=#b85450;" vertex="1" parent="ulm6JMO-Ilno_R5Uy9MG-1">
-          <mxGeometry x="72" y="298" width="16" height="20" as="geometry" />
         </mxCell>
         <mxCell id="ulm6JMO-Ilno_R5Uy9MG-28" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;endArrow=none;endFill=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeWidth=2;" edge="1" parent="ulm6JMO-Ilno_R5Uy9MG-1">
           <mxGeometry relative="1" as="geometry">
