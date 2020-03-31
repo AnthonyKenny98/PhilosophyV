@@ -1,4 +1,4 @@
-<mxfile host="www.draw.io" modified="2020-03-31T02:21:30.703Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36" etag="wZauh8FLoDJlEbSGg5Gj" version="12.9.4" type="github" pages="4">
+<mxfile host="www.draw.io" modified="2020-03-31T02:22:28.213Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36" etag="s6U6l3TfqJSyjOQxqtYq" version="12.9.4" type="github" pages="4">
   <diagram id="l-QONBMP0DDUvviEroiV" name="Core">
     <mxGraphModel dx="2426" dy="1669" grid="1" gridSize="10" guides="0" tooltips="1" connect="1" arrows="0" fold="0" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -1942,7 +1942,7 @@
     
   </diagram>
   <diagram id="tLRsJGVEqHHKasmLKiZ0" name="HoneyBee">
-    <mxGraphModel dx="772" dy="483" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2400" pageHeight="2400" math="0" shadow="0" extFonts="Computer Modern^https://fonts.googleapis.com/css?family=Computer+Modern">
+    <mxGraphModel dx="772" dy="532" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2400" pageHeight="2400" math="0" shadow="0" extFonts="Computer Modern^https://fonts.googleapis.com/css?family=Computer+Modern">
       <root>
         <mxCell id="yucTcaGxGMNIJf8wDbqY-0" />
         <mxCell id="yucTcaGxGMNIJf8wDbqY-1" parent="yucTcaGxGMNIJf8wDbqY-0" />
@@ -1959,7 +1959,7 @@
         <mxCell id="uqWX5sFfroWvKUeDKfwF-0" value="" style="whiteSpace=wrap;html=1;aspect=fixed;align=left;fillColor=#FBBC05;strokeColor=#000000;strokeWidth=2;fontFamily=Computer Modern;" vertex="1" parent="yucTcaGxGMNIJf8wDbqY-1">
           <mxGeometry x="280" y="160" width="200" height="200" as="geometry" />
         </mxCell>
-        <mxCell id="uqWX5sFfroWvKUeDKfwF-1" value="&lt;b style=&quot;font-size: 22px&quot;&gt;HoneyBee&lt;br&gt;&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;shadow=0;glass=0;comic=0;fontSize=22;fontColor=#000000;fontFamily=Computer Modern;" vertex="1" parent="yucTcaGxGMNIJf8wDbqY-1">
+        <mxCell id="uqWX5sFfroWvKUeDKfwF-1" value="&lt;b&gt;&lt;font style=&quot;font-size: 28px&quot;&gt;HoneyBee&lt;/font&gt;&lt;br&gt;&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;shadow=0;glass=0;comic=0;fontSize=22;fontColor=#000000;fontFamily=Computer Modern;" vertex="1" parent="yucTcaGxGMNIJf8wDbqY-1">
           <mxGeometry x="360" y="250" width="40" height="20" as="geometry" />
         </mxCell>
         <mxCell id="uqWX5sFfroWvKUeDKfwF-5" value="&lt;font style=&quot;font-size: 18px&quot;&gt;Input Edge&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Computer Modern;" vertex="1" parent="yucTcaGxGMNIJf8wDbqY-1">
