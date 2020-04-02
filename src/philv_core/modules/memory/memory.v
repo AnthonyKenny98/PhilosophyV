@@ -79,7 +79,8 @@ initial begin
 		INIT_INST=MEM_FILE;
 	end
 	$display("initializing %m's instruction memory from '%s'", INIT_INST);
-	$readmemb(INIT_INST, MEM, 0, (LENGTH*4)-1);
+	// $readmemb(INIT_INST, MEM, 0, (LENGTH*4)-1);
+	$readmemh(INIT_INST, MEM, 0, (LENGTH*4)-1);
 end
 //`else
 //initial begin

@@ -41,12 +41,11 @@ module run_philv_core;
     // Generate clk for testing
     integer i;
     initial begin
-        clk = 0;
-        #5000;
-        for (i = 0; i < `NUM_CYCLES*2; i = i + 1) begin
-            #10; clk = ~clk;
+        // Run Philosophy V Core for NUM_CYCLES
+        clk = 0; #100;
+        while (uut._instr_ != 32'bx || uut._program_count_ <=32'h40) begin
+            #5; clk = ~clk;
         end
-        $finish;
     end
     ///////////////////////////////////////////////////////////////////////////
     
@@ -59,10 +58,7 @@ module run_philv_core;
             "ALU_SRC_A = %h | ", uut._alu_src_a_,
             "ALU_SRC_B = %h | ", uut._alu_src_b_,
             "EX = %h | ", uut.EX_REG.q,
-            "MEM = %h | ", uut.MEM_REG.q,
-            "WB = %h", uut.WB_REG.q,
-            " | r2 = %h", uut.REG_FILE.r02,
-            " | r3 = %h", uut.REG_FILE.r03);
+            "MEM = %h | ", uut.MEM_REG.q);
     end
 
 endmodule

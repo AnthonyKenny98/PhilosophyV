@@ -222,7 +222,7 @@ module philosophyVCore(clk, rstb);
     mux2 #(.BUS_WIDTH(BUS_WIDTH)) EX_MUX (
         .selector(_exec_src_select_),
         .in0(_alu_result_),
-        .in1(_collision_[32:0]),
+        .in1(_collision_[31:0]),
         .out(_exec_in_)
     );
     
